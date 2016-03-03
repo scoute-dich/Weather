@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="@string/action_exit" />
+
+    <item
+        android:id="@+id/action_clearCache"
+        android:orderInCategory="100"
+        android:title="@string/action_clearCache" />
+
+    <item
+        android:id="@+id/action_save_screenshot"
+        android:orderInCategory="100"
+        android:title="@string/action_save_screenshot" />
+
+    <item
+        android:id="@+id/action_screenshot"
+        android:orderInCategory="100"
+        android:title="@string/action_screenshot" />
+
+    <item
+        android:id="@+id/action_license"
+        android:orderInCategory="100"
+        android:title="@string/action_license" />
+
+</menu>

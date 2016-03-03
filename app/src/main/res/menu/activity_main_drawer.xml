@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menu1">
+        <menu>
+            <item
+                android:id="@+id/ort3"
+                android:checked="false"
+                android:icon="@drawable/drawer_loc"
+                android:title="@string/ort3" />
+
+            <item
+                android:id="@+id/ort5"
+                android:checked="false"
+                android:icon="@drawable/drawer_loc"
+                android:title="@string/ort5" />
+
+            <item
+                android:id="@+id/ort2"
+                android:checked="false"
+                android:icon="@drawable/drawer_loc"
+                android:title="@string/ort2" />
+
+            <item
+                android:id="@+id/ort1"
+                android:checked="false"
+                android:icon="@drawable/drawer_loc"
+                android:scaleType="fitCenter"
+                android:title="@string/ort1" />
+
+            <item
+                android:id="@+id/ort4"
+                android:checked="false"
+                android:icon="@drawable/drawer_loc"
+                android:title="@string/ort4" />
+
+            <item
+                android:id="@+id/bookmarks"
+                android:checked="false"
+                android:icon="@drawable/drawer_search"
+                android:title="@string/search" />
+        </menu>
+    </item>
+
+    <item android:title="@string/menu2">
+        <menu>
+            <item
+                android:id="@+id/action_radar"
+                android:checked="false"
+                android:icon="@drawable/drawer_rain"
+                android:title="@string/action_radar" />
+
+            <item
+                android:id="@+id/action_satellit"
+                android:checked="false"
+                android:icon="@drawable/drawer_sat"
+                android:title="@string/action_satellit" />
+
+            <item
+                android:id="@+id/action_karten"
+                android:checked="false"
+                android:icon="@drawable/drawer_wind"
+                android:title="@string/action_karten" />
+
+            <item
+                android:id="@+id/action_thema"
+                android:checked="false"
+                android:icon="@drawable/drawer_info"
+                android:title="@string/action_thema" />
+
+            <item
+                android:id="@+id/action_lexikon"
+                android:checked="false"
+                android:icon="@drawable/drawer_lex"
+                android:title="@string/action_lexikon" />
+
+        </menu>
+    </item>
+
+</menu>
