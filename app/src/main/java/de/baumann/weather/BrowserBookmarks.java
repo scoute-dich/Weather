@@ -41,7 +41,7 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
-    boolean ret = true;
+    private boolean ret = true;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private boolean isNetworkAvailable() {
@@ -90,7 +90,7 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
-            mWebView.enableSlowWholeDocumentDraw();
+            WebView.enableSlowWholeDocumentDraw();
 
         setContentView(R.layout.activity_bookmarks_browser);
         setTitle(R.string.search);

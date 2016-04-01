@@ -39,7 +39,7 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
-    boolean ret = true;
+    private boolean ret = true;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private boolean isNetworkAvailable() {
@@ -67,7 +67,7 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
-            mWebView.enableSlowWholeDocumentDraw();
+            WebView.enableSlowWholeDocumentDraw();
 
         setContentView(R.layout.activity_bookmarks_browser);
         setTitle(R.string.meteo);

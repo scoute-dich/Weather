@@ -44,7 +44,7 @@ public class Info extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
-            mWebView.enableSlowWholeDocumentDraw();
+            WebView.enableSlowWholeDocumentDraw();
 
         setContentView(R.layout.activity_info);
         setTitle(R.string.action_license);

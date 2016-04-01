@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
     private com.getbase.floatingactionbutton.FloatingActionsMenu fab;
-    boolean ret = true;
+    private boolean ret = true;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private boolean isNetworkAvailable() {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
-            mWebView.enableSlowWholeDocumentDraw();
+            WebView.enableSlowWholeDocumentDraw();
 
         setContentView(R.layout.activity_main);
         setTitle(R.string.ort1_ueberblick);

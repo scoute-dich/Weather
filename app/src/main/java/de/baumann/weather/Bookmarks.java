@@ -20,7 +20,6 @@ import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Bookmarks extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
