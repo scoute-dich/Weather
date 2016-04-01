@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class FloatingActionButtonBehavior extends CoordinatorLayout.Behavior<FloatingActionButton> {
 

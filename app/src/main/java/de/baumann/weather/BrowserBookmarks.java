@@ -29,7 +29,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,10 +53,31 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
     public void fab5_click(View v){
         // write your code here ..
         try {
-            BrowserDatabase db = new BrowserDatabase(this);
-            db.addBookmark(mWebView.getTitle(), mWebView.getUrl());
-            db.close();
-            Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
+            final EditText input = new EditText(this);
+            input.setText(mWebView.getTitle());
+            final BrowserDatabase db = new BrowserDatabase(this);
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                    .setView(input)
+                    .setTitle(R.string.search)
+                    .setIcon(R.drawable.ic_launcher)
+                    .setMessage(R.string.bookmark_message)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String inputTag = input.getText().toString().trim();
+                            db.addBookmark(inputTag, mWebView.getUrl());
+                            db.close();
+                            Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+            dialog.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,15 +169,6 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
         if (mWebView.canGoBack()) {
             mWebView.goBack();
             setTitle(R.string.app_name);
-            Snackbar snackbar = Snackbar
-                    .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
-                        }
-                    });
-            snackbar.show();
         } else {
             Snackbar snackbar = Snackbar
                     .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
@@ -186,15 +198,7 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            Snackbar snackbar = Snackbar
-                    .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
-                        }
-                    });
-            snackbar.show();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_clearCache) {
@@ -261,11 +265,9 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
             try {
 
                 fos = new FileOutputStream(screen);
-                if (fos != null) {
-                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 
-                    fos.close();
-                }
+                fos.close();
             } catch (Exception e) {
                 e.getMessage();
 
@@ -330,11 +332,9 @@ public class BrowserBookmarks extends AppCompatActivity implements NavigationVie
             try {
 
                 fos = new FileOutputStream(screen);
-                if (fos != null) {
-                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 
-                    fos.close();
-                }
+                fos.close();
             } catch (Exception e) {
                 e.getMessage();
 

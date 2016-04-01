@@ -2,112 +2,114 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
-    <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit das Bildschirmfoto
-        gespeichert werden kann. Danach solltest du die Anwendung komplett schließen oder das Telefon neu starten.
-        Wenn du den Zugriff verweigerst und die Funktion später doch nutzen willst, kannst du die Berechtigung
-        nachträglich erteilen. Öffne dafür: Systemeinstellungen - Apps - Wetter. Im Bereich Berechtigungen kannst
-        dann die entsprechende Einstellung vornehmen.</string>
+    <string name="permissions">You must grant \"Access Storage Permission\" to save screenshots. After that you should
+        completely close the app or restart the phone. If you don\'t permit the storage access but want to use the
+        screenshot function at a later time, you can grant the permission later. Please open then: systemsettings - apps -
+        weather. In the permissions section you can grant the \"write storage permission\".</string>
 
     // Application
 
-    <string name="app_name">Wetter</string>
-    <string name="app_copyright">Nicht jede Wolke erzeugt ein Gewitter.</string>
+    <string name="app_name">Weather</string>
+    <string name="app_copyright">Not every cloud makes a thunderstorm.</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
     <string name="imagebutton">Menu</string>
 
     // Titles
+    // Ort = city
+    // Ueberblick = overview
+    // stuendlich = hourly
+    // Bericht = report
 
-    <string name="ort1_ueberblick">Stutensee | Überblick</string>
-    <string name="ort1_stuendlich">Stutensee | Stündlich</string>
+    <string name="ort1_ueberblick">Stutensee | Overview</string>
+    <string name="ort1_stuendlich">Stutensee | Hourly</string>
     <string name="ort1_trend">Stutensee | Trend</string>
-    <string name="ort1_bericht">Stutensee | Bericht</string>
+    <string name="ort1_bericht">Stutensee | Report</string>
 
-    <string name="ort2_ueberblick">Karlsruhe | Überblick</string>
-    <string name="ort2_stuendlich">Karlsruhe | Stündlich</string>
+    <string name="ort2_ueberblick">Karlsruhe | Overview</string>
+    <string name="ort2_stuendlich">Karlsruhe | Hourly</string>
     <string name="ort2_trend">Karlsruhe | Trend</string>
-    <string name="ort2_bericht">Karlsruhe | Bericht</string>
+    <string name="ort2_bericht">Karlsruhe | Report</string>
 
-    <string name="ort3_ueberblick">Berlin | Überblick</string>
-    <string name="ort3_stuendlich">Berlin | Stündlich</string>
+    <string name="ort3_ueberblick">Berlin | Overview</string>
+    <string name="ort3_stuendlich">Berlin | Hourly</string>
     <string name="ort3_trend">Berlin | Trend</string>
-    <string name="ort3_bericht">Berlin | Bericht</string>
+    <string name="ort3_bericht">Berlin | Report</string>
 
-    <string name="ort4_ueberblick">Stuttgart | Überblick</string>
-    <string name="ort4_stuendlich">Stuttgart | Stündlich</string>
+    <string name="ort4_ueberblick">Stuttgart | Overview</string>
+    <string name="ort4_stuendlich">Stuttgart | Hourly</string>
     <string name="ort4_trend">Stuttgart | Trend</string>
-    <string name="ort4_bericht">Stuttgart | Bericht</string>
+    <string name="ort4_bericht">Stuttgart | Report</string>
 
-    <string name="ort5_ueberblick">Heidelberg | Überblick</string>
-    <string name="ort5_stuendlich">Heidelberg | Stündlich</string>
+    <string name="ort5_ueberblick">Heidelberg | Overview</string>
+    <string name="ort5_stuendlich">Heidelberg | Hourly</string>
     <string name="ort5_trend">Heidelberg | Trend</string>
-    <string name="ort5_bericht">Heidelberg | Bericht</string>
+    <string name="ort5_bericht">Heidelberg | Report</string>
 
     // (Drawer-) Menu Items
+    // Ort = city
 
-    <string name="menu1">Wettervorhersagen für ...</string>
-    <string name="menu2">Weitere Wetterinfos</string>
+    <string name="menu1">Weather report for …</string>
+    <string name="menu2">More weather infos</string>
 
-    <string name="action_license">Über die App | Lizenz</string>
-    <string name="action_exit">App verlassen</string>
-    <string name="action_clearCache">Cache löschen</string>
-    <string name="action_screenshot">Wetterbericht teilen</string>
-    <string name="action_save_screenshot">Bildschirmfoto speichern</string>
+    <string name="action_license">About the app | icense</string>
+    <string name="action_exit">Exit app</string>
+    <string name="action_clearCache">Clear cache</string>
+    <string name="action_screenshot">Share weather report</string>
+    <string name="action_save_screenshot">Save screenshot</string>
 
-    <string name="search">Lesezeichen | Suche ...</string>
+    <string name="search">Bookamrks | Search …</string>
     <string name="ort1">Stutensee</string>
     <string name="ort2">Karlsruhe</string>
     <string name="ort3">Berlin</string>
     <string name="ort4">Stuttgart</string>
     <string name="ort5">Heidelberg</string>
 
-    <string name="dwd">Deutscher Wetterdienst</string>
-    <string name="meteo">Meteoblue | Wetterkarten</string>
+    // DWD = German Weather Service
 
-    <string name="action_thema">DWD - Thema des Tages</string>
-    <string name="action_karten">Strömungsfilm</string>
-    <string name="action_lexikon">DWD - Wetterlexikon</string>
-    <string name="action_radar">Niederschlag Vorhersage</string>
-    <string name="action_satellit">Satellitenbild</string>
+    <string name="dwd">Deutscher Wetterdienst</string>
+    <string name="meteo">Meteoblue | Weather chart</string>
+
+    <string name="action_thema">DWD - Topic of the day</string>
+    <string name="action_karten">Wind animation</string>
+    <string name="action_lexikon">DWD - weather encyclopedia</string>
+    <string name="action_radar">Rain forecast</string>
+    <string name="action_satellit">Satellite view</string>
 
     // Toasts
 
-    <string name="toast_screenshot">Bildschirmfoto wird erstellt ...</string>
-    <string name="toast_clearCache">Cache wird geleert ...</string>
-    <string name="toast_doubleback">Drücke noch einmal ZURÜCK um die App zu verlassen.</string>
-    <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
+    <string name="toast_screenshot">Making screenshot …</string>
+    <string name="toast_clearCache">Clearing cache …</string>
+    <string name="toast_doubleback">Press again to exit app.</string>
+    <string name="toast_cache">No internet connection. Loading from cache.</string>
 
     // Dialog
 
-    <string name="confirm_exit">Möchtest du die App verlassen?</string>
-    <string name="diolog_dwd">Die Internetseiten des Deutschen Wetterdienstes können leider
-    nicht aus dem Cache geladen werden. Benutze die Bildschirmfoto speichern Funktion im Menu,
-    um die Seite als Bild auf deinem Handy zu speichern.</string>
+    <string name="confirm_exit">Do you want to exit the app?</string>
     <string name="yes">OK</string>
-    <string name="no">NEIN</string>
+    <string name="no">NO</string>
+    <string name="bookmark_message">You can edit the name of the bookmark:</string>
 
     // Floating Action Buttons - Titles
 
-    <string name="fab1_title">Wetter Übersicht</string>
-    <string name="fab2_title">Stündliche Vorhersage</string>
-    <string name="fab3_title">10 Tage Trend</string>
-    <string name="fab4_title">Wetterbericht</string>
-    <string name="fab5_title">Lesezeichen hinzufügen</string>
+    <string name="fab1_title">Weather overview</string>
+    <string name="fab2_title">Hourly forecast</string>
+    <string name="fab3_title">10 day trend</string>
+    <string name="fab4_title">Weather report</string>
+    <string name="fab5_title">Add bookmark</string>
 
     // Bookmarks
 
     <string name="add_bookmark">Add bookmark</string>
-    <string name="remove_confirmation">Dieses Lesezeichen wird entfernt. OK?</string>
-    <string name="cannot_remove">Mindestens ein Lesezeichen wird gebraucht!</string>
-    <string name="added">Lesezeichen wird hinzugefügt.</string>
+    <string name="remove_confirmation">Bookmark will be removed. OK?</string>
+    <string name="cannot_remove">You need at least one bookmark!</string>
+    <string name="added">Adding bookmark.</string>
     <string name="ok">OK</string>
-    <string name="cancel">Abbrechen</string>
-    <string name="go">OK! Lass mich suchen!</string>
+    <string name="cancel">Cancel</string>
+    <string name="go">OK! Let me search!</string>
 
-    <string name="text">Auf der nächsten Seite kannst du nach Wettervorhersagen für beliebige Städte suchen.
-        Einfach die passende Postleitzahl oder den Namen einer Stadt in das Suchfeld eingeben und die richtige Auswahl treffen.
-        Aufgerufene Suchergebnisse können als Lesezeichen gespeichert werden und hier jederzeit
-        wieder (offline) aufgerufen werden.</string>
+    <string name="text">On the next page you can search for weather reports for any city.
+        Just enter the name or the zipcode of a city and make your choice. You can save any loaded
+        webpage as bookmark. You can the recall it from here at anytime (even offline).</string>
 
 </resources>

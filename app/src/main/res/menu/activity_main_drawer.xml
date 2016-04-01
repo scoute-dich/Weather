@@ -25,7 +25,6 @@
                 android:id="@+id/ort1"
                 android:checked="false"
                 android:icon="@drawable/drawer_loc"
-                android:scaleType="fitCenter"
                 android:title="@string/ort1" />
 
             <item
@@ -39,6 +38,7 @@
                 android:checked="false"
                 android:icon="@drawable/drawer_search"
                 android:title="@string/search" />
+
         </menu>
     </item>
 

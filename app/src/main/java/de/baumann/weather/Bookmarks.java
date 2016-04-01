@@ -137,15 +137,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            Snackbar snackbar = Snackbar
-                    .make(listView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
-                        }
-                    });
-            snackbar.show();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_license) {
@@ -243,11 +235,11 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
     private void setBookmarkList() {
 
-        ArrayList<HashMap<String,String>> mapList = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String,String>> mapList = new ArrayList<>();
 
         try {
             BrowserDatabase db = new BrowserDatabase(this);
-            ArrayList<String[]> bookmarkList = new ArrayList<String[]>();
+            ArrayList<String[]> bookmarkList = new ArrayList<>();
             db.getBookmarks(bookmarkList);
             if (bookmarkList.size() == 0) {
                 db.loadInitialData();
@@ -255,10 +247,8 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
             }
             db.close();
 
-            Iterator<String[]> it = bookmarkList.iterator();
-            while(it.hasNext()) {
-                String[] strAry = (String[])it.next();
-                HashMap<String,String> map = new HashMap<String,String>();
+            for (String[] strAry : bookmarkList) {
+                HashMap<String, String> map = new HashMap<>();
                 map.put("seqno", strAry[0]);
                 map.put("title", strAry[1]);
                 map.put("url", strAry[2]);

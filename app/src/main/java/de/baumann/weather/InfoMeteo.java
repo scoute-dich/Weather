@@ -18,7 +18,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -147,15 +146,6 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
         if (mWebView.canGoBack()) {
             mWebView.goBack();
             setTitle(R.string.app_name);
-            Snackbar snackbar = Snackbar
-                    .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
-                        }
-                    });
-            snackbar.show();
         } else {
             Snackbar snackbar = Snackbar
                     .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
@@ -185,15 +175,7 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            Snackbar snackbar = Snackbar
-                    .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
-                        }
-                    });
-            snackbar.show();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_clearCache) {
@@ -260,11 +242,9 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
             try {
 
                 fos = new FileOutputStream(screen);
-                if (fos != null) {
-                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 
-                    fos.close();
-                }
+                fos.close();
             } catch (Exception e) {
                 e.getMessage();
 
@@ -329,11 +309,9 @@ public class InfoMeteo extends AppCompatActivity implements NavigationView.OnNav
             try {
 
                 fos = new FileOutputStream(screen);
-                if (fos != null) {
-                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 
-                    fos.close();
-                }
+                fos.close();
             } catch (Exception e) {
                 e.getMessage();
 
