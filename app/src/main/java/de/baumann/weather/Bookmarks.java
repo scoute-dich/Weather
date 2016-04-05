@@ -1,8 +1,11 @@
 package de.baumann.weather;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -11,12 +14,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,42 +72,122 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 @SuppressWarnings("unchecked")
                 HashMap<String,String> map = (HashMap<String,String>)listView.getItemAtPosition(position);
                 final String seqnoStr = map.get("seqno");
+                final String title = map.get("title");
+                final String url = map.get("url");
 
-                try {
-                    BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
-                    final int count = db.getRecordCount();
-                    db.close();
+                final CharSequence[] options = {("Edit Title"), "Edit URL", "Deleate"};
+                new AlertDialog.Builder(Bookmarks.this)
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
+                                if (options[item].equals("Edit Title")) {
+                                    try {
+                                        final EditText input = new EditText(Bookmarks.this);
+                                        input.setText(title);
+                                        final BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
+                                        db.deleteBookmark((Integer.parseInt(seqnoStr)));
+                                        final AlertDialog.Builder dialog2 = new AlertDialog.Builder(Bookmarks.this)
+                                                .setView(input)
+                                                .setTitle(R.string.search)
+                                                .setIcon(R.drawable.ic_launcher)
+                                                .setMessage(R.string.bookmark_message)
+                                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-                    if (count == 1) {
-                        Snackbar snackbar = Snackbar
-                                .make(listView, R.string.cannot_remove, Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        String inputTag = input.getText().toString().trim();
+                                                        db.addBookmark(inputTag, url);
+                                                        db.close();
+                                                        setBookmarkList();
+                                                    }
+                                                })
+                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 
-                    } else {
-                        Snackbar snackbar = Snackbar
-                                .make(listView, R.string.remove_confirmation, Snackbar.LENGTH_LONG)
-                                .setAction(R.string.ok, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        try {
-                                            BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
-                                            db.deleteBookmark(Integer.parseInt(seqnoStr));
-                                            db.close();
-                                            setBookmarkList();
-                                        } catch (PackageManager.NameNotFoundException e) {
-                                            e.printStackTrace();
-                                        }
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        dialog.cancel();
+                                                    }
+                                                });
+                                        dialog2.show();
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                });
-                        snackbar.show();
-                    }
+                                }
+                                if (options[item].equals("Edit URL")) {
+                                    try {
+                                        final EditText input = new EditText(Bookmarks.this);
+                                        input.setText(url);
+                                        final BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
+                                        db.deleteBookmark((Integer.parseInt(seqnoStr)));
+                                        final AlertDialog.Builder dialog2 = new AlertDialog.Builder(Bookmarks.this)
+                                                .setView(input)
+                                                .setTitle(R.string.search)
+                                                .setIcon(R.drawable.ic_launcher)
+                                                .setMessage(R.string.bookmark_message)
+                                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        String inputTag = input.getText().toString().trim();
+                                                        db.addBookmark(title, inputTag);
+                                                        db.close();
+                                                        setBookmarkList();
+                                                    }
+                                                })
+                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        dialog.cancel();
+                                                    }
+                                                });
+                                        dialog2.show();
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                                if (options[item].equals("Deleate")) {
+
+
+                                    try {
+                                        BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
+                                        final int count = db.getRecordCount();
+                                        db.close();
+
+                                        if (count == 1) {
+                                            Snackbar snackbar = Snackbar
+                                                    .make(listView, R.string.cannot_remove, Snackbar.LENGTH_LONG);
+                                            snackbar.show();
+
+                                        } else {
+                                            Snackbar snackbar = Snackbar
+                                                    .make(listView, R.string.remove_confirmation, Snackbar.LENGTH_LONG)
+                                                    .setAction(R.string.ok, new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            try {
+                                                                BrowserDatabase db = new BrowserDatabase(Bookmarks.this);
+                                                                db.deleteBookmark(Integer.parseInt(seqnoStr));
+                                                                db.close();
+                                                                setBookmarkList();
+                                                            } catch (PackageManager.NameNotFoundException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    });
+                                            snackbar.show();
+                                        }
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                        }).show();
 
                 return true;
             }
