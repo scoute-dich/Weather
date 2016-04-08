@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,18 +14,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +29,13 @@ import java.util.HashMap;
 public class Bookmarks extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView listView = null;
-    public void button_click(View v){
+    ImageView imgHeader;
 
-        Intent intent = new Intent(Bookmarks.this, BrowserBookmarks.class);
-        intent.putExtra("url", "http://m.wetterdienst.de/");
-        startActivityForResult(intent, 100);
+    public void fab5_click(View v){
+        // write your code here ..
+        Intent intent_in = new Intent(Bookmarks.this, Search.class);
+        startActivity(intent_in);
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_bookmarks);
-        setTitle(R.string.search);
+        setTitle(R.string.action_bookmarks);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,13 +57,23 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        imgHeader = (ImageView) findViewById(R.id.imageView3);
+
+        TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
+        int choice = (int) (Math.random() * images.length());
+        imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash1));
+        images.recycle();
+
         listView = (ListView)findViewById(R.id.bookmarks);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 @SuppressWarnings("unchecked")
                 HashMap<String,String> map = (HashMap<String,String>)listView.getItemAtPosition(position);
-                Intent intent = new Intent(Bookmarks.this, BrowserBookmarks.class);
+                Intent intent = new Intent(Bookmarks.this, Browser.class);
                 intent.putExtra("url", map.get("url"));
+                intent.putExtra("url2", map.get("url") + "stuendlich");
+                intent.putExtra("url3", map.get("url") + "10-Tage");
+                intent.putExtra("title", map.get("title"));
                 startActivityForResult(intent, 100);
             }
         });
@@ -79,12 +87,12 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                 final String title = map.get("title");
                 final String url = map.get("url");
 
-                final CharSequence[] options = {("Edit Title"), "Edit URL", "Deleate"};
+                final CharSequence[] options = {getString(R.string.edit_title), getString(R.string.edit_url),getString(R.string.delete_bookmark)};
                 new AlertDialog.Builder(Bookmarks.this)
                         .setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals("Edit Title")) {
+                                if (options[item].equals(getString(R.string.edit_title))) {
                                     try {
                                         final EditText input = new EditText(Bookmarks.this);
                                         input.setText(title);
@@ -92,10 +100,8 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(Bookmarks.this)
                                                 .setView(input)
-                                                .setTitle(R.string.search)
-                                                .setIcon(R.drawable.ic_launcher)
-                                                .setMessage(R.string.bookmark_message)
-                                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                .setMessage(R.string.edit_title)
+                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         String inputTag = input.getText().toString().trim();
@@ -116,7 +122,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                                         e.printStackTrace();
                                     }
                                 }
-                                if (options[item].equals("Edit URL")) {
+                                if (options[item].equals(getString(R.string.edit_url))) {
                                     try {
                                         final EditText input = new EditText(Bookmarks.this);
                                         input.setText(url);
@@ -124,10 +130,8 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(Bookmarks.this)
                                                 .setView(input)
-                                                .setTitle(R.string.search)
-                                                .setIcon(R.drawable.ic_launcher)
-                                                .setMessage(R.string.bookmark_message)
-                                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                .setMessage(R.string.edit_url)
+                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         String inputTag = input.getText().toString().trim();
@@ -149,7 +153,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                                     }
 
                                 }
-                                if (options[item].equals("Deleate")) {
+                                if (options[item].equals(getString(R.string.delete_bookmark))) {
 
 
                                     try {
@@ -165,7 +169,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                                         } else {
                                             Snackbar snackbar = Snackbar
                                                     .make(listView, R.string.remove_confirmation, Snackbar.LENGTH_LONG)
-                                                    .setAction(R.string.ok, new View.OnClickListener() {
+                                                    .setAction(R.string.yes, new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View view) {
                                                             try {
@@ -228,9 +232,10 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
             moveTaskToBack(true);
         }
 
-        if (id == R.id.action_license) {
-            Intent intent_in = new Intent(Bookmarks.this, Info.class);
+        if (id == R.id.action_settings) {
+            Intent intent_in = new Intent(Bookmarks.this, UserSettingsActivity.class);
             startActivity(intent_in);
+            overridePendingTransition(0, 0);
         }
 
         return super.onOptionsItemSelected(item);
@@ -242,62 +247,47 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.ort1) {
-            Intent intent_in = new Intent(Bookmarks.this, MainActivity.class);
+        if (id == R.id.action_favorite) {
+            Intent intent_in = new Intent(Bookmarks.this, Start.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
 
-        } else if (id == R.id.ort2) {
-            Intent intent_in = new Intent(Bookmarks.this, MainActivity2.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-
-        } else if (id == R.id.ort4) {
-            Intent intent_in = new Intent(Bookmarks.this, MainActivity3.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-
-        } else if (id == R.id.ort3) {
-            Intent intent_in = new Intent(Bookmarks.this, MainActivity4.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-
-        } else if (id == R.id.ort5) {
-            Intent intent_in = new Intent(Bookmarks.this, MainActivity5.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-
-        } else if (id == R.id.bookmarks) {
+        } else if (id == R.id.action_bookmarks) {
             Intent intent_in = new Intent(Bookmarks.this, Bookmarks.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
 
+        } else if (id == R.id.action_search) {
+            Intent intent_in = new Intent(Bookmarks.this, Search.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+
         } else if (id == R.id.action_radar) {
-            Intent intent_ra = new Intent(Bookmarks.this, InfoMeteo.class);
+            Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/niederschlag_1h/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
 
         } else if (id == R.id.action_satellit) {
-            Intent intent_ra = new Intent(Bookmarks.this, InfoMeteo.class);
+            Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/satellit/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
 
         } else if (id == R.id.action_karten) {
-            Intent intent_ra = new Intent(Bookmarks.this, InfoMeteo.class);
+            Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/film/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
 
         } else if (id == R.id.action_thema) {
-            Intent intent_th = new Intent(Bookmarks.this, InfoDWD.class);
+            Intent intent_th = new Intent(Bookmarks.this, Search.class);
             intent_th.putExtra("url", "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null");
             startActivityForResult(intent_th, 100);
             overridePendingTransition(0, 0);
 
         } else if (id == R.id.action_lexikon) {
-            Intent intent_le = new Intent(Bookmarks.this, InfoDWD.class);
+            Intent intent_le = new Intent(Bookmarks.this, Search.class);
             intent_le.putExtra("url", "http://www.dwd.de/DE/service/lexikon/lexikon_node.html");
             startActivityForResult(intent_le, 100);
             overridePendingTransition(0, 0);

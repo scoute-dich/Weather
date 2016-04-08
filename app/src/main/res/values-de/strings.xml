@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    // Application
 
+    <string name="app_name">Wetter</string>
+    <string name="app_copyright">Nicht jede Wolke macht einen Sturm.</string>
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit das Bildschirmfoto
@@ -9,58 +14,45 @@
         nachträglich erteilen. Öffne dafür: Systemeinstellungen - Apps - Wetter. Im Bereich Berechtigungen kannst
         dann die entsprechende Einstellung vornehmen.</string>
 
-    // Application
-
-    <string name="app_name">Wetter</string>
-    <string name="app_copyright">Nicht jede Wolke erzeugt ein Gewitter.</string>
-    <string name="closeDrawer">Navigation View</string>
-    <string name="openDrawer">Navigation View Closed</string>
-    <string name="imagebutton">Menu</string>
-
-    // Titles
-
-    <string name="ort1_ueberblick">Stutensee | Überblick</string>
-    <string name="ort1_stuendlich">Stutensee | Stündlich</string>
-    <string name="ort1_trend">Stutensee | Trend</string>
-    <string name="ort1_bericht">Stutensee | Bericht</string>
-
-    <string name="ort2_ueberblick">Karlsruhe | Überblick</string>
-    <string name="ort2_stuendlich">Karlsruhe | Stündlich</string>
-    <string name="ort2_trend">Karlsruhe | Trend</string>
-    <string name="ort2_bericht">Karlsruhe | Bericht</string>
-
-    <string name="ort3_ueberblick">Berlin | Überblick</string>
-    <string name="ort3_stuendlich">Berlin | Stündlich</string>
-    <string name="ort3_trend">Berlin | Trend</string>
-    <string name="ort3_bericht">Berlin | Bericht</string>
-
-    <string name="ort4_ueberblick">Stuttgart | Überblick</string>
-    <string name="ort4_stuendlich">Stuttgart | Stündlich</string>
-    <string name="ort4_trend">Stuttgart | Trend</string>
-    <string name="ort4_bericht">Stuttgart | Bericht</string>
-
-    <string name="ort5_ueberblick">Heidelberg | Überblick</string>
-    <string name="ort5_stuendlich">Heidelberg | Stündlich</string>
-    <string name="ort5_trend">Heidelberg | Trend</string>
-    <string name="ort5_bericht">Heidelberg | Bericht</string>
 
     // (Drawer-) Menu Items
 
-    <string name="menu1">Wettervorhersagen für …</string>
+    <string name="menu1">Wetterbericht für …</string>
     <string name="menu2">Weitere Wetterinfos</string>
 
-    <string name="action_license">Über die App | Lizenz</string>
     <string name="action_exit">App verlassen</string>
-    <string name="action_clearCache">Cache löschen</string>
-    <string name="action_screenshot">Wetterbericht teilen</string>
+    <string name="action_share">Wetterbericht teilen</string>
+    <string name="action_share_screenshot">Bildschirmfoto teilen</string>
+    <string name="action_share_link">Link als Text teilen</string>
     <string name="action_save_screenshot">Bildschirmfoto speichern</string>
 
-    <string name="search">Lesezeichen | Suche …</string>
-    <string name="ort1">Stutensee</string>
-    <string name="ort2">Karlsruhe</string>
-    <string name="ort3">Berlin</string>
-    <string name="ort4">Stuttgart</string>
-    <string name="ort5">Heidelberg</string>
+    <string name="action_search">Suche …</string>
+    <string name="action_bookmarks">Lesezeichen</string>
+    <string name="action_favorite">Favorit</string>
+    <string name="action_settings">Einstellungen | Über | Hilfe</string>
+
+    // Settings
+
+    <string name="pref_1">Über die Appp</string>
+    <string name="pref_2">App Einstellungen</string>
+
+    <string name="action_changelog">Änderungen</string>
+    <string name="action_changelog_summary">Was gibt es Neues …</string>
+
+    <string name="action_license">Lizenz</string>
+    <string name="action_license_summary">App ist unter der GPL3-Lizenz lizensiert.</string>
+
+    <string name="action_help">Hilfe</string>
+    <string name="action_help_summary">Kommt bald …</string>
+
+    <string name="action_clearCache">Cache leeren</string>
+    <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
+
+    <string name="action_start">Was möchtest du beim Start sehen?</string>
+    <string name="action_start_summary">Entweder das erste Lesezeidchen oder die Lezeichenliste?</string>
+
+
+    // DWD = German Weather Service
 
     <string name="dwd">Deutscher Wetterdienst</string>
     <string name="meteo">Meteoblue | Wetterkarten</string>
@@ -68,44 +60,92 @@
     <string name="action_thema">DWD - Thema des Tages</string>
     <string name="action_karten">Strömungsfilm</string>
     <string name="action_lexikon">DWD - Wetterlexikon</string>
-    <string name="action_radar">Niederschlag Vorhersage</string>
+    <string name="action_radar">Regenvorhersage</string>
     <string name="action_satellit">Satellitenbild</string>
 
-    // Toasts
 
-    <string name="toast_screenshot">Bildschirmfoto wird erstellt …</string>
-    <string name="toast_clearCache">Cache wird geleert …</string>
-    <string name="toast_doubleback">Drücke noch einmal ZURÜCK um die App zu verlassen.</string>
-    <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
-
-    // Dialog
+    // Dialog // Snackbar
 
     <string name="confirm_exit">Möchtest du die App verlassen?</string>
     <string name="yes">OK</string>
     <string name="no">NEIN</string>
-    <string name="bookmark_message">Du kannst den Namen des Lesezeichens bearbeiten:</string>
+    <string name="cancel">Abbrechen</string>
+
+    <string name="edit_bookmark">Lesezeichen bearbeiten</string>
+    <string name="delete_bookmark">Lesezeichen löschen</string>
+    <string name="edit_url">Die URL des Lesezeidchens bearbeiten</string>
+    <string name="edit_title">Den Titel des Lesezeichens bearbeiten</string>
+
+    <string name="toast_screenshot">Bildschirmfoto wird gespeichert …</string>
+    <string name="toast_clearCache">Cache wird geleert …</string>
+    <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
 
     // Floating Action Buttons - Titles
 
-    <string name="fab1_title">Wetter Übersicht</string>
+    <string name="fab1_title">Übersicht</string>
     <string name="fab2_title">Stündliche Vorhersage</string>
     <string name="fab3_title">10 Tage Trend</string>
-    <string name="fab4_title">Wetterbericht</string>
-    <string name="fab5_title">Lesezeichen hinzufügen</string>
 
     // Bookmarks
 
     <string name="add_bookmark">Lesezeichen hinzufügen</string>
-    <string name="remove_confirmation">Dieses Lesezeichen wird entfernt. OK?</string>
-    <string name="cannot_remove">Mindestens ein Lesezeichen wird gebraucht!</string>
+    <string name="remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
+    <string name="cannot_remove">Du brauchst mindestens ein Lesezeichen!</string>
     <string name="added">Lesezeichen wird hinzugefügt.</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Abbrechen</string>
-    <string name="go">OK! Lass mich suchen!</string>
 
-    <string name="text">Auf der nächsten Seite kannst du nach Wettervorhersagen für beliebige Städte suchen.
-        Einfach die passende Postleitzahl oder den Namen einer Stadt in das Suchfeld eingeben und die richtige Auswahl treffen.
-        Aufgerufene Suchergebnisse können als Lesezeichen gespeichert werden und hier jederzeit
-        wieder (offline) aufgerufen werden.</string>
+    //License Dialog
+    <string name="about_title">Copyright © 2016  by scoute-dich</string>
+    <string name="about_text">
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
 
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see http://www.gnu.org/licenses.
+    </string>
+
+    //Changelog Dialog
+    <string name="changelog_text">
+        &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
+        https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v2.0:&lt;/b>&lt;br>
+        &#8226; Einstellungen&lt;br>
+        &#8226; mit dem ersten Lesezeichen …&lt;br>
+        &#8226; … oder der Lesezeichenliste starten&lt;br>
+        &#8226; Lezeichen bearbeiten&lt;br>
+        &#8226; anpassen der Oberfläche&lt;br>
+        &#8226; Startbildschirm
+    </string>
+
+    //Help Dialog
+    <string name="help_text">
+        &lt;i>Kommt bald&lt;/i>
+    </string>
+
+    //String arrays
+
+    <array name="splash_images">
+        <item>@drawable/splash1</item>
+        <item>@drawable/splash2</item>
+        <item>@drawable/splash3</item>
+        <item>@drawable/splash4</item>
+        <item>@drawable/splash5</item>
+    </array>
+
+    <string-array name="listArray">
+        <item>Lesezeichenliste</item>
+        <item>Das erste Lesezeichen</item>
+    </string-array>
+
+    <string-array name="listValues">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

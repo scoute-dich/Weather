@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="de.baumann.weather.MainActivity">
+    tools:context=".Start">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -71,18 +71,6 @@
             fab:fab_icon="@drawable/fab_sieben"
             fab:fab_title="@string/fab3_title"
             fab:fab_colorPressed="@color/blue_pressed"
-            fab:fab_size="mini" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab4_action"
-            android:onClick="fab4_click"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/blue"
-            fab:fab_icon="@drawable/fab_thema"
-            fab:fab_title="@string/fab4_title"
-            fab:fab_colorPressed="@color/blue_pressed"
-            fab:fab_labelStyle="@style/menu_labels_style"
             fab:fab_size="mini" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

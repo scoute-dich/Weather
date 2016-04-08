@@ -6,8 +6,8 @@
         android:title="@string/action_exit" />
 
     <item
-        android:id="@+id/action_license"
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_license" />
+        android:title="@string/action_settings" />
 
 </menu>

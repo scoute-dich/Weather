@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="de.baumann.weather.MainActivity">
+    tools:context=".Start">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -35,7 +35,6 @@
         android:onClick="fab5_click"
         fab:fab_colorNormal="@color/pink"
         fab:fab_icon="@drawable/fab_bookmark"
-        fab:fab_title="@string/fab5_title"
         fab:fab_colorPressed="@color/pink_pressed"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_size="normal"

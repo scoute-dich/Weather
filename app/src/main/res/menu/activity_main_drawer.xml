@@ -4,40 +4,22 @@
     <item android:title="@string/menu1">
         <menu>
             <item
-                android:id="@+id/ort3"
+                android:id="@+id/action_favorite"
                 android:checked="false"
                 android:icon="@drawable/drawer_loc"
-                android:title="@string/ort3" />
+                android:title="@string/action_favorite" />
 
             <item
-                android:id="@+id/ort5"
+                android:id="@+id/action_bookmarks"
                 android:checked="false"
-                android:icon="@drawable/drawer_loc"
-                android:title="@string/ort5" />
+                android:icon="@drawable/drawer_book"
+                android:title="@string/action_bookmarks" />
 
             <item
-                android:id="@+id/ort2"
-                android:checked="false"
-                android:icon="@drawable/drawer_loc"
-                android:title="@string/ort2" />
-
-            <item
-                android:id="@+id/ort1"
-                android:checked="false"
-                android:icon="@drawable/drawer_loc"
-                android:title="@string/ort1" />
-
-            <item
-                android:id="@+id/ort4"
-                android:checked="false"
-                android:icon="@drawable/drawer_loc"
-                android:title="@string/ort4" />
-
-            <item
-                android:id="@+id/bookmarks"
+                android:id="@+id/action_search"
                 android:checked="false"
                 android:icon="@drawable/drawer_search"
-                android:title="@string/search" />
+                android:title="@string/action_search" />
 
         </menu>
     </item>
