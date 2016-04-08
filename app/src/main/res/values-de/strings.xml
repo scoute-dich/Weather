@@ -40,7 +40,7 @@
     <string name="action_changelog_summary">Was gibt es Neues …</string>
 
     <string name="action_license">Lizenz</string>
-    <string name="action_license_summary">App ist unter der GPL3-Lizenz lizensiert.</string>
+    <string name="action_license_summary">App ist unter der GPL3-Lizenz lizenziert.</string>
 
     <string name="action_help">Hilfe</string>
     <string name="action_help_summary">Kommt bald …</string>
@@ -48,8 +48,8 @@
     <string name="action_clearCache">Cache leeren</string>
     <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
 
-    <string name="action_start">Was möchtest du beim Start sehen?</string>
-    <string name="action_start_summary">Entweder das erste Lesezeidchen oder die Lezeichenliste?</string>
+    <string name="action_start">Start und Titelbar-Klick</string>
+    <string name="action_start_summary">Was möchtest du sehen: Entweder das erste Lesezeidchen oder die Lesezeichenliste?</string>
 
 
     // DWD = German Weather Service
@@ -120,14 +120,59 @@
         &#8226; mit dem ersten Lesezeichen …&lt;br>
         &#8226; … oder der Lesezeichenliste starten&lt;br>
         &#8226; Lezeichen bearbeiten&lt;br>
+        &#8226; Hilfedialoge&lt;br>
         &#8226; anpassen der Oberfläche&lt;br>
         &#8226; Startbildschirm
     </string>
 
-    //Help Dialog
-    <string name="help_text">
-        &lt;i>Kommt bald&lt;/i>
-    </string>
+    //Help Dialogs
+
+    <string name="firstSearch_text">
+        Um ein Lesezeichen zu speichern einfach den pinken Knopf drücken. Wenn du eine Stadt speicherst ist es wichtig,
+        dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
+        die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
+
+        Wenn du den pinken Knopf gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
+        eingeben (im Normalfall den Namen der Stadt).</string>
+
+    <string name="firstSearch_title">
+        Lesezeichen speichern</string>
+
+    <string name="firstBrowser_text">
+        Hier siehst du deine Lesezeichen. Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.
+        Bei gespeicherten Städten kannst du den orangenen Knopf drücken und zwischen der Wetterübersicht, der stündlichen
+        Vorhersage und dem 10 Tage-Trend wechseln.&lt;br>&lt;br>
+
+        Seiten des \"Deutschen Wetterdiensten\" und von \"Meteoblue\", welche auch als Lesezeichen gespeichert werden können,
+        haben diesen Knopf nicht.&lt;br>&lt;br>
+
+        Du kannst zur Lesezeichenliste zurückkehren, indem du nach rechts wischst, oder (wenn es in den Einstellungen aktiviert wurde)
+        indem du auf die Titelleiste klickst.</string>
+
+    <string name="firstBrowser_title">
+        Die \"Webview\"</string>
+
+    <string name="firstBookmark_title">
+        Die Lesezeichenliste</string>
+
+    <string name="firstBookmark_text">
+        &lt;i>Die Liste&lt;/i>&lt;br>
+
+        Das ist deine Lesezeichenliste. das oberste Lesezeichen ist dein Favorit. Es kann beim Start der App oder beim
+        Klick auf die Titelbar geladen werden (siehe Einstellungen).&lt;br>&lt;br>
+
+        &lt;i>Lesezeichen bearbeiten&lt;/i>&lt;br>
+
+        Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst dann den Titel oder die URL des
+        Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein. Wenn du
+        Probleme hast die stündliche Vorhersage oder den 10 Tage-Trend einer gespeicherten Stadt zu öffnen, musst du die
+        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/Deutschlandwetter/[name_deiner_stadt]/.
+        Wenn das nicht so ist, verbessere es.&lt;br>&lt;br>
+
+        &lt;i>Nach neuen Städten suchen&lt;/i>&lt;br>
+
+        Wenn du den pinken Knopf klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
+        nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen</string>
 
     //String arrays
 

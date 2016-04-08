@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +36,7 @@ import java.util.HashMap;
 public class Bookmarks extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView listView = null;
-    ImageView imgHeader;
+    private ImageView imgHeader;
 
     public void fab5_click(View v){
         // write your code here ..
@@ -41,12 +48,32 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkFirstRun();
 
         setContentView(R.layout.activity_bookmarks);
         setTitle(R.string.action_bookmarks);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final String startType = sharedPref.getString("startType", "1");
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (startType.equals("2")) {
+                    Intent intent_in = new Intent(Bookmarks.this, Start.class);
+                    startActivity(intent_in);
+                    overridePendingTransition(0, 0);
+                } else if (startType.equals("1")) {
+                    Intent intent_in = new Intent(Bookmarks.this, Bookmarks.class);
+                    startActivity(intent_in);
+                    overridePendingTransition(0, 0);
+                }
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -207,7 +234,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                 .setAction(R.string.yes, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        moveTaskToBack(true);
+                        finish();
                     }
                 });
         snackbar.show();
@@ -229,7 +256,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            moveTaskToBack(true);
+            finish();
         }
 
         if (id == R.id.action_settings) {
@@ -345,6 +372,32 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void checkFirstRun() {
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstBookmark", true);
+        if (isFirstRun){
+            // Place your dialog code here to display the dialog
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBookmark_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog d = new AlertDialog.Builder(Bookmarks.this)
+                    .setTitle(R.string.firstBookmark_title)
+                    .setMessage(s)
+                    .setPositiveButton(getString(R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+            d.show();
+            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("firstBookmark", false)
+                    .apply();
         }
     }
 }

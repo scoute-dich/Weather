@@ -101,7 +101,7 @@ class BrowserDatabase extends SQLiteOpenHelper
 
     public void addBookmark(String title, String url)
     {
-        int seqno = 0;
+        int seqno;
 
         SQLiteDatabase db = getWritableDatabase();
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import java.util.ArrayList;
@@ -82,5 +83,17 @@ public class Start extends AppCompatActivity  {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fab5_click(View view) {
+    }
+
+    public void fab1_click(View view) {
+    }
+
+    public void fab2_click(View view) {
+    }
+
+    public void fab3_click(View view) {
     }
 }

@@ -1,7 +1,7 @@
 package de.baumann.weather;
 
 /**
- * Created by juergen on 29.02.16.
+ * Created by juergen on 29.02.16. Licensed under GPL.
  */
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

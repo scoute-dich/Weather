@@ -23,6 +23,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +36,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,17 +48,17 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
-    private boolean ret = true;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
-    private boolean isNetworkAvailable() {
+    private boolean isNetworkUnAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService( CONNECTIVITY_SERVICE );
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return activeNetworkInfo == null || !activeNetworkInfo.isConnected();
     }
 
     public void fab5_click(View v){
         // write your code here ..
+
         try {
             final EditText input = new EditText(this);
             input.setText(mWebView.getTitle());
@@ -82,12 +87,13 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             e.printStackTrace();
         }
 
-        ret = true;
+        boolean ret = true;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkFirstRun();
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
             WebView.enableSlowWholeDocumentDraw();
@@ -98,6 +104,25 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final String startType = sharedPref.getString("startType", "1");
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (startType.equals("2")) {
+                    Intent intent_in = new Intent(Search.this, Start.class);
+                    startActivity(intent_in);
+                    overridePendingTransition(0, 0);
+                } else if (startType.equals("1")){
+                    Intent intent_in = new Intent(Search.this, Bookmarks.class);
+                    startActivity(intent_in);
+                    overridePendingTransition(0, 0);
+                }
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -120,7 +145,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
 
-        if (!isNetworkAvailable()) { // loading offline
+        if (isNetworkUnAvailable()) { // loading offline
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
         }
@@ -139,7 +164,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!isNetworkAvailable()) { // loading offline
+                if (isNetworkUnAvailable()) { // loading offline
                     mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
                     Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
                 }
@@ -200,7 +225,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            moveTaskToBack(true);
+                            finish();
                         }
                     });
             snackbar.show();
@@ -223,7 +248,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            moveTaskToBack(true);
+            finish();
         }
 
         if (id == R.id.action_settings) {
@@ -284,13 +309,11 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                 if (screen.exists())
                                     screen.delete();
                                 picture.draw(c);
-                                FileOutputStream fos = null;
+                                FileOutputStream fos;
                                 try {
                                     fos = new FileOutputStream(screen);
-                                    if (fos != null) {
-                                        b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-                                        fos.close();
-                                    }
+                                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                                    fos.close();
                                 } catch (Exception e) {
                                     e.getMessage();
                                 }
@@ -347,13 +370,11 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                 if (screen.exists())
                                     screen.delete();
                                 picture.draw(c);
-                                FileOutputStream fos = null;
+                                FileOutputStream fos;
                                 try {
                                     fos = new FileOutputStream(screen);
-                                    if (fos != null) {
-                                        b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-                                        fos.close();
-                                    }
+                                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                                    fos.close();
                                 } catch (Exception e) {
                                     e.getMessage();
                                 }
@@ -425,5 +446,31 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void checkFirstRun() {
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstSearch", true);
+        if (isFirstRun){
+            // Place your dialog code here to display the dialog
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog d = new AlertDialog.Builder(Search.this)
+                    .setTitle(R.string.firstSearch_title)
+                    .setMessage(s)
+                    .setPositiveButton(getString(R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+            d.show();
+            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("firstSearch", false)
+                    .apply();
+        }
     }
 }

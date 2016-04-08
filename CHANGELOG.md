@@ -4,6 +4,7 @@
 - start with first bookmark or …
 - … with bookmark list
 - editable bookmarks
+- help dialogs
 - ui improvements
 - splashscreen
 

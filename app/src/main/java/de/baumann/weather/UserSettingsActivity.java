@@ -5,28 +5,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 
 /**
- * Created by juergen on 03.04.16. Licensed under GPL.
+ * Created by juergen on 03.04.16. Licensed under GPL. Licensed under GPL.
  */
 public class UserSettingsActivity extends AppCompatActivity {
 
@@ -48,12 +41,11 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     public static class SettingsFragment extends PreferenceFragment {
 
-
         private void addClearCacheListener() {
 
             final Activity activity = getActivity();
 
-            Preference reset = (Preference) findPreference("clearCache");
+            Preference reset = findPreference("clearCache");
 
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
@@ -67,10 +59,10 @@ public class UserSettingsActivity extends AppCompatActivity {
                         try {
                             File[] children = dir.listFiles();
                             if (children.length > 0) {
-                                for (int i = 0; i < children.length; i++) {
-                                    File[] temp = children[i].listFiles();
-                                    for (int x = 0; x < temp.length; x++) {
-                                        temp[x].delete();
+                                for (File aChildren : children) {
+                                    File[] temp = aChildren.listFiles();
+                                    for (File aTemp : temp) {
+                                        aTemp.delete();
                                     }
                                 }
                             }
@@ -87,7 +79,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         }
 
         private void addChangelogListener() {
-            Preference reset = (Preference) findPreference("changelog");
+            Preference reset = findPreference("changelog");
 
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
             {
@@ -114,35 +106,8 @@ public class UserSettingsActivity extends AppCompatActivity {
             });
         }
 
-        private void addHelpListener() {
-            Preference reset = (Preference) findPreference("help");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
-            {
-                public boolean onPreferenceClick(Preference pref)
-                {
-
-                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.help_text)));
-                    Linkify.addLinks(s, Linkify.WEB_URLS);
-
-                    final AlertDialog d = new AlertDialog.Builder(getActivity())
-                            .setMessage(s)
-                            .setPositiveButton(getString(R.string.yes),
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    }).show();
-                    d.show();
-                    ((TextView)d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-
-                    return true;
-                }
-            });
-        }
-
         private void addLicenseListener() {
-            Preference reset = (Preference) findPreference("license");
+            Preference reset = findPreference("license");
 
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference pref) {
@@ -173,7 +138,6 @@ public class UserSettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.user_settings);
-            addHelpListener();
             addLicenseListener();
             addChangelogListener();
             addClearCacheListener();
