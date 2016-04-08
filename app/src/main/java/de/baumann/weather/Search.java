@@ -225,7 +225,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finish();
+                            moveTaskToBack(true);
                         }
                     });
             snackbar.show();
@@ -248,7 +248,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            finish();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_settings) {
@@ -455,22 +455,25 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
-            final AlertDialog d = new AlertDialog.Builder(Search.this)
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Search.this)
                     .setTitle(R.string.firstSearch_title)
                     .setMessage(s)
-                    .setPositiveButton(getString(R.string.yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            }).show();
-            d.show();
-            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("firstSearch", false)
-                    .apply();
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("firstSearch", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
     }
 }

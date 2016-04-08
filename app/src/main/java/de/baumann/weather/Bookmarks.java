@@ -256,7 +256,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            finish();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_settings) {
@@ -382,22 +382,25 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBookmark_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
-            final AlertDialog d = new AlertDialog.Builder(Bookmarks.this)
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Bookmarks.this)
                     .setTitle(R.string.firstBookmark_title)
                     .setMessage(s)
-                    .setPositiveButton(getString(R.string.yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            }).show();
-            d.show();
-            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("firstBookmark", false)
-                    .apply();
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("firstBookmark", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
     }
 }

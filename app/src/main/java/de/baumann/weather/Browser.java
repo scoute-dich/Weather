@@ -194,7 +194,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finish();
+                            moveTaskToBack(true);
                         }
                     });
             snackbar.show();
@@ -217,7 +217,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            finish();
+            moveTaskToBack(true);
         }
 
         if (id == R.id.action_settings) {
@@ -463,22 +463,25 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
-            final AlertDialog d = new AlertDialog.Builder(Browser.this)
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                     .setTitle(R.string.firstBrowser_title)
                     .setMessage(s)
-                    .setPositiveButton(getString(R.string.yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            }).show();
-            d.show();
-            ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("firstBookmark", false)
-                    .apply();
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                                    .edit()
+                                    .putBoolean("firstBrowser", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
     }
 }

@@ -127,6 +127,8 @@
 
     //Help Dialogs
 
+    <string name="notagain">Nicht mehr anzeigen.</string>
+
     <string name="firstSearch_text">
         Um ein Lesezeichen zu speichern einfach den pinken Knopf drücken. Wenn du eine Stadt speicherst ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
@@ -147,7 +149,7 @@
         haben diesen Knopf nicht.&lt;br>&lt;br>
 
         Du kannst zur Lesezeichenliste zurückkehren, indem du nach rechts wischst, oder (wenn es in den Einstellungen aktiviert wurde)
-        indem du auf die Titelleiste klickst.</string>
+        indem du auf die Titelleiste klickst. Nach unten wischen um die Seite neu zu laden.</string>
 
     <string name="firstBrowser_title">
         Die \"Webview\"</string>

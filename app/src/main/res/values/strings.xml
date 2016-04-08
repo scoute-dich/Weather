@@ -124,6 +124,8 @@
 
     //Help Dialogs
 
+    <string name="notagain">Do not show again.</string>
+
     <string name="firstSearch_text">
         To save a bookmark simply click on the pink button. If you want to bookmark a city it is
         important, that the \"Überblick\" button on the webpage is blue and checked. Otherwise it is
@@ -144,7 +146,7 @@
         orange button.&lt;br>&lt;br>
 
         You can switch back to the bookmark list by swiping to the right (or clicking the titlebar,
-        if enabled in settings).</string>
+        if enabled in settings). Swipe down to reload the website.</string>
 
     <string name="firstBrowser_title">
         The webview</string>
