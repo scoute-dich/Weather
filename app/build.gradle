@@ -8,8 +8,8 @@ android {
         applicationId "de.baumann.weather"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 7
-        versionName "2.1.1"
+        versionCode 9
+        versionName "2.1.2"
     }
     buildTypes {
         release {

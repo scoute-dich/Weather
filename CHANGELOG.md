@@ -1,3 +1,10 @@
+### v2.1.1 - 2.1.2
+- fixed F-Droid build issues
+        
+### v2.1
+- fixed app closing
+- mind sdk 16
+
 ### v2.0
 
 - settings activity

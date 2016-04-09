@@ -112,6 +112,13 @@
         &lt;i>For more informations visit the project site on github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
+        &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
+        &#8226; fixed F-Droid build issues&lt;br>&lt;br>
+
+        &lt;b>v2.1:&lt;/b>&lt;br>
+        &#8226; mind SDK 16&lt;br>
+        &#8226; fixed app closing&lt;br>&lt;br>
+
         &lt;b>v2.0:&lt;/b>&lt;br>
         &#8226; settings activity&lt;br>
         &#8226; start with first bookmark or …&lt;br>

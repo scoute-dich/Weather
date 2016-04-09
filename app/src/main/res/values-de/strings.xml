@@ -42,9 +42,6 @@
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">App ist unter der GPL3-Lizenz lizenziert.</string>
 
-    <string name="action_help">Hilfe</string>
-    <string name="action_help_summary">Kommt bald …</string>
-
     <string name="action_clearCache">Cache leeren</string>
     <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
 
@@ -114,6 +111,13 @@
     <string name="changelog_text">
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
+        &#8226; fixed F-Droid build Fehler&lt;br>&lt;br>
+
+        &lt;b>v2.1:&lt;/b>&lt;br>
+        &#8226; Mind SDK 16&lt;br>
+        &#8226; fixed App beenden&lt;br>&lt;br>
 
         &lt;b>v2.0:&lt;/b>&lt;br>
         &#8226; Einstellungen&lt;br>
