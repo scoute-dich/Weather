@@ -224,8 +224,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                     .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
+                        public void onClick(View view) {finishAffinity();
                         }
                     });
             snackbar.show();
@@ -248,7 +247,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            moveTaskToBack(true);
+            finishAffinity();
         }
 
         if (id == R.id.action_settings) {

@@ -234,7 +234,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                 .setAction(R.string.yes, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        finish();
+                        finishAffinity();
                     }
                 });
         snackbar.show();
@@ -256,7 +256,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            moveTaskToBack(true);
+            finishAffinity();
         }
 
         if (id == R.id.action_settings) {

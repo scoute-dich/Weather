@@ -193,8 +193,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
                     .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
-                            moveTaskToBack(true);
+                        public void onClick(View view) {finishAffinity();
                         }
                     });
             snackbar.show();
@@ -217,7 +216,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_exit) {
-            moveTaskToBack(true);
+            finishAffinity();
         }
 
         if (id == R.id.action_settings) {
