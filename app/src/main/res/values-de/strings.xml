@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     // Application
 
     <string name="app_name">Wetter</string>
@@ -35,15 +35,21 @@
 
     <string name="pref_1">Über die Appp</string>
     <string name="pref_2">App Einstellungen</string>
+    <string name="pref_3">Hilfe</string>
 
     <string name="action_changelog">Änderungen</string>
     <string name="action_changelog_summary">Was gibt es Neues …</string>
+
+    <string name="action_java">Javascript aktivieren</string>
+    <string name="action_java_summary">Manche Funktionen der Internetseiten benötigen Javascript um zu
+        funktionieren. Javascript stellt allerdings ein Sicherheitsrisiko dar.</string>
 
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">App ist unter der GPL3-Lizenz lizenziert.</string>
 
     <string name="action_clearCache">Cache leeren</string>
     <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
+    <string name="action_clearCache_dialog">Möchtest du wirklich den Cache leeren? Alle offline gespeicherten Seiten werden gelöscht.</string>
 
     <string name="action_start">Start und Titelbar-Klick</string>
     <string name="action_start_summary">Was möchtest du sehen: Entweder das erste Lesezeidchen oder die Lesezeichenliste?</string>
@@ -68,13 +74,13 @@
     <string name="no">NEIN</string>
     <string name="cancel">Abbrechen</string>
 
-    <string name="edit_bookmark">Lesezeichen bearbeiten</string>
+    <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="delete_bookmark">Lesezeichen löschen</string>
     <string name="edit_url">Die URL des Lesezeidchens bearbeiten</string>
     <string name="edit_title">Den Titel des Lesezeichens bearbeiten</string>
 
     <string name="toast_screenshot">Bildschirmfoto wird gespeichert …</string>
-    <string name="toast_clearCache">Cache wird geleert …</string>
+    <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
 
     // Floating Action Buttons - Titles
@@ -85,14 +91,14 @@
 
     // Bookmarks
 
-    <string name="add_bookmark">Lesezeichen hinzufügen</string>
+    <string name="add_bookmark" tools:keep="@string/add_bookmark">Lesezeichen hinzufügen</string>
     <string name="remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
     <string name="cannot_remove">Du brauchst mindestens ein Lesezeichen!</string>
     <string name="added">Lesezeichen wird hinzugefügt.</string>
 
     //License Dialog
-    <string name="about_title">Copyright © 2016  by scoute-dich</string>
-    <string name="about_text">
+    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by scoute-dich</string>
+    <string name="about_text" tools:keep="@string/about_text">
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -108,9 +114,15 @@
     </string>
 
     //Changelog Dialog
-    <string name="changelog_text">
+    <string name="changelog_text" tools:keep="@string/changelog_text">
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v2.2:&lt;/b>&lt;br>
+        &#8226; fixed Einstellungen verlassen&lt;br>
+        &#8226; Javascript Einstellung&lt;br>
+        &#8226; Hilfe Einstellungen&lt;br>
+        &#8226; fixed einige \"force close\" Fehler&lt;br>&lt;br>
 
         &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build Fehler&lt;br>&lt;br>
@@ -133,6 +145,9 @@
 
     <string name="notagain">Nicht mehr anzeigen.</string>
 
+    <string name="firstSearch_title">Lesezeichen speichern</string>
+    <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
+
     <string name="firstSearch_text">
         Um ein Lesezeichen zu speichern einfach den pinken Knopf drücken. Wenn du eine Stadt speicherst ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
@@ -141,11 +156,12 @@
         Wenn du den pinken Knopf gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
         eingeben (im Normalfall den Namen der Stadt).</string>
 
-    <string name="firstSearch_title">
-        Lesezeichen speichern</string>
+
+    <string name="firstBrowser_title">Browser</string>
+    <string name="firstBrowser_title_summary">Noch einmal anzeigen: Funktionen des Browsers?</string>
 
     <string name="firstBrowser_text">
-        Hier siehst du deine Lesezeichen. Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.
+        Deine Lesezeichen werden in diesem Browser angezeigt. Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.
         Bei gespeicherten Städten kannst du den orangenen Knopf drücken und zwischen der Wetterübersicht, der stündlichen
         Vorhersage und dem 10 Tage-Trend wechseln.&lt;br>&lt;br>
 
@@ -155,30 +171,37 @@
         Du kannst zur Lesezeichenliste zurückkehren, indem du nach rechts wischst, oder (wenn es in den Einstellungen aktiviert wurde)
         indem du auf die Titelleiste klickst. Nach unten wischen um die Seite neu zu laden.</string>
 
-    <string name="firstBrowser_title">
-        Die \"Webview\"</string>
 
-    <string name="firstBookmark_title">
-        Die Lesezeichenliste</string>
+    <string name="firstBookmark_title">Lesezeichenliste</string>
+    <string name="firstBookmark_title_summary">Noch einmal anzeigen: Funktion der Lesezeichenliste?</string>
 
     <string name="firstBookmark_text">
-        &lt;i>Die Liste&lt;/i>&lt;br>
+        &lt;i>Die Liste:&lt;/i>&lt;br>
 
         Das ist deine Lesezeichenliste. das oberste Lesezeichen ist dein Favorit. Es kann beim Start der App oder beim
         Klick auf die Titelbar geladen werden (siehe Einstellungen).&lt;br>&lt;br>
 
-        &lt;i>Lesezeichen bearbeiten&lt;/i>&lt;br>
+        &lt;i>Lesezeichen bearbeiten:&lt;/i>&lt;br>
 
         Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst dann den Titel oder die URL des
-        Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein. Wenn du
+        Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein). Wenn du
         Probleme hast die stündliche Vorhersage oder den 10 Tage-Trend einer gespeicherten Stadt zu öffnen, musst du die
-        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/Deutschlandwetter/[name_deiner_stadt]/.
+        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/Deutschlandwetter/name_deiner_stadt.
         Wenn das nicht so ist, verbessere es.&lt;br>&lt;br>
 
-        &lt;i>Nach neuen Städten suchen&lt;/i>&lt;br>
+        &lt;i>Nach neuen Städten suchen:&lt;/i>&lt;br>
 
         Wenn du den pinken Knopf klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
         nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen</string>
+
+
+    <string name="firstScreenshot_title">Bildschirmfoto aufnehmen</string>
+    <string name="firstScreenshot_title_summary">Noch einmal anzeigen: Bildschirmfotos richtig aufnehmen?</string>
+
+    <string name="firstScreenshot_text">
+        Du kannst Bildschirmfotos der gesamten Internetseite machen (auch von dem Teil, der gerade nicht auf dem
+        Bildschirm zu sehen ist). Damit dies richtig funktioniert, solltest du warten, bis die Internetseite komplett geladen
+        ist, um sicherzustellen, dass die gesamte Internetseite aufgenommen wird.</string>
 
     //String arrays
 
@@ -190,13 +213,15 @@
         <item>@drawable/splash5</item>
     </array>
 
-    <string-array name="listArray">
+    <string-array name="listArrayStart">
         <item>Lesezeichenliste</item>
         <item>Das erste Lesezeichen</item>
     </string-array>
 
-    <string-array name="listValues">
+    <string-array name="listValuesStart">
         <item>1</item>
         <item>2</item>
     </string-array>
+
+
 </resources>

@@ -1,4 +1,4 @@
-package de.baumann.weather;
+package de.baumann.weather.helper;
 
 import android.content.Context;
 import android.view.GestureDetector;
@@ -7,10 +7,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 
-/**
- * Created by juergen on 09.03.16. Licensed under GPL.
- */
-class OnSwipeTouchListener implements OnTouchListener {
+public class OnSwipeTouchListener implements OnTouchListener {
 
     private final GestureDetector gestureDetector;
 

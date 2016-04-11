@@ -1,3 +1,9 @@
+### v2.2
+- fixed settings go back
+- added javascript option in settings
+- added help options in settings
+- fixed some force closes issues
+
 ### v2.1.1 - 2.1.2
 - fixed F-Droid build issues
         

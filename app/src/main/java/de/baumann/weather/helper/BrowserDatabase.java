@@ -1,4 +1,4 @@
-package de.baumann.weather;
+package de.baumann.weather.helper;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 
-class BrowserDatabase extends SQLiteOpenHelper
+public class BrowserDatabase extends SQLiteOpenHelper
 {
     public BrowserDatabase(Context context)
     throws NameNotFoundException
@@ -40,7 +40,7 @@ class BrowserDatabase extends SQLiteOpenHelper
         );
     }
 
-    public int loadInitialData()
+    public void loadInitialData()
     {
         int seqno = 0;
 
@@ -56,8 +56,6 @@ class BrowserDatabase extends SQLiteOpenHelper
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
-
-        return seqno;
     }
 
     public int getRecordCount()
@@ -78,11 +76,9 @@ class BrowserDatabase extends SQLiteOpenHelper
         return ret;
     }
 
-    public boolean getBookmarks(ArrayList<String[]> data)
+    public void getBookmarks(ArrayList<String[]> data)
     {
         SQLiteDatabase db = getReadableDatabase();
-
-        boolean ret = false;
 
         String sql = "SELECT seqno,title,url FROM bookmarks ORDER BY seqno";
         Cursor c = db.rawQuery(sql, null);
@@ -91,12 +87,9 @@ class BrowserDatabase extends SQLiteOpenHelper
             String[] strAry = {c.getString(0), c.getString(1), c.getString(2)};
             data.add(strAry);
             c.moveToNext();
-            ret = true;
         }
         c.close();
         db.close();
-
-        return ret;
     }
 
     public void addBookmark(String title, String url)
@@ -121,23 +114,27 @@ class BrowserDatabase extends SQLiteOpenHelper
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
+
+        c.close();
     }
 
-    public void updateBookmark(int seqno, String title, String url)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-
-        SQLiteStatement stmt = db.compileStatement("UPDATE bookmarks SET title=?, url=? WHERE seqno=?");
-        stmt.bindLong(1, seqno);
-        stmt.bindString(2, title);
-        stmt.bindString(3, url);
-        stmt.execute();
-
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        db.close();
-    }
+// --Commented out by Inspection START (09.04.16 19:24):
+//    public void updateBookmark(int seqno, String title, String url)
+//    {
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.beginTransaction();
+//
+//        SQLiteStatement stmt = db.compileStatement("UPDATE bookmarks SET title=?, url=? WHERE seqno=?");
+//        stmt.bindLong(1, seqno);
+//        stmt.bindString(2, title);
+//        stmt.bindString(3, url);
+//        stmt.execute();
+//
+//        db.setTransactionSuccessful();
+//        db.endTransaction();
+//        db.close();
+//    }
+// --Commented out by Inspection STOP (09.04.16 19:24)
 
     public void deleteBookmark(int seqno)
     {

@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +32,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 
-    ImageView imgSplash;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

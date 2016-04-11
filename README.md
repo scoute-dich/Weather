@@ -7,7 +7,7 @@ A small android webview application to show weather informations from wetterdien
 - share screenshot of whole webview
 - five predefined locations
 - search and save other locations as bookmarks
-- usefull weather informations (satelitt, rain radar, topic of the day, ...)
+- useful weather informations (satellit, rain radar, topic of the day, ...)
 
 ### Links:
 - Download [APK](https://github.com/scoute-dich/Weather/releases)

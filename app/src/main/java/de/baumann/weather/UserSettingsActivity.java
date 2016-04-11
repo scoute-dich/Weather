@@ -4,23 +4,25 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 
-/**
- * Created by juergen on 03.04.16. Licensed under GPL. Licensed under GPL.
- */
+
 public class UserSettingsActivity extends AppCompatActivity {
 
     @Override
@@ -29,9 +31,10 @@ public class UserSettingsActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_user_settings);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        setTitle(R.string.action_settings);
-
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            setTitle(R.string.action_settings);
+        }
 
         // Display the fragment as the main content
         getFragmentManager().beginTransaction()
@@ -52,26 +55,42 @@ public class UserSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference pref)
                 {
 
+                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.action_clearCache_dialog)));
+                    Linkify.addLinks(s, Linkify.WEB_URLS);
 
-                    File dir = getActivity().getCacheDir();
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(s)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-                    if (dir != null && dir.isDirectory()) {
-                        try {
-                            File[] children = dir.listFiles();
-                            if (children.length > 0) {
-                                for (File aChildren : children) {
-                                    File[] temp = aChildren.listFiles();
-                                    for (File aTemp : temp) {
-                                        aTemp.delete();
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    File dir = getActivity().getCacheDir();
+
+                                    if (dir != null && dir.isDirectory()) {
+                                        try {
+                                            File[] children = dir.listFiles();
+                                            if (children.length > 0) {
+                                                for (File aChildren : children) {
+                                                    File[] temp = aChildren.listFiles();
+                                                    for (File aTemp : temp) {
+                                                        aTemp.delete();
+                                                    }
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            Log.e("Cache", "failed cache clean");
+                                        }
                                     }
-                                }
-                            }
-                        } catch (Exception e) {
-                            Log.e("Cache", "failed cache clean");
-                        }
-                    }
 
-                    Toast.makeText(activity,R.string.toast_clearCache,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(activity,R.string.toast_clearCache,Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            });
+                    dialog.show();
 
                     return true;
                 }
@@ -132,7 +151,6 @@ public class UserSettingsActivity extends AppCompatActivity {
             });
         }
 
-
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -144,11 +162,59 @@ public class UserSettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
     public void onBackPressed() {
-        Intent intent_in = new Intent(de.baumann.weather.UserSettingsActivity.this, Bookmarks.class);
-        startActivity(intent_in);
-        overridePendingTransition(0, 0);
-        finish();
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final String startType = sharedPref.getString("startType", "1");
+        if (startType.equals("2")) {
+            Intent intent_in = new Intent(UserSettingsActivity.this, Start.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            finish();
+        } else if (startType.equals("1")) {
+            Intent intent_in = new Intent(UserSettingsActivity.this, Bookmarks.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            final String startType = sharedPref.getString("startType", "1");
+            if (startType.equals("2")) {
+                Intent intent_in = new Intent(UserSettingsActivity.this, Start.class);
+                startActivity(intent_in);
+                overridePendingTransition(0, 0);
+                finish();
+            } else if (startType.equals("1")) {
+                Intent intent_in = new Intent(UserSettingsActivity.this, Bookmarks.class);
+                startActivity(intent_in);
+                overridePendingTransition(0, 0);
+                finish();
+            }
+        }
+
+        if (id == R.id.action_exit) {
+            finishAffinity();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

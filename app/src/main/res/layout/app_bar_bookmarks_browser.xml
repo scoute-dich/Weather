@@ -38,6 +38,6 @@
         fab:fab_colorPressed="@color/pink_pressed"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_size="normal"
-        app:layout_behavior="de.baumann.weather.FloatingActionButtonBehavior" />
+        app:layout_behavior="de.baumann.weather.helper.FloatingActionButtonBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>

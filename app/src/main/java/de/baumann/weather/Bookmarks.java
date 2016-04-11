@@ -18,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,68 +27,77 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.baumann.weather.helper.BrowserDatabase;
+
 public class Bookmarks extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView listView = null;
-    private ImageView imgHeader;
 
     public void fab5_click(View v){
-        // write your code here ..
         Intent intent_in = new Intent(Bookmarks.this, Search.class);
         startActivity(intent_in);
         overridePendingTransition(0, 0);
+        finish();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkFirstRun();
 
         setContentView(R.layout.activity_bookmarks);
         setTitle(R.string.action_bookmarks);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        checkFirstRun();
 
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        final String startType = sharedPref.getString("startType", "1");
 
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (startType.equals("2")) {
-                    Intent intent_in = new Intent(Bookmarks.this, Start.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
-                } else if (startType.equals("1")) {
-                    Intent intent_in = new Intent(Bookmarks.this, Bookmarks.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(toolbar != null) {
+            final String startType = sharedPref.getString("startType", "1");
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (startType.equals("2")) {
+                        Intent intent_in = new Intent(Bookmarks.this, Start.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    } else if (startType.equals("1")) {
+                        Intent intent_in = new Intent(Bookmarks.this, Bookmarks.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        if(drawer != null) {
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if(navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
-        imgHeader = (ImageView) findViewById(R.id.imageView3);
+        ImageView imgHeader = (ImageView) findViewById(R.id.imageView3);
+        if(imgHeader != null) {
+            TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
+            int choice = (int) (Math.random() * images.length());
+            imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash1));
+            images.recycle();
+        }
 
-        TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
-        int choice = (int) (Math.random() * images.length());
-        imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash1));
-        images.recycle();
 
         listView = (ListView)findViewById(R.id.bookmarks);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,6 +110,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                 intent.putExtra("url3", map.get("url") + "10-Tage");
                 intent.putExtra("title", map.get("title"));
                 startActivityForResult(intent, 100);
+                finish();
             }
         });
 
@@ -263,6 +272,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
             Intent intent_in = new Intent(Bookmarks.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -278,50 +288,60 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
             Intent intent_in = new Intent(Bookmarks.this, Start.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_bookmarks) {
             Intent intent_in = new Intent(Bookmarks.this, Bookmarks.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_search) {
             Intent intent_in = new Intent(Bookmarks.this, Search.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_radar) {
             Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/niederschlag_1h/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_satellit) {
             Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/satellit/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_karten) {
             Intent intent_ra = new Intent(Bookmarks.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/film/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_thema) {
             Intent intent_th = new Intent(Bookmarks.this, Search.class);
             intent_th.putExtra("url", "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null");
             startActivityForResult(intent_th, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_lexikon) {
             Intent intent_le = new Intent(Bookmarks.this, Search.class);
             intent_le.putExtra("url", "http://www.dwd.de/DE/service/lexikon/lexikon_node.html");
             startActivityForResult(intent_le, 100);
             overridePendingTransition(0, 0);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if(drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
@@ -375,10 +395,9 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
-    public void checkFirstRun() {
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstBookmark", true);
-        if (isFirstRun){
-            // Place your dialog code here to display the dialog
+    private void checkFirstRun() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_bookmark", false)){
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBookmark_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
@@ -394,9 +413,8 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
                     .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                                    .edit()
-                                    .putBoolean("firstBookmark", false)
+                            sharedPref.edit()
+                                    .putBoolean("first_bookmark", false)
                                     .apply();
                         }
                     });

@@ -1,8 +1,6 @@
-package de.baumann.weather;
+package de.baumann.weather.helper;
 
-/**
- * Created by juergen on 29.02.16. Licensed under GPL.
- */
+
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar.SnackbarLayout;

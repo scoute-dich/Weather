@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Picture;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -25,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,12 +35,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.helper.OnSwipeTouchListener;
 
 public class Search extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,7 +59,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
     }
 
     public void fab5_click(View v){
-        // write your code here ..
 
         try {
             final EditText input = new EditText(this);
@@ -86,64 +87,81 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        boolean ret = true;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkFirstRun();
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
             WebView.enableSlowWholeDocumentDraw();
 
         setContentView(R.layout.activity_bookmarks_browser);
+        checkFirstRun();
+
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        final String startType = sharedPref.getString("startType", "1");
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (startType.equals("2")) {
-                    Intent intent_in = new Intent(Search.this, Start.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
-                } else if (startType.equals("1")){
-                    Intent intent_in = new Intent(Search.this, Bookmarks.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
+        if(toolbar != null) {
+            final String startType = sharedPref.getString("startType", "1");
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (startType.equals("2")) {
+                        Intent intent_in = new Intent(Search.this, Start.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    } else if (startType.equals("1")) {
+                        Intent intent_in = new Intent(Search.this, Bookmarks.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
                 }
+            });
+        }
+
+        swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeView.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (isNetworkUnAvailable()) { // loading offline
+                    mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+                    Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
+                }
+                mWebView.reload();
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        if(drawer != null) {
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
-        swipeView.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
+        if(navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
         mWebView = (WebView) findViewById(R.id.webView);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
         mWebView.loadUrl("http://m.wetterdienst.de/");
         mWebView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
+
+        if (sharedPref.getBoolean ("java", false)){
+            mWebView.getSettings().setJavaScriptEnabled(true);
+        }
 
         if (isNetworkUnAvailable()) { // loading offline
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -161,16 +179,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 swipeView.setRefreshing(false);
             }
         });
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (isNetworkUnAvailable()) { // loading offline
-                    mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-                    Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
-                }
-                mWebView.reload();
-            }
-        });
 
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
@@ -183,7 +191,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         mWebView.scrollTo(0, 160);
                         setTitle(R.string.dwd);
                     } else if (url.contains("meteoblue")) {
-                        mWebView.scrollTo(0, 160);
+                        mWebView.scrollTo(0, 280);
                         setTitle(R.string.meteo);
                     } else {
                         mWebView.scrollTo(0, 0);
@@ -203,12 +211,14 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 Intent intent_in = new Intent(Search.this, Bookmarks.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
+                finish();
             }
 
             public void onSwipeLeft() {
                 Intent intent_in = new Intent(Search.this, Bookmarks.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
+                finish();
             }
         });
 
@@ -254,6 +264,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             Intent intent_in = new Intent(Search.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
         }
 
         if (id == R.id.action_share) {
@@ -294,37 +305,56 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                     }
                                 }
                                 Snackbar.make(swipeView, R.string.toast_screenshot, Snackbar.LENGTH_LONG).show();
-                                File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/");
+                                File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
                                 Date date = new Date();
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-                                Picture picture = mWebView.capturePicture();
-                                Bitmap b = Bitmap.createBitmap(picture.getWidth(), picture.getHeight(), Bitmap.Config.ARGB_8888);
-                                Canvas c = new Canvas(b);
-                                File screen = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/"
-                                        + dateFormat.format(date) + ".jpg");
-                                if (screen.exists())
-                                    screen.delete();
-                                picture.draw(c);
-                                FileOutputStream fos;
+
+                                mWebView.measure(View.MeasureSpec.makeMeasureSpec(
+                                        View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
+                                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                                mWebView.layout(0, 0, mWebView.getMeasuredWidth(),
+                                        mWebView.getMeasuredHeight());
+                                mWebView.setDrawingCacheEnabled(true);
+                                mWebView.buildDrawingCache();
+                                Bitmap bm = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+                                        mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+                                Canvas bigcanvas = new Canvas(bm);
+                                Paint paint = new Paint();
+                                int iHeight = bm.getHeight();
+                                bigcanvas.drawBitmap(bm, 0, iHeight, paint);
+                                mWebView.draw(bigcanvas);
+                                System.out.println("1111111111111111111111="
+                                        + bigcanvas.getWidth());
+                                System.out.println("22222222222222222222222="
+                                        + bigcanvas.getHeight());
+
                                 try {
-                                    fos = new FileOutputStream(screen);
-                                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-                                    fos.close();
+                                    OutputStream fOut;
+                                    File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
+                                    fOut = new FileOutputStream(file);
+
+                                    bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+                                    bm.recycle();
                                 } catch (Exception e) {
-                                    e.getMessage();
+                                    e.printStackTrace();
                                 }
+
                                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                                 sharingIntent.setType("image/png");
                                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                 sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/"
+                                Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
                                         + dateFormat.format(date) + ".jpg"));
                                 sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
                                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
-                                File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/"
+
+                                File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
                                         + dateFormat.format(date) + ".jpg");
                                 Uri uri = Uri.fromFile(file);
                                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
@@ -355,29 +385,47 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                     }
                                 }
                                 Snackbar.make(swipeView, R.string.toast_screenshot, Snackbar.LENGTH_LONG).show();
-                                File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/");
+                                File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
                                 Date date = new Date();
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-                                Picture picture = mWebView.capturePicture();
-                                Bitmap b = Bitmap.createBitmap(picture.getWidth(), picture.getHeight(), Bitmap.Config.ARGB_8888);
-                                Canvas c = new Canvas(b);
-                                File screen = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/"
-                                        + dateFormat.format(date) + ".jpg");
-                                if (screen.exists())
-                                    screen.delete();
-                                picture.draw(c);
-                                FileOutputStream fos;
+
+                                mWebView.measure(View.MeasureSpec.makeMeasureSpec(
+                                        View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
+                                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                                mWebView.layout(0, 0, mWebView.getMeasuredWidth(),
+                                        mWebView.getMeasuredHeight());
+                                mWebView.setDrawingCacheEnabled(true);
+                                mWebView.buildDrawingCache();
+                                Bitmap bm = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+                                        mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+                                Canvas bigcanvas = new Canvas(bm);
+                                Paint paint = new Paint();
+                                int iHeight = bm.getHeight();
+                                bigcanvas.drawBitmap(bm, 0, iHeight, paint);
+                                mWebView.draw(bigcanvas);
+                                System.out.println("1111111111111111111111="
+                                        + bigcanvas.getWidth());
+                                System.out.println("22222222222222222222222="
+                                        + bigcanvas.getHeight());
+
                                 try {
-                                    fos = new FileOutputStream(screen);
-                                    b.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-                                    fos.close();
+                                    OutputStream fOut;
+                                    File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
+                                    fOut = new FileOutputStream(file);
+
+                                    bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+                                    bm.recycle();
                                 } catch (Exception e) {
-                                    e.getMessage();
+                                    e.printStackTrace();
                                 }
-                                File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Webpages/"
+
+                                File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
                                         + dateFormat.format(date) + ".jpg");
                                 Uri uri = Uri.fromFile(file);
                                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
@@ -385,6 +433,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                             }
                         }
                     }).show();
+            checkFirstRun2();
         }
 
         return super.onOptionsItemSelected(item);
@@ -400,57 +449,66 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             Intent intent_in = new Intent(Search.this, Start.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_bookmarks) {
             Intent intent_in = new Intent(Search.this, Bookmarks.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_search) {
             Intent intent_in = new Intent(Search.this, Search.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_radar) {
             Intent intent_ra = new Intent(Search.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/niederschlag_1h/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_satellit) {
             Intent intent_ra = new Intent(Search.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/satellit/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_karten) {
             Intent intent_ra = new Intent(Search.this, Search.class);
             intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/film/europa");
             startActivityForResult(intent_ra, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_thema) {
             Intent intent_th = new Intent(Search.this, Search.class);
             intent_th.putExtra("url", "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null");
             startActivityForResult(intent_th, 100);
             overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.action_lexikon) {
             Intent intent_le = new Intent(Search.this, Search.class);
             intent_le.putExtra("url", "http://www.dwd.de/DE/service/lexikon/lexikon_node.html");
             startActivityForResult(intent_le, 100);
             overridePendingTransition(0, 0);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if(drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
-    public void checkFirstRun() {
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstSearch", true);
-        if (isFirstRun){
-            // Place your dialog code here to display the dialog
+    private void checkFirstRun() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_search", false)){
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
@@ -466,9 +524,35 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                     .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                                    .edit()
-                                    .putBoolean("firstSearch", false)
+                            sharedPref.edit()
+                                    .putBoolean("first_search", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
+        }
+    }
+
+    private void checkFirstRun2() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_screenshot", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Search.this)
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
                                     .apply();
                         }
                     });

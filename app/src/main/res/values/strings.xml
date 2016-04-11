@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     // Application
 
@@ -10,7 +10,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permissions">You must grant \"Access Storage Permission\" to save screenshots. After that you should
         completely close the app or restart the phone. If you don\'t permit the storage access but want to use the
-        screenshot function at a later time, you can grant the permission later. Please open then: systemsettings - apps -
+        screenshot function at a later time, you can grant the permission later. Please open then: system settings - apps -
         weather. In the permissions section you can grant the \"write storage permission\".</string>
 
 
@@ -34,15 +34,21 @@
 
     <string name="pref_1">About the app</string>
     <string name="pref_2">App settings</string>
+    <string name="pref_3">Help</string>
 
     <string name="action_changelog">Changelog</string>
     <string name="action_changelog_summary">See what\'s new …</string>
+
+    <string name="action_java">Enable javascript</string>
+    <string name="action_java_summary">Some functions on the websites need javascript to work. But javascript is
+        known to be a security risk.</string>
 
     <string name="action_license">License</string>
     <string name="action_license_summary">App is licensed under GPL3</string>
 
     <string name="action_clearCache">Clear cache</string>
     <string name="action_clearCache_summary">Clear cache of application. All cached websites will be lost …</string>
+    <string name="action_clearCache_dialog">Do you really ant to clear cache? All cached websites will be lost.</string>
 
     <string name="action_start">Start and actionbar click</string>
     <string name="action_start_summary">What do you want to see: Either the first bookmark or the bookmark list?</string>
@@ -66,13 +72,13 @@
     <string name="no">NO</string>
     <string name="cancel">Cancel</string>
 
-    <string name="edit_bookmark">Edit bookmark</string>
+    <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Edit bookmark</string>
     <string name="delete_bookmark">Delete bookmark</string>
     <string name="edit_url">Edit URL of the bookmark</string>
     <string name="edit_title">Edit title of the bookmark</string>
 
     <string name="toast_screenshot">Making screenshot …</string>
-    <string name="toast_clearCache">Clearing cache …</string>
+    <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Clearing cache …</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
 
     // Floating Action Buttons - Titles
@@ -83,15 +89,15 @@
 
     // Bookmarks
 
-    <string name="add_bookmark">Add bookmark</string>
+    <string name="add_bookmark" tools:keep="@string/add_bookmark">Add bookmark</string>
     <string name="remove_confirmation">Bookmark will be removed. OK?</string>
     <string name="cannot_remove">You need at least one bookmark!</string>
     <string name="added">Adding bookmark.</string>
 
     //License Dialog
 
-    <string name="about_title">Copyright © 2016  by scoute-dich</string>
-    <string name="about_text">
+    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by scoute-dich</string>
+    <string name="about_text" tools:keep="@string/about_text">
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -108,16 +114,22 @@
 
     //Changelog Dialog
 
-    <string name="changelog_text">
+    <string name="changelog_text" tools:keep="@string/changelog_text">
         &lt;i>For more informations visit the project site on github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v2.2:&lt;/b>&lt;br>
+        &#8226; fixed settings go back&lt;br>
+        &#8226; added javascript option in settings&lt;br>
+        &#8226; added help options in settings&lt;br>
+        &#8226; fixed some force closes issues&lt;br>&lt;br>
 
         &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build issues&lt;br>&lt;br>
 
         &lt;b>v2.1:&lt;/b>&lt;br>
         &#8226; mind SDK 16&lt;br>
-        &#8226; fixed app closing&lt;br>&lt;br>
+        &#8226; fixed exit app&lt;br>&lt;br>
 
         &lt;b>v2.0:&lt;/b>&lt;br>
         &#8226; settings activity&lt;br>
@@ -133,19 +145,23 @@
 
     <string name="notagain">Do not show again.</string>
 
+    <string name="firstSearch_title">Saving bookmarks</string>
+    <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>
+
     <string name="firstSearch_text">
         To save a bookmark simply click on the pink button. If you want to bookmark a city it is
-        important, that the \"Überblick\" button on the webpage is blue and checked. Otherwise it is
+        important, that the \"Überblick\" button on the website is blue and checked. Otherwise it is
         later not possible to load the hourly und the 10 day trend forecast of a city.&lt;br>&lt;br>
 
         If you clicked the pink button a popup appears. You can now edit the title of the bookmark.
         Normally you enter the name of the city.</string>
 
-    <string name="firstSearch_title">
-        How to save bookmarks</string>
+
+    <string name="firstBrowser_title">Browser</string>
+    <string name="firstBrowser_title_summary">Show again: Functionality of the browser?</string>
 
     <string name="firstBrowser_text">
-        Here you see bookmarked websites. If you have no internet connection they will be loaded offline from
+        Your bookmarked websites are shown in this browser. If you have no internet connection they will be loaded offline from
         the cache. For saved cities you can click the orange button and switch between the overview, the hourly
         and the 10 day trend forecast.&lt;br>&lt;br>
 
@@ -155,30 +171,34 @@
         You can switch back to the bookmark list by swiping to the right (or clicking the titlebar,
         if enabled in settings). Swipe down to reload the website.</string>
 
-    <string name="firstBrowser_title">
-        The webview</string>
 
-    <string name="firstBookmark_title">
-        The bookmark list</string>
+    <string name="firstBookmark_title">Bookmark list</string>
+    <string name="firstBookmark_title_summary">Show again: Tip about the bookmark list?</string>
 
     <string name="firstBookmark_text">
-        &lt;i>The list&lt;/i>&lt;br>
+        &lt;i>The list:&lt;/i>&lt;br>
 
         This is your bookmark list. The first bookmark is your favorite. It can be loaded on app start or on title bar click
         (look in the settings).&lt;br>&lt;br>
 
-        &lt;i>Edit bookmarks&lt;/i>&lt;br>
+        &lt;i>Edit bookmarks:&lt;/i>&lt;br>
 
         Long click on a bookmark opens a popup menu. You can edit title and URL of the bookmark or delete it (at least
         one bookmark is needed). If you have problems to open the hourly or the 10 day forecast of a bookmarked city
-        you must control the URL. It should look like this: http://www.wetterdienst.de/Deutschlandwetter/[name_of_yor_city]/.
+        you must control the URL. It should look like this: http://www.wetterdienst.de/Deutschlandwetter/name_of_yor_city.
         If this is not the case, correct it.&lt;br>&lt;br>
 
-        &lt;i>Search new cities&lt;/i>&lt;br>
+        &lt;i>Search new cities:&lt;/i>&lt;br>
 
         If you click the pink button the website of wetterdienst.de opens. There you can search worldwide for cities.
         Just enter the name in the search field and make your joice.</string>
 
+    <string name="firstScreenshot_title">Making screenshots</string>
+    <string name="firstScreenshot_title_summary">Show again: Taking screenshots?</string>
+
+    <string name="firstScreenshot_text">
+        You can make screenshots of the whole website (even of the part which is outside of your display.
+        Before taking the screenshot wait until the website is fully loaded, to ensure that the whole website is captured.</string>
 
     //String arrays
 
@@ -190,12 +210,12 @@
         <item>@drawable/splash5</item>
     </array>
 
-    <string-array name="listArray">
+    <string-array name="listArrayStart">
         <item>Bookmark list</item>
         <item>First bookmark in list</item>
     </string-array>
 
-    <string-array name="listValues">
+    <string-array name="listValuesStart">
         <item>1</item>
         <item>2</item>
     </string-array>

@@ -11,6 +11,8 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.baumann.weather.helper.BrowserDatabase;
+
 public class Start extends AppCompatActivity  {
 
     private ListView listView = null;
@@ -86,14 +88,18 @@ public class Start extends AppCompatActivity  {
     }
 
     public void fab5_click(View view) {
+        finish();
     }
 
     public void fab1_click(View view) {
+        finish();
     }
 
     public void fab2_click(View view) {
+        finish();
     }
 
     public void fab3_click(View view) {
+        finish();
     }
 }
