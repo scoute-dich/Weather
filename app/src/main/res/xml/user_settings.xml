@@ -22,7 +22,7 @@
             android:title="@string/action_java"
             android:summary="@string/action_java_summary"
             android:key="java"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
 
         <Preference
             android:title="@string/action_clearCache"
