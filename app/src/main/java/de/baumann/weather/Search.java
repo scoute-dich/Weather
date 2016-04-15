@@ -275,7 +275,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         public void onClick(DialogInterface dialog, int item) {
                             if (options[item].equals(getString(R.string.action_share_link))) {
                                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("image/png");
+                                sharingIntent.setType("ext/plain");
                                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                 sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
                                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
