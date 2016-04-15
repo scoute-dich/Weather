@@ -168,8 +168,8 @@
         Sites from the \"Deutscher Wetterdienst\" and \"Meteoblue\", which can be also bookmarked do not have the
         orange button.&lt;br>&lt;br>
 
-        You can switch back to the bookmark list by swiping to the right (or clicking the titlebar,
-        if enabled in settings). Swipe down to reload the website.</string>
+        You can switch back to the bookmark list (or your favorite - lokk into the settings) by swiping to the right
+        or by clicking the titlebar. Swipe down to reload the website.</string>
 
 
     <string name="firstBookmark_title">Bookmark list</string>
