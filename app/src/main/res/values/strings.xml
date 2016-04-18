@@ -118,13 +118,14 @@
         &lt;i>For more informations visit the project site on github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>v2.2:&lt;/b>&lt;br>
+        &lt;b>v2.3:&lt;/b>&lt;br>
         &#8226; fixed settings go back&lt;br>
         &#8226; added javascript option in settings&lt;br>
         &#8226; added help options in settings&lt;br>
+        &#8226; reduced app size&lt;br>
         &#8226; fixed some force closes issues&lt;br>&lt;br>
 
-        &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
+        &lt;b>v2.1.1 - 2.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build issues&lt;br>&lt;br>
 
         &lt;b>v2.1:&lt;/b>&lt;br>
@@ -168,7 +169,7 @@
         Sites from the \"Deutscher Wetterdienst\" and \"Meteoblue\", which can be also bookmarked do not have the
         orange button.&lt;br>&lt;br>
 
-        You can switch back to the bookmark list (or your favorite - lokk into the settings) by swiping to the right
+        You can switch back to the bookmark list or to your favorite (look into the settings) by swiping to the right
         or by clicking the titlebar. Swipe down to reload the website.</string>
 
 

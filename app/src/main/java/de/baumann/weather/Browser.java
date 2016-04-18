@@ -96,6 +96,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
         }
 
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        assert swipeView != null;
         swipeView.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -122,6 +123,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
         }
 
         mWebView = (WebView) findViewById(R.id.webView);
+        assert mWebView != null;
         mWebView.loadUrl("http://m.wetterdienst.de/");
         mWebView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
         mWebView.getSettings().setAllowFileAccess(true);

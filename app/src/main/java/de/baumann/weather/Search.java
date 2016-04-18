@@ -127,6 +127,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         }
 
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        assert swipeView != null;
         swipeView.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -153,6 +154,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         }
 
         mWebView = (WebView) findViewById(R.id.webView);
+        assert mWebView != null;
         mWebView.loadUrl("http://m.wetterdienst.de/");
         mWebView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
         mWebView.getSettings().setAllowFileAccess(true);
@@ -275,7 +277,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         public void onClick(DialogInterface dialog, int item) {
                             if (options[item].equals(getString(R.string.action_share_link))) {
                                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("ext/plain");
+                                sharingIntent.setType("text/plain");
                                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                 sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
                                 startActivity(Intent.createChooser(sharingIntent, "Share using"));

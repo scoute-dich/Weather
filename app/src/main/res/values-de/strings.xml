@@ -118,13 +118,14 @@
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>v2.2:&lt;/b>&lt;br>
+        &lt;b>v2.3:&lt;/b>&lt;br>
         &#8226; fixed Einstellungen verlassen&lt;br>
         &#8226; Javascript Einstellung&lt;br>
         &#8226; Hilfe Einstellungen&lt;br>
+        &#8226; App-Größe reduziert&lt;br>
         &#8226; fixed einige \"force close\" Fehler&lt;br>&lt;br>
 
-        &lt;b>v2.1.1 - 2.1.2:&lt;/b>&lt;br>
+        &lt;b>v2.1.1 - 2.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build Fehler&lt;br>&lt;br>
 
         &lt;b>v2.1:&lt;/b>&lt;br>
@@ -168,7 +169,7 @@
         Seiten des \"Deutschen Wetterdiensten\" und von \"Meteoblue\", welche auch als Lesezeichen gespeichert werden können,
         haben diesen Knopf nicht.&lt;br>&lt;br>
 
-        Du kannst zur Lesezeichenliste (oder zu deinem Favorit - siehe Einstellungen) zurückkehren, indem du nach rechts wischst,
+        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren, indem du nach rechts wischst,
         oder indem du auf die Titelleiste klickst. Nach unten wischen um die Seite neu zu laden.</string>
 
 

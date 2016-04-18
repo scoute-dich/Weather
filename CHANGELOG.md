@@ -1,10 +1,11 @@
-### v2.2
+### v2.3
 - fixed settings go back
 - added javascript option in settings
 - added help options in settings
+- reduced app size
 - fixed some force closes issues
 
-### v2.1.1 - 2.1.2
+### v2.1.1 - 2.2
 - fixed F-Droid build issues
         
 ### v2.1
