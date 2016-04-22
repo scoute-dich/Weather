@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import de.baumann.weather.helper.BrowserDatabase;
 
+@SuppressWarnings("UnusedParameters")
 public class Start extends AppCompatActivity  {
 
     private ListView listView = null;
@@ -27,6 +28,7 @@ public class Start extends AppCompatActivity  {
 
         setBookmarkList();
 
+        @SuppressWarnings("unchecked")
         HashMap<String,String> map = (HashMap<String,String>)listView.getItemAtPosition(0);
         Intent intent = new Intent(Start.this, Browser.class);
         intent.putExtra("url", map.get("url"));

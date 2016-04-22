@@ -9,12 +9,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/imageView2"
         android:src="@drawable/header"
         android:scaleType="centerCrop" />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="@android:dimen/notification_large_icon_height"
         android:layout_height="@android:dimen/notification_large_icon_width"
         android:paddingTop="@dimen/nav_header_vertical_spacing"

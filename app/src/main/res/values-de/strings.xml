@@ -4,8 +4,6 @@
 
     <string name="app_name">Wetter</string>
     <string name="app_copyright">Nicht jede Wolke macht einen Sturm.</string>
-    <string name="closeDrawer">Navigation View</string>
-    <string name="openDrawer">Navigation View Closed</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit das Bildschirmfoto
@@ -76,7 +74,7 @@
 
     <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="delete_bookmark">Lesezeichen löschen</string>
-    <string name="edit_url">Die URL des Lesezeidchens bearbeiten</string>
+    <string name="edit_url">Die URL des Lesezeichens bearbeiten</string>
     <string name="edit_title">Den Titel des Lesezeichens bearbeiten</string>
 
     <string name="toast_screenshot">Bildschirmfoto wird gespeichert …</string>

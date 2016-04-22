@@ -58,6 +58,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         return activeNetworkInfo == null || !activeNetworkInfo.isConnected();
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void fab5_click(View v){
 
         try {

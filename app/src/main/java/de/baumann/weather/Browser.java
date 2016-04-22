@@ -43,6 +43,7 @@ import java.util.Date;
 
 import de.baumann.weather.helper.OnSwipeTouchListener;
 
+@SuppressWarnings("UnusedParameters")
 public class Browser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private WebView mWebView;

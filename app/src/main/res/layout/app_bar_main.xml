@@ -39,7 +39,6 @@
         app:layout_behavior="de.baumann.weather.helper.FloatingActionsMenuBehavior" >
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab1_action"
             android:onClick="fab1_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
             fab:fab_size="mini" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab2_action"
             android:onClick="fab2_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +61,6 @@
             fab:fab_size="mini" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab3_action"
             android:onClick="fab3_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -25,7 +25,6 @@
     <include layout="@layout/content_bookmarks_browser" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab5_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

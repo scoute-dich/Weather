@@ -37,7 +37,7 @@ public class Bookmarks extends AppCompatActivity implements NavigationView.OnNav
 
     private ListView listView = null;
 
-    public void fab5_click(View v){
+    public void fab5_click(@SuppressWarnings("UnusedParameters") View v){
         Intent intent_in = new Intent(Bookmarks.this, Search.class);
         startActivity(intent_in);
         overridePendingTransition(0, 0);
