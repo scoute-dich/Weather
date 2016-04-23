@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 import de.baumann.weather.helper.BrowserDatabase;
 
-@SuppressWarnings("UnusedParameters")
+@SuppressWarnings({"UnusedParameters", "EmptyMethod"})
 public class Start extends AppCompatActivity  {
 
     private ListView listView = null;

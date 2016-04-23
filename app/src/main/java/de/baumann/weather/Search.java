@@ -39,7 +39,7 @@ import android.widget.EditText;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 import de.baumann.weather.helper.BrowserDatabase;
@@ -312,8 +312,9 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
+
                                 Date date = new Date();
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+                                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 
                                 mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
@@ -392,8 +393,9 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
+
                                 Date date = new Date();
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+                                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 
                                 mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
