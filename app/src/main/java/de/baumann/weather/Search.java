@@ -40,7 +40,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import de.baumann.weather.helper.BrowserDatabase;
 import de.baumann.weather.helper.OnSwipeTouchListener;
@@ -307,14 +309,17 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                         return;
                                     }
                                 }
-                                Snackbar.make(swipeView, R.string.toast_screenshot, Snackbar.LENGTH_LONG).show();
+
                                 File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
 
                                 Date date = new Date();
-                                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+
+                                String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
+                                Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
 
                                 mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
@@ -388,14 +393,17 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                                         return;
                                     }
                                 }
-                                Snackbar.make(swipeView, R.string.toast_screenshot, Snackbar.LENGTH_LONG).show();
+
                                 File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                 if (!directory.exists()) {
                                     directory.mkdirs();
                                 }
 
                                 Date date = new Date();
-                                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+
+                                String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
+                                Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
 
                                 mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),

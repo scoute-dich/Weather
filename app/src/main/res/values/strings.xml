@@ -75,7 +75,7 @@
     <string name="edit_url">Edit URL of the bookmark</string>
     <string name="edit_title">Edit title of the bookmark</string>
 
-    <string name="toast_screenshot">Making screenshot …</string>
+    <string name="toast_screenshot">Saving screenshot as:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Clearing cache …</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
 

@@ -77,7 +77,7 @@
     <string name="edit_url">Die URL des Lesezeichens bearbeiten</string>
     <string name="edit_title">Den Titel des Lesezeichens bearbeiten</string>
 
-    <string name="toast_screenshot">Bildschirmfoto wird gespeichert …</string>
+    <string name="toast_screenshot">Bildschirmfoto wird gespeichert unter:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
 
