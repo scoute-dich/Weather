@@ -31,7 +31,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:id="@+id/progressBar"
-        android:progressTint="@color/colorAccent" />
+        android:id="@+id/progressBar" />
 
 </RelativeLayout>
