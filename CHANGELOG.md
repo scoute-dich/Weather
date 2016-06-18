@@ -1,4 +1,5 @@
 ### v2.3.1
+- fixed splashscreen on some devices
 - bug fixes
 
 ### v2.3
