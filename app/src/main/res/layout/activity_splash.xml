@@ -10,5 +10,6 @@
         android:src="@drawable/splashscreen"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

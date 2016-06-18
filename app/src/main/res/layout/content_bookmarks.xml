@@ -22,6 +22,7 @@
         android:id="@+id/imageView3"
         android:layout_centerHorizontal="true"
         android:src="@drawable/splash1"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>
