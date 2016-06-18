@@ -1,3 +1,6 @@
+### v2.3.1
+- bug fixes
+
 ### v2.3
 - fixed settings go back
 - added javascript option in settings
