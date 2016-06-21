@@ -10,6 +10,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/action_saveBookmark"
+        android:orderInCategory="100"
+        android:title="@string/action_bookmarks"
+        android:icon="@drawable/fab_bookmark"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_exit"
         android:orderInCategory="100"
         android:title="@string/action_exit" />

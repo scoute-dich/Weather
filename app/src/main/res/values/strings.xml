@@ -3,9 +3,6 @@
     // Application
 
     <string name="app_name">Weather</string>
-    <string name="app_copyright">Not every cloud makes a thunderstorm.</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permissions">You must grant \"Access Storage Permission\" to save screenshots. After that you should
         completely close the app or restart the phone. If you don\'t permit the storage access but want to use the
         screenshot function at a later time, you can grant the permission later. Please open then: system settings - apps -
@@ -14,8 +11,7 @@
 
     // (Drawer-) Menu Items
 
-    <string name="menu1">Weather report for …</string>
-    <string name="menu2">More weather infos</string>
+    <string name="menu2">Weather infos</string>
 
     <string name="action_exit">Exit app</string>
     <string name="action_share">Share weather report</string>
@@ -25,7 +21,6 @@
 
     <string name="action_search">Search …</string>
     <string name="action_bookmarks">Bookmarks</string>
-    <string name="action_favorite">Favorite</string>
     <string name="action_settings">Settings | About | Help</string>
 
     // Settings
@@ -61,11 +56,11 @@
     <string name="action_lexikon">DWD - weather encyclopedia</string>
     <string name="action_radar">Rain forecast</string>
     <string name="action_satellit">Satellite view</string>
+    <string name="action_webSearch">Web search</string>
 
 
     // Dialog // Snackbar
 
-    <string name="confirm_exit">Do you want to exit the app?</string>
     <string name="yes">OK</string>
     <string name="no">NO</string>
     <string name="cancel">Cancel</string>
@@ -82,8 +77,8 @@
     // Floating Action Buttons - Titles
 
     <string name="fab1_title">Overview</string>
-    <string name="fab2_title">Hourly forecast</string>
-    <string name="fab3_title">10 day trend</string>
+    <string name="fab2_title">Hourly</string>
+    <string name="fab3_title">Trend</string>
 
     // Bookmarks
 
@@ -152,12 +147,16 @@
     <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>
 
     <string name="firstSearch_text">
-        To save a bookmark simply click on the pink button. If you want to bookmark a city it is
+        To save a bookmark simply click the icon at the toolbar. If you want to bookmark a city it is
         important, that the \"Überblick\" button on the website is blue and checked. Otherwise it is
         later not possible to load the hourly und the 10 day trend forecast of a city.&lt;br>&lt;br>
 
-        If you clicked the pink button a popup appears. You can now edit the title of the bookmark.
-        Normally you enter the name of the city.</string>
+        If you clicked the icon a popup appears. You can now edit the title of the bookmark.
+        Normally you enter the name of the city.&lt;br>&lt;br>
+
+        You can switch back to the bookmark list or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the bookmark list you can also press the arrow at the toolbar. Swipe down to reload the website.
+    </string>
 
 
     <string name="firstBrowser_title">Browser</string>
@@ -165,15 +164,10 @@
 
     <string name="firstBrowser_text">
         Your bookmarked websites are shown in this browser. If you have no internet connection they will be loaded offline from
-        the cache. For saved cities you can click the orange button and switch between the overview, the hourly
-        and the 10 day trend forecast.&lt;br>&lt;br>
+        the cache.&lt;br>&lt;br>
 
-        Sites from the \"Deutscher Wetterdienst\" and \"Meteoblue\", which can be also bookmarked do not have the
-        orange button.&lt;br>&lt;br>
-
-        You can switch back to the bookmark list or to your favorite (look into the settings) by swiping to the right
-        or by clicking the titlebar. Swipe down to reload the website.</string>
-
+        You can switch back to the bookmark list or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the bookmark list you can also press the arrow at the toolbar. Swipe down to reload the website.</string>
 
     <string name="firstBookmark_title">Bookmark list</string>
     <string name="firstBookmark_title_summary">Show again: Tip about the bookmark list?</string>
@@ -193,7 +187,7 @@
 
         &lt;i>Search new cities:&lt;/i>&lt;br>
 
-        If you click the pink button the website of wetterdienst.de opens. There you can search worldwide for cities.
+        If you click the magnifier at the toolbar the website of wetterdienst.de opens. There you can search worldwide for cities.
         Just enter the name in the search field and make your joice.</string>
 
     <string name="firstScreenshot_title">Making screenshots</string>

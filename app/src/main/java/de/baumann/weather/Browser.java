@@ -15,12 +15,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -34,6 +30,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,19 +40,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import de.baumann.weather.helper.OnSwipeTouchListener;
+import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.helper.Start;
 
-@SuppressWarnings("UnusedParameters")
-public class Browser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Browser extends AppCompatActivity  {
 
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
-    private com.getbase.floatingactionbutton.FloatingActionsMenu fab;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private boolean isNetworkUnAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService( CONNECTIVITY_SERVICE );
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo == null || !activeNetworkInfo.isConnected();
     }
@@ -67,14 +63,12 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
         if (android.os.Build.VERSION.SDK_INT >= 21)
             WebView.enableSlowWholeDocumentDraw();
 
-        setContentView(R.layout.activity_main);
-        checkFirstRun();
+        setContentView(R.layout.activity_browser);
 
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        fab = (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.multiple_actions);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,13 +83,18 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
                         overridePendingTransition(0, 0);
                         finish();
                     } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Browser.this, Bookmarks.class);
+                        Intent intent_in = new Intent(Browser.this, Main.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
                     }
                 }
             });
+        }
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
@@ -111,19 +110,6 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
                 mWebView.reload();
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if(drawer != null) {
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-        }
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if(navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
-        }
 
         mWebView = (WebView) findViewById(R.id.webView);
         assert mWebView != null;
@@ -164,13 +150,15 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
                     if (url.contains("dwd")) {
                         mWebView.scrollTo(0, 160);
                         setTitle(R.string.dwd);
-                        fab.setVisibility(View.GONE);
+                        checkFirstRun3();
                     } else if (url.contains("meteoblue")) {
                         mWebView.scrollTo(0, 280);
                         setTitle(R.string.meteo);
-                        fab.setVisibility(View.GONE);
+                        checkFirstRun3();
                     } else {
-                        mWebView.scrollTo(0, 400);
+                        mWebView.scrollTo(0, 0);
+                        setTitle(R.string.action_search);
+                        checkFirstRun();
                     }
 
                 } else {
@@ -180,39 +168,17 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
 
-        mWebView.setOnTouchListener(new OnSwipeTouchListener(Browser.this) {
-            public void onSwipeRight() {
-                Intent intent_in = new Intent(Browser.this, Bookmarks.class);
-                startActivity(intent_in);
-                overridePendingTransition(0, 0);
-                finish();
-            }
-
-            public void onSwipeLeft() {
-                Intent intent_in = new Intent(Browser.this, Bookmarks.class);
-                startActivity(intent_in);
-                overridePendingTransition(0, 0);
-                finish();
-            }
-        });
-
     }
 
     @Override
     public void onBackPressed() {
-        fab.collapse();
         if (mWebView.canGoBack()) {
             mWebView.goBack();
-            setTitle(R.string.app_name);
         } else {
-            Snackbar snackbar = Snackbar
-                    .make(swipeView, R.string.confirm_exit, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {finishAffinity();
-                        }
-                    });
-            snackbar.show();
+            Intent intent_in = new Intent(Browser.this, Main.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            finish();
         }
     }
 
@@ -235,8 +201,45 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
             finishAffinity();
         }
 
+        if (id == R.id.action_saveBookmark) {
+            try {
+                final EditText input = new EditText(this);
+                input.setText(mWebView.getTitle());
+                final BrowserDatabase db = new BrowserDatabase(this);
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                        .setView(input)
+                        .setMessage(R.string.edit_title)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                String inputTag = input.getText().toString().trim();
+                                db.addBookmark(inputTag, mWebView.getUrl());
+                                db.close();
+                                Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+                dialog.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         if (id == R.id.action_settings) {
             Intent intent_in = new Intent(Browser.this, UserSettingsActivity.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            finish();
+        }
+
+        if (id == android.R.id.home) {
+            Intent intent_in = new Intent(Browser.this, Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -283,37 +286,85 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }
 
-    public void fab1_click(View v) {
-        Intent intent = getIntent();
-        mWebView.loadUrl(intent.getStringExtra("url"));
-        setTitle(intent.getStringExtra("title") + " | " + getString(R.string.fab1_title));
-        if (isNetworkUnAvailable()) { // loading offline
-            mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-            Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
+    private void checkFirstRun() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_search", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
+                    .setTitle(R.string.firstSearch_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sharedPref.edit()
+                                    .putBoolean("first_search", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
-        fab.collapse();
     }
 
-    public void fab2_click(View v) {
-        Intent intent = getIntent();
-        mWebView.loadUrl(intent.getStringExtra("url2"));
-        setTitle(intent.getStringExtra("title") + " | " + getString(R.string.fab2_title));
-        if (isNetworkUnAvailable()) { // loading offline
-            mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-            Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
+    private void checkFirstRun2() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_screenshot", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
-        fab.collapse();
     }
 
-    public void fab3_click(View v) {
-        Intent intent = getIntent();
-        mWebView.loadUrl(intent.getStringExtra("url3"));
-        setTitle(intent.getStringExtra("title") + " | " + getString(R.string.fab3_title));
-        if (isNetworkUnAvailable()) { // loading offline
-            mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-            Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
+    private void checkFirstRun3() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_browser", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
+                    .setTitle(R.string.firstBrowser_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sharedPref.edit()
+                                    .putBoolean("first_browser", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
-        fab.collapse();
     }
 
     private void screenshot() {
@@ -343,6 +394,7 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
 
         File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
         if (!directory.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             directory.mkdirs();
         }
 
@@ -390,126 +442,5 @@ public class Browser extends AppCompatActivity implements NavigationView.OnNavig
         Uri uri = Uri.fromFile(file);
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         sendBroadcast(intent);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.action_favorite) {
-            Intent intent_in = new Intent(Browser.this, Start.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_bookmarks) {
-            Intent intent_in = new Intent(Browser.this, Bookmarks.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_search) {
-            Intent intent_in = new Intent(Browser.this, Search.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_radar) {
-            Intent intent_ra = new Intent(Browser.this, Search.class);
-            intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/niederschlag_1h/europa");
-            startActivityForResult(intent_ra, 100);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_satellit) {
-            Intent intent_ra = new Intent(Browser.this, Search.class);
-            intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/satellit/europa");
-            startActivityForResult(intent_ra, 100);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_karten) {
-            Intent intent_ra = new Intent(Browser.this, Search.class);
-            intent_ra.putExtra("url", "https://www.meteoblue.com/de/wetter/karte/film/europa");
-            startActivityForResult(intent_ra, 100);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_thema) {
-            Intent intent_th = new Intent(Browser.this, Search.class);
-            intent_th.putExtra("url", "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null");
-            startActivityForResult(intent_th, 100);
-            overridePendingTransition(0, 0);
-            finish();
-
-        } else if (id == R.id.action_lexikon) {
-            Intent intent_le = new Intent(Browser.this, Search.class);
-            intent_le.putExtra("url", "http://www.dwd.de/DE/service/lexikon/lexikon_node.html");
-            startActivityForResult(intent_le, 100);
-            overridePendingTransition(0, 0);
-            finish();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if(drawer != null) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        return true;
-    }
-
-    private void checkFirstRun() {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_browser", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
-
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
-                    .setTitle(R.string.firstBrowser_title)
-                    .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            sharedPref.edit()
-                                    .putBoolean("first_browser", false)
-                                    .apply();
-                        }
-                    });
-            dialog.show();
-        }
-    }
-
-    private void checkFirstRun2() {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_screenshot", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
-
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
-                    .setTitle(R.string.firstScreenshot_title)
-                    .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            sharedPref.edit()
-                                    .putBoolean("first_screenshot", false)
-                                    .apply();
-                        }
-                    });
-            dialog.show();
-        }
     }
 }

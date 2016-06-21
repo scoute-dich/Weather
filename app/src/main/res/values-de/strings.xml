@@ -3,9 +3,6 @@
     // Application
 
     <string name="app_name">Wetter</string>
-    <string name="app_copyright">Nicht jede Wolke macht einen Sturm.</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit das Bildschirmfoto
         gespeichert werden kann. Danach solltest du die Anwendung komplett schließen oder das Telefon neu starten.
         Wenn du den Zugriff verweigerst und die Funktion später doch nutzen willst, kannst du die Berechtigung
@@ -15,8 +12,7 @@
 
     // (Drawer-) Menu Items
 
-    <string name="menu1">Wetterbericht für …</string>
-    <string name="menu2">Weitere Wetterinfos</string>
+    <string name="menu2">Wetterinfos</string>
 
     <string name="action_exit">App verlassen</string>
     <string name="action_share">Wetterbericht teilen</string>
@@ -26,7 +22,6 @@
 
     <string name="action_search">Suche …</string>
     <string name="action_bookmarks">Lesezeichen</string>
-    <string name="action_favorite">Favorit</string>
     <string name="action_settings">Einstellungen | Über | Hilfe</string>
 
     // Settings
@@ -63,11 +58,11 @@
     <string name="action_lexikon">DWD - Wetterlexikon</string>
     <string name="action_radar">Regenvorhersage</string>
     <string name="action_satellit">Satellitenbild</string>
+    <string name="action_webSearch">Web Suche</string>
 
 
     // Dialog // Snackbar
 
-    <string name="confirm_exit">Möchtest du die App verlassen?</string>
     <string name="yes">OK</string>
     <string name="no">NEIN</string>
     <string name="cancel">Abbrechen</string>
@@ -84,8 +79,8 @@
     // Floating Action Buttons - Titles
 
     <string name="fab1_title">Übersicht</string>
-    <string name="fab2_title">Stündliche Vorhersage</string>
-    <string name="fab3_title">10 Tage Trend</string>
+    <string name="fab2_title">Stündlich</string>
+    <string name="fab3_title">Trend</string>
 
     // Bookmarks
 
@@ -152,28 +147,28 @@
     <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
 
     <string name="firstSearch_text">
-        Um ein Lesezeichen zu speichern einfach den pinken Knopf drücken. Wenn du eine Stadt speicherst ist es wichtig,
+        Um ein Lesezeichen zu speichern einfach den das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
         die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
 
-        Wenn du den pinken Knopf gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
-        eingeben (im Normalfall den Namen der Stadt).</string>
+        Wenn du das Icon gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
+        eingeben (im Normalfall den Namen der Stadt).&lt;br>&lt;br>*
+
+        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
+        indem du auf die Titelleiste klickst. Um zur Lesezeichenliste zurückzukehren kannst du auch den Pfeil in der Titelleiste
+        klicken. Nach unten wischen um die Seite neu zu laden.</string>
 
 
     <string name="firstBrowser_title">Browser</string>
     <string name="firstBrowser_title_summary">Noch einmal anzeigen: Funktionen des Browsers?</string>
 
     <string name="firstBrowser_text">
-        Deine Lesezeichen werden in diesem Browser angezeigt. Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.
-        Bei gespeicherten Städten kannst du den orangenen Knopf drücken und zwischen der Wetterübersicht, der stündlichen
-        Vorhersage und dem 10 Tage-Trend wechseln.&lt;br>&lt;br>
+        Deine Lesezeichen werden in diesem Browser angezeigt. Wenn du keine Internetverbindung hast, werden sie
+        offline (aus dem Cache) geladen.&lt;br>&lt;br>
 
-        Seiten des \"Deutschen Wetterdiensten\" und von \"Meteoblue\", welche auch als Lesezeichen gespeichert werden können,
-        haben diesen Knopf nicht.&lt;br>&lt;br>
-
-        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren, indem du nach rechts wischst,
-        oder indem du auf die Titelleiste klickst. Nach unten wischen um die Seite neu zu laden.</string>
-
+        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
+        indem du auf die Titelleiste klickst. Um zur Lesezeichenliste zurückzukehren kannst du auch den Pfeil in der Titelleiste
+        klicken. Nach unten wischen um die Seite neu zu laden.</string>
 
     <string name="firstBookmark_title">Lesezeichenliste</string>
     <string name="firstBookmark_title_summary">Noch einmal anzeigen: Funktion der Lesezeichenliste?</string>
@@ -194,7 +189,7 @@
 
         &lt;i>Nach neuen Städten suchen:&lt;/i>&lt;br>
 
-        Wenn du den pinken Knopf klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
+        Wenn du die Lupe in der Toolbar klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
         nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen</string>
 
 

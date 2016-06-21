@@ -15,7 +15,7 @@ public class BrowserDatabase extends SQLiteOpenHelper
     throws NameNotFoundException
     {
         super(context,
-              "browser.db",
+              "activity_browser.db",
               null,
               context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode);
     }

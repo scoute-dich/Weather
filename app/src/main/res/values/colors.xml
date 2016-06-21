@@ -4,17 +4,4 @@
     <color name="colorPrimaryDark">#2196f3</color>
     <color name="colorAccent">#ff9800</color>
 
-    <color name="blue">#2196f3</color>
-    <color name="blue_pressed">#64b5f6</color>
-
-    <color name="pink">#e91e63</color>
-    <color name="pink_pressed">#f48fb1</color>
-
-    <color name="orange">#ff9800</color>
-    <color name="orange_pressed">#ffb74d</color>
-
-    <color name="label_background">#7F000000</color>
-    <color name="label_text">#ffffff</color>
-
-    <color name="white">#fafafa</color>
 </resources>

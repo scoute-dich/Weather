@@ -1,4 +1,4 @@
-package de.baumann.weather;
+package de.baumann.weather.helper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,8 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.R;
+import de.baumann.weather.Weather;
 
 @SuppressWarnings({"UnusedParameters", "EmptyMethod"})
 public class Start extends AppCompatActivity  {
@@ -22,7 +23,7 @@ public class Start extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_bookmarks);
+        setContentView(R.layout.fragment_bookmarks);
 
         listView = (ListView)findViewById(R.id.bookmarks);
 
@@ -30,26 +31,14 @@ public class Start extends AppCompatActivity  {
 
         @SuppressWarnings("unchecked")
         HashMap<String,String> map = (HashMap<String,String>)listView.getItemAtPosition(0);
-        Intent intent = new Intent(Start.this, Browser.class);
+        Intent intent = new Intent(Start.this, Weather.class);
         intent.putExtra("url", map.get("url"));
         intent.putExtra("url2", map.get("url") + "stuendlich");
         intent.putExtra("url3", map.get("url") + "10-Tage");
         intent.putExtra("title", map.get("title"));
         startActivityForResult(intent, 100);
+        finish();
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 100:
-                if (resultCode == Activity.RESULT_OK) {
-                    if (data.getIntExtra("updated", 0) == 1) {
-                        setBookmarkList();
-                    }
-                }
-        }
     }
 
     private void setBookmarkList() {
@@ -57,7 +46,7 @@ public class Start extends AppCompatActivity  {
         ArrayList<HashMap<String,String>> mapList = new ArrayList<>();
 
         try {
-            BrowserDatabase db = new BrowserDatabase(this);
+            BrowserDatabase db = new BrowserDatabase(Start.this);
             ArrayList<String[]> bookmarkList = new ArrayList<>();
             db.getBookmarks(bookmarkList);
             if (bookmarkList.size() == 0) {
@@ -75,11 +64,11 @@ public class Start extends AppCompatActivity  {
             }
 
             SimpleAdapter simpleAdapter = new SimpleAdapter(
-                    this,
+                    Start.this,
                     mapList,
-                    android.R.layout.simple_list_item_2,
+                    R.layout.list_item2,
                     new String[] {"title", "url"},
-                    new int[] {android.R.id.text1, android.R.id.text2}
+                    new int[] {R.id.item, R.id.textView1}
             );
 
             listView.setAdapter(simpleAdapter);
@@ -87,17 +76,5 @@ public class Start extends AppCompatActivity  {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public void fab5_click(View view) {
-    }
-
-    public void fab1_click(View view) {
-    }
-
-    public void fab2_click(View view) {
-    }
-
-    public void fab3_click(View view) {
     }
 }

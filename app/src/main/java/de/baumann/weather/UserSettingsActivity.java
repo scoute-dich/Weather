@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import de.baumann.weather.helper.Start;
+
 
 public class UserSettingsActivity extends AppCompatActivity {
 
@@ -36,7 +38,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             setTitle(R.string.action_settings);
         }
 
-        // Display the fragment as the main content
+        // Display the fragment as the activity_main content
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
@@ -72,6 +74,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                                                 for (File aChildren : children) {
                                                     File[] temp = aChildren.listFiles();
                                                     for (File aTemp : temp) {
+                                                        //noinspection ResultOfMethodCallIgnored
                                                         aTemp.delete();
                                                     }
                                                 }
@@ -172,7 +175,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
             finish();
         } else if (startType.equals("1")) {
-            Intent intent_in = new Intent(UserSettingsActivity.this, Bookmarks.class);
+            Intent intent_in = new Intent(UserSettingsActivity.this, Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -204,7 +207,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 finish();
             } else if (startType.equals("1")) {
-                Intent intent_in = new Intent(UserSettingsActivity.this, Bookmarks.class);
+                Intent intent_in = new Intent(UserSettingsActivity.this, Main.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
                 finish();

@@ -17,7 +17,7 @@
     If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.baumann.weather;
+package de.baumann.weather.helper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +28,9 @@ import android.view.WindowManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.baumann.weather.Main;
+import de.baumann.weather.R;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -54,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent_in);
                     overridePendingTransition(0, 0);
                 } else if (startType.equals("1")){
-                    Intent intent_in = new Intent(SplashActivity.this, Bookmarks.class);
+                    Intent intent_in = new Intent(SplashActivity.this, Main.class);
                     startActivity(intent_in);
                     overridePendingTransition(0, 0);
                 }
