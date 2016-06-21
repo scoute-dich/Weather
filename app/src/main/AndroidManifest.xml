@@ -14,6 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".helper.SplashActivity"
             android:launchMode="singleInstance"
@@ -26,26 +27,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".helper.Start"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".Browser"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".UserSettingsActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name" />
+
         <activity
             android:name=".Weather"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".Main"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
     </application>
 

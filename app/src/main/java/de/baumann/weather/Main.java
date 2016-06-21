@@ -30,9 +30,6 @@ import de.baumann.weather.helper.Start;
 
 public class Main extends AppCompatActivity {
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,36 +64,6 @@ public class Main extends AppCompatActivity {
                     }
                 }
             });
-        }
-
-
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Main.this)
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.no), null)
-                            .show();
-                    return;
-                }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
-                return;
-            }
-        }
-
-        File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
-        if (!directory.exists()) {
-            directory.mkdirs();
         }
     }
 
@@ -139,6 +106,11 @@ public class Main extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_bookmarks, menu);
@@ -163,13 +135,6 @@ public class Main extends AppCompatActivity {
 
         if (id == R.id.action_search) {
             Intent intent_in = new Intent(Main.this, Browser.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
-        }
-
-        if (id == android.R.id.home) {
-            Intent intent_in = new Intent(Main.this, Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();

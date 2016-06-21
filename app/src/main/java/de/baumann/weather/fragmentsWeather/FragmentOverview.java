@@ -1,10 +1,12 @@
 package de.baumann.weather.fragmentsWeather;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,6 +19,9 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +49,7 @@ public class FragmentOverview extends Fragment {
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private boolean isNetworkUnAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -138,41 +144,66 @@ public class FragmentOverview extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.action_share:
-                final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
-                new AlertDialog.Builder(getActivity())
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals(getString(R.string.action_share_link))) {
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("text/plain");
-                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+
+                final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                if (sharedPref.getBoolean ("first_screenshot", false)){
+                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+                    Linkify.addLinks(s, Linkify.WEB_URLS);
+
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.firstScreenshot_title)
+                            .setMessage(s)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
                                 }
-                                if (options[item].equals(getString(R.string.action_share_screenshot))) {
+                            })
+                            .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
 
-                                    screenshot();
-
-                                    new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
-                                    Date date = new Date();
-                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
-
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("image/png");
-                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                            + dateFormat.format(date) + ".jpg"));
-                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    sharedPref.edit()
+                                            .putBoolean("first_screenshot", false)
+                                            .apply();
                                 }
-                                if (options[item].equals(getString(R.string.action_save_screenshot))) {
-                                    screenshot();
-                                }
-                            }
-                        }).show();
+                            });
+                    dialog.show();
+                } else {
+                    final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
+                    new AlertDialog.Builder(getActivity())
+                            .setItems(options, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int item) {
+                                    if (options[item].equals(getString(R.string.action_share_link))) {
+                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                        sharingIntent.setType("text/plain");
+                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                    }
+                                    if (options[item].equals(getString(R.string.action_share_screenshot))) {
 
+                                        screenshot();
+
+                                        new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
+                                        Date date = new Date();
+                                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+
+                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                        sharingIntent.setType("image/png");
+                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                        Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                                + dateFormat.format(date) + ".jpg"));
+                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                    }
+                                    if (options[item].equals(getString(R.string.action_save_screenshot))) {
+                                        screenshot();
+                                    }
+                                }
+                            }).show();
+                }
                 return true;
         }
 
@@ -180,6 +211,36 @@ public class FragmentOverview extends Fragment {
     }
 
     private void screenshot() {
+
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            int hasWRITE_EXTERNAL_STORAGE = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.permissions)
+                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (android.os.Build.VERSION.SDK_INT >= 23)
+                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                REQUEST_CODE_ASK_PERMISSIONS);
+                                }
+                            })
+                            .setNegativeButton(getString(R.string.no), null)
+                            .show();
+                    return;
+                }
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return;
+            }
+        }
+
+        File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
+        if (!directory.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            directory.mkdirs();
+        }
 
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());

@@ -22,7 +22,7 @@
 
     <string name="action_search">Suche …</string>
     <string name="action_bookmarks">Lesezeichen</string>
-    <string name="action_settings">Einstellungen | Über | Hilfe</string>
+    <string name="action_settings">Einstellungen</string>
 
     // Settings
 
@@ -110,6 +110,9 @@
     <string name="changelog_text" tools:keep="@string/changelog_text">
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v3.0:&lt;/b>&lt;br>
+        &#8226; zum Tab Layout gewechselt&lt;br>&lt;br>
 
         &lt;b>v2.3.1:&lt;/b>&lt;br>
         &#8226; fixed Splashscreen bei manchen Geräten&lt;br>

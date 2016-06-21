@@ -150,11 +150,11 @@ public class Browser extends AppCompatActivity  {
                     if (url.contains("dwd")) {
                         mWebView.scrollTo(0, 160);
                         setTitle(R.string.dwd);
-                        checkFirstRun3();
+                        checkFirstRun2();
                     } else if (url.contains("meteoblue")) {
                         mWebView.scrollTo(0, 280);
                         setTitle(R.string.meteo);
-                        checkFirstRun3();
+                        checkFirstRun2();
                     } else {
                         mWebView.scrollTo(0, 0);
                         setTitle(R.string.action_search);
@@ -280,7 +280,6 @@ public class Browser extends AppCompatActivity  {
                             }
                         }
                     }).show();
-            checkFirstRun2();
         }
 
         return super.onOptionsItemSelected(item);
@@ -314,33 +313,6 @@ public class Browser extends AppCompatActivity  {
     }
 
     private void checkFirstRun2() {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_screenshot", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
-
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
-                    .setTitle(R.string.firstScreenshot_title)
-                    .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            sharedPref.edit()
-                                    .putBoolean("first_screenshot", false)
-                                    .apply();
-                        }
-                    });
-            dialog.show();
-        }
-    }
-
-    private void checkFirstRun3() {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref.getBoolean ("first_browser", false)){
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
@@ -396,6 +368,31 @@ public class Browser extends AppCompatActivity  {
         if (!directory.exists()) {
             //noinspection ResultOfMethodCallIgnored
             directory.mkdirs();
+        }
+
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref.getBoolean ("first_screenshot", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
         }
 
         Date date = new Date();

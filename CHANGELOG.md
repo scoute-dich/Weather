@@ -1,3 +1,6 @@
+### v3.0
+- switched to tab layout
+
 ### v2.3.1
 - fixed splashscreen on some devices
 - bug fixes
