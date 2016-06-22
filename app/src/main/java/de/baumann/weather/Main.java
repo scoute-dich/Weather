@@ -1,5 +1,7 @@
 package de.baumann.weather;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +13,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,11 +105,6 @@ public class Main extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_bookmarks, menu);
@@ -128,12 +128,33 @@ public class Main extends AppCompatActivity {
         }
 
         if (id == R.id.action_search) {
-            Intent intent_in = new Intent(Main.this, Browser.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
+            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            if (sharedPref.getBoolean ("first_search", false)) {
+                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(Main.this)
+                        .setTitle(R.string.firstSearch_title)
+                        .setMessage(s)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                                sharedPref.edit()
+                                        .putBoolean("first_search", false)
+                                        .apply();
+                            }
+                        });
+                dialog.show();
+            } else {
+                Intent intent_in = new Intent(Main.this, Browser.class);
+                startActivity(intent_in);
+                overridePendingTransition(0, 0);
+                finish();
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

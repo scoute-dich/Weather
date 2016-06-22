@@ -101,6 +101,7 @@ public class FragmentOverview extends Fragment {
 
         if (isNetworkUnAvailable()) { // loading offline
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            Snackbar.make(container, R.string.toast_cache, Snackbar.LENGTH_LONG).show();
         }
 
         Intent intent = getActivity().getIntent();
@@ -157,11 +158,6 @@ public class FragmentOverview extends Fragment {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     dialog.cancel();
-                                }
-                            })
-                            .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
                                     sharedPref.edit()
                                             .putBoolean("first_screenshot", false)
                                             .apply();

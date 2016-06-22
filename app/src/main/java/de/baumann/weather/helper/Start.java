@@ -64,7 +64,7 @@ public class Start extends AppCompatActivity  {
             SimpleAdapter simpleAdapter = new SimpleAdapter(
                     Start.this,
                     mapList,
-                    R.layout.list_item2,
+                    R.layout.list_item,
                     new String[] {"title", "url"},
                     new int[] {R.id.item, R.id.textView1}
             );

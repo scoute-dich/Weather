@@ -111,6 +111,8 @@ public class Browser extends AppCompatActivity  {
             }
         });
 
+        checkFirstRunBrowser();
+
         mWebView = (WebView) findViewById(R.id.webView);
         assert mWebView != null;
         mWebView.loadUrl("http://m.wetterdienst.de/");
@@ -150,15 +152,12 @@ public class Browser extends AppCompatActivity  {
                     if (url.contains("dwd")) {
                         mWebView.scrollTo(0, 160);
                         setTitle(R.string.dwd);
-                        checkFirstRun2();
                     } else if (url.contains("meteoblue")) {
                         mWebView.scrollTo(0, 280);
                         setTitle(R.string.meteo);
-                        checkFirstRun2();
                     } else {
                         mWebView.scrollTo(0, 0);
                         setTitle(R.string.action_search);
-                        checkFirstRun();
                     }
 
                 } else {
@@ -202,32 +201,54 @@ public class Browser extends AppCompatActivity  {
         }
 
         if (id == R.id.action_saveBookmark) {
-            try {
-                final EditText input = new EditText(this);
-                input.setText(mWebView.getTitle());
-                final BrowserDatabase db = new BrowserDatabase(this);
-                final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
-                        .setView(input)
-                        .setMessage(R.string.edit_title)
+            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            if (sharedPref.getBoolean ("first_search", false)) {
+                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
+                        .setTitle(R.string.firstSearch_title)
+                        .setMessage(s)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                String inputTag = input.getText().toString().trim();
-                                db.addBookmark(inputTag, mWebView.getUrl());
-                                db.close();
-                                Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
+                                sharedPref.edit()
+                                        .putBoolean("first_search", false)
+                                        .apply();
                             }
                         });
                 dialog.show();
+            } else {
+                try {
 
-            } catch (Exception e) {
-                e.printStackTrace();
+
+                    final EditText input = new EditText(this);
+                    input.setText(mWebView.getTitle());
+                    final BrowserDatabase db = new BrowserDatabase(this);
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                            .setView(input)
+                            .setMessage(R.string.edit_title)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    String inputTag = input.getText().toString().trim();
+                                    db.addBookmark(inputTag, mWebView.getUrl());
+                                    db.close();
+                                    Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            });
+                    dialog.show();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -246,73 +267,67 @@ public class Browser extends AppCompatActivity  {
         }
 
         if (id == R.id.action_share) {
-            final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
-            new AlertDialog.Builder(Browser.this)
-                    .setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int item) {
-                            if (options[item].equals(getString(R.string.action_share_link))) {
-                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("text/plain");
-                                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                startActivity(Intent.createChooser(sharingIntent, "Share using"));
-                            }
-                            if (options[item].equals(getString(R.string.action_share_screenshot))) {
+            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            if (sharedPref.getBoolean ("first_screenshot", false)){
+                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+                Linkify.addLinks(s, Linkify.WEB_URLS);
 
-                                screenshot();
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.firstScreenshot_title)
+                        .setMessage(s)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-                                new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
-                                Date date = new Date();
-                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                                sharedPref.edit()
+                                        .putBoolean("first_screenshot", false)
+                                        .apply();
+                            }
+                        });
+                dialog.show();
+            } else {
+                final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
+                new AlertDialog.Builder(Browser.this)
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
+                                if (options[item].equals(getString(R.string.action_share_link))) {
+                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                    sharingIntent.setType("text/plain");
+                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                }
+                                if (options[item].equals(getString(R.string.action_share_screenshot))) {
 
-                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("image/png");
-                                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                        + dateFormat.format(date) + ".jpg"));
-                                sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                    screenshot();
+
+                                    new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
+                                    Date date = new Date();
+                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+
+                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                    sharingIntent.setType("image/png");
+                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                    Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                            + dateFormat.format(date) + ".jpg"));
+                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                }
+                                if (options[item].equals(getString(R.string.action_save_screenshot))) {
+                                    screenshot();
+                                }
                             }
-                            if (options[item].equals(getString(R.string.action_save_screenshot))) {
-                                screenshot();
-                            }
-                        }
-                    }).show();
+                        }).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkFirstRun() {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_search", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
 
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
-                    .setTitle(R.string.firstSearch_title)
-                    .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            sharedPref.edit()
-                                    .putBoolean("first_search", false)
-                                    .apply();
-                        }
-                    });
-            dialog.show();
-        }
-    }
-
-    private void checkFirstRun2() {
+    private void checkFirstRunBrowser() {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref.getBoolean ("first_browser", false)){
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
@@ -325,11 +340,6 @@ public class Browser extends AppCompatActivity  {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
                             sharedPref.edit()
                                     .putBoolean("first_browser", false)
                                     .apply();
@@ -382,11 +392,6 @@ public class Browser extends AppCompatActivity  {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
                             sharedPref.edit()
                                     .putBoolean("first_screenshot", false)
                                     .apply();

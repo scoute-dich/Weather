@@ -14,9 +14,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/webView"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -27,6 +25,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         style="@android:style/Widget.ProgressBar.Horizontal"
+        android:progressBackgroundTint="@color/colorPrimary"
+        android:progressBackgroundTintMode="src_over"
         android:progressTint="@color/colorAccent"
         android:id="@+id/progressBar" />
 

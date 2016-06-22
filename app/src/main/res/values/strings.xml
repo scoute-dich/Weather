@@ -89,7 +89,7 @@
 
     //License Dialog
 
-    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by scoute-dich</string>
+    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by Gaukler Faun</string>
     <string name="about_text" tools:keep="@string/about_text">
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@
 
     //Help Dialogs
 
-    <string name="notagain">Do not show again.</string>
+    <string name="notagain">Do not show again</string>
 
     <string name="firstSearch_title">Saving bookmarks</string>
     <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>

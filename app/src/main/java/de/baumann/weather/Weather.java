@@ -129,11 +129,6 @@ public class Weather extends AppCompatActivity {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
                             sharedPref.edit()
                                     .putBoolean("first_browser", false)
                                     .apply();

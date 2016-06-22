@@ -242,7 +242,7 @@ public class FragmentBookmark extends Fragment {
             SimpleAdapter simpleAdapter = new SimpleAdapter(
                     getActivity(),
                     mapList,
-                    R.layout.list_item2,
+                    R.layout.list_item,
                     new String[] {"title", "url"},
                     new int[] {R.id.item, R.id.textView1}
             );
@@ -267,11 +267,6 @@ public class FragmentBookmark extends Fragment {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton(R.string.notagain, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int whichButton) {
                             sharedPref.edit()
                                     .putBoolean("first_bookmark", false)
                                     .apply();

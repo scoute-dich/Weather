@@ -90,7 +90,7 @@
     <string name="added">Lesezeichen wird hinzugefügt.</string>
 
     //License Dialog
-    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by scoute-dich</string>
+    <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by Gaukler Faun</string>
     <string name="about_text" tools:keep="@string/about_text">
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@
         &#8226; Einstellungen&lt;br>
         &#8226; mit dem ersten Lesezeichen …&lt;br>
         &#8226; … oder der Lesezeichenliste starten&lt;br>
-        &#8226; Lezeichen bearbeiten&lt;br>
+        &#8226; Lesezeichen bearbeiten&lt;br>
         &#8226; Hilfedialoge&lt;br>
         &#8226; anpassen der Oberfläche&lt;br>
         &#8226; Startbildschirm
@@ -144,18 +144,18 @@
 
     //Help Dialogs
 
-    <string name="notagain">Nicht mehr anzeigen.</string>
+    <string name="notagain">Nicht mehr anzeigen</string>
 
     <string name="firstSearch_title">Lesezeichen speichern</string>
     <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
 
     <string name="firstSearch_text">
-        Um ein Lesezeichen zu speichern einfach den das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst ist es wichtig,
+        Um ein Lesezeichen zu speichern einfach das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
         die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
 
         Wenn du das Icon gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
-        eingeben (im Normalfall den Namen der Stadt).&lt;br>&lt;br>*
+        eingeben (im Normalfall den Namen der Stadt).&lt;br>&lt;br>
 
         Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
         indem du auf die Titelleiste klickst. Um zur Lesezeichenliste zurückzukehren kannst du auch den Pfeil in der Titelleiste

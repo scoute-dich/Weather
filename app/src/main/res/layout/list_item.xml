@@ -8,7 +8,7 @@
         android:id="@+id/icon"
         android:layout_width="46dp"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:src="@drawable/imp0"
         android:layout_margin="16dp" />
 
     <LinearLayout android:layout_width="wrap_content"
@@ -23,7 +23,8 @@
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginTop="16dp"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginRight="16dp" />
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -31,6 +32,7 @@
             android:textSize="12sp"
             android:layout_marginBottom="16dp"
             android:typeface="serif"
-            android:lines="1" />
+            android:lines="1"
+            android:layout_marginRight="16dp" />
     </LinearLayout>
 </LinearLayout>
