@@ -69,8 +69,9 @@
 
     <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="delete_bookmark">Lesezeichen löschen</string>
-    <string name="edit_url">Die URL des Lesezeichens bearbeiten</string>
-    <string name="edit_title">Den Titel des Lesezeichens bearbeiten</string>
+    <string name="edit_url">URL bearbeiten</string>
+    <string name="edit_title">Titel bearbeiten</string>
+    <string name="edit_fav">Als Favorit setzen</string>
 
     <string name="toast_screenshot">Bildschirmfoto wird gespeichert unter:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Cache wird geleert …</string>
@@ -179,8 +180,8 @@
     <string name="firstBookmark_text">
         &lt;i>Die Liste:&lt;/i>&lt;br>
 
-        Das ist deine Lesezeichenliste. das oberste Lesezeichen ist dein Favorit. Es kann beim Start der App oder beim
-        Klick auf die Titelbar geladen werden (siehe Einstellungen).&lt;br>&lt;br>
+        Das ist deine Lesezeichenliste. Du kannst ein Lesezeichen als Favorit setzen, indem du lange darauf klickst.
+        Es kann beim Start der App oder beim Klick auf die Titelbar geladen werden (siehe Einstellungen).&lt;br>&lt;br>
 
         &lt;i>Lesezeichen bearbeiten:&lt;/i>&lt;br>
 

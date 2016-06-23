@@ -40,6 +40,5 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         imageView.setImageResource(imgid[position]);
         extratxt.setText(itemURL[position]);
         return rowView;
-
     }
 }

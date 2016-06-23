@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -87,7 +88,7 @@ public class FragmentBookmark extends Fragment {
                 final String title = map.get("title");
                 final String url = map.get("url");
 
-                final CharSequence[] options = {getString(R.string.edit_title), getString(R.string.edit_url),getString(R.string.delete_bookmark)};
+                final CharSequence[] options = {getString(R.string.edit_title), getString(R.string.edit_url), getString(R.string.edit_fav), getString(R.string.delete_bookmark)};
                 new AlertDialog.Builder(getActivity())
                         .setItems(options, new DialogInterface.OnClickListener() {
                             @Override
@@ -153,6 +154,14 @@ public class FragmentBookmark extends Fragment {
                                     }
 
                                 }
+
+                                if (options[item].equals (getString(R.string.edit_fav))) {
+                                    final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                    sharedPref.edit()
+                                            .putString("favorite", url)
+                                            .apply();
+                                }
+
                                 if (options[item].equals(getString(R.string.delete_bookmark))) {
 
 

@@ -67,8 +67,9 @@
 
     <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Edit bookmark</string>
     <string name="delete_bookmark">Delete bookmark</string>
-    <string name="edit_url">Edit URL of the bookmark</string>
-    <string name="edit_title">Edit title of the bookmark</string>
+    <string name="edit_url">Edit URL</string>
+    <string name="edit_title">Edit title</string>
+    <string name="edit_fav">Set as favorite</string>
 
     <string name="toast_screenshot">Saving screenshot as:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Clearing cache …</string>
@@ -178,8 +179,8 @@
     <string name="firstBookmark_text">
         &lt;i>The list:&lt;/i>&lt;br>
 
-        This is your bookmark list. The first bookmark is your favorite. It can be loaded on app start or on title bar click
-        (look in the settings).&lt;br>&lt;br>
+        This is your bookmark list. You can set your favorite by long pressing a bookmark.
+        It can be loaded on app start or on title bar click (look in the settings).&lt;br>&lt;br>
 
         &lt;i>Edit bookmarks:&lt;/i>&lt;br>
 

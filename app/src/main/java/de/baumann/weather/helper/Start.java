@@ -1,78 +1,40 @@
 package de.baumann.weather.helper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.baumann.weather.Browser;
 import de.baumann.weather.R;
 import de.baumann.weather.Weather;
 
-@SuppressWarnings({"UnusedParameters", "EmptyMethod"})
 public class Start extends AppCompatActivity  {
 
-    private ListView listView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_bookmarks);
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String startURL = sharedPref.getString("favorite", "http://m.wetterdienst.de/");
 
-        listView = (ListView)findViewById(R.id.bookmarks);
-
-        setBookmarkList();
-
-        @SuppressWarnings("unchecked")
-        HashMap<String,String> map = (HashMap<String,String>)listView.getItemAtPosition(0);
-        Intent intent = new Intent(Start.this, Weather.class);
-        intent.putExtra("url", map.get("url"));
-        intent.putExtra("url2", map.get("url") + "stuendlich");
-        intent.putExtra("url3", map.get("url") + "10-Tage");
-        intent.putExtra("title", map.get("title"));
-        startActivityForResult(intent, 100);
-        finish();
-
-    }
-
-    private void setBookmarkList() {
-
-        ArrayList<HashMap<String,String>> mapList = new ArrayList<>();
-
-        try {
-            BrowserDatabase db = new BrowserDatabase(Start.this);
-            ArrayList<String[]> bookmarkList = new ArrayList<>();
-            db.getBookmarks(bookmarkList);
-            if (bookmarkList.size() == 0) {
-                db.loadInitialData();
-                db.getBookmarks(bookmarkList);
-            }
-            db.close();
-
-            for (String[] strAry : bookmarkList) {
-                HashMap<String, String> map = new HashMap<>();
-                map.put("seqno", strAry[0]);
-                map.put("title", strAry[1]);
-                map.put("url", strAry[2]);
-                mapList.add(map);
-            }
-
-            SimpleAdapter simpleAdapter = new SimpleAdapter(
-                    Start.this,
-                    mapList,
-                    R.layout.list_item,
-                    new String[] {"title", "url"},
-                    new int[] {R.id.item, R.id.textView1}
-            );
-
-            listView.setAdapter(simpleAdapter);
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        if (startURL.contains("m.wetterdienst.de")) {
+            Intent intent = new Intent(Start.this, Weather.class);
+            intent.putExtra("url", startURL);
+            startActivityForResult(intent, 100);
+            finish();
+        } else {
+            Intent intent = new Intent(Start.this, Browser.class);
+            intent.putExtra("url", startURL);
+            startActivityForResult(intent, 100);
+            finish();
         }
     }
 }
