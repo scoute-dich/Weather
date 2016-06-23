@@ -23,11 +23,15 @@ public class Start extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String startURL = sharedPref.getString("favorite", "http://m.wetterdienst.de/");
+        String startURL = sharedPref.getString("favoriteURL", "http://m.wetterdienst.de/");
+        String startTitle = sharedPref.getString("favoriteTitle", "http://m.wetterdienst.de/");
 
         if (startURL.contains("m.wetterdienst.de")) {
             Intent intent = new Intent(Start.this, Weather.class);
             intent.putExtra("url", startURL);
+            intent.putExtra("url2", startURL + "stuendlich");
+            intent.putExtra("url3", startURL + "10-Tage");
+            intent.putExtra("title", startTitle);
             startActivityForResult(intent, 100);
             finish();
         } else {

@@ -158,7 +158,8 @@ public class FragmentBookmark extends Fragment {
                                 if (options[item].equals (getString(R.string.edit_fav))) {
                                     final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                                     sharedPref.edit()
-                                            .putString("favorite", url)
+                                            .putString("favoriteURL", url)
+                                            .putString("favoriteTitle", title)
                                             .apply();
                                 }
 
