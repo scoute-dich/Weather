@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class BrowserDatabase extends SQLiteOpenHelper
 {
     public BrowserDatabase(Context context)
-    throws NameNotFoundException
+            throws NameNotFoundException
     {
         super(context,
-              "activity_browser.db",
-              null,
-              context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode);
+                "browser.db",
+                null,
+                context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode);
     }
 
     @Override
@@ -33,10 +33,10 @@ public class BrowserDatabase extends SQLiteOpenHelper
     {
         db.execSQL(
                 "CREATE TABLE bookmarks (" +
-                "seqno NUMBER NOT NULL, " +
-                "title TEXT NOT NULL, " +
-                "url TEXT NOT NULL, " +
-                "PRIMARY KEY(seqno))"
+                        "seqno NUMBER NOT NULL, " +
+                        "title TEXT NOT NULL, " +
+                        "url TEXT NOT NULL, " +
+                        "PRIMARY KEY(seqno))"
         );
     }
 
