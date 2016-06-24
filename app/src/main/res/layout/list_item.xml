@@ -8,7 +8,7 @@
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="match_parent"
-        android:src="@drawable/imp0"
+        android:src="@drawable/img_00"
         android:layout_margin="16dp" />
 
     <LinearLayout android:layout_width="wrap_content"
@@ -25,15 +25,27 @@
             android:layout_marginTop="16dp"
             android:textSize="18sp"
             android:layout_marginRight="16dp"
-            android:lines="1" />
+            android:lines="1"
+            android:layout_marginLeft="16dp" />
+
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:layout_marginBottom="16dp"
             android:typeface="serif"
             android:lines="1"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textSize="12sp"
+            android:typeface="serif"
+            android:lines="1" />
+
     </LinearLayout>
 </LinearLayout>

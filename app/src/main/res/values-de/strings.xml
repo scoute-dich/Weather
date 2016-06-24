@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     // Application
 
     <string name="app_name">Wetter</string>
@@ -10,19 +11,18 @@
         dann die entsprechende Einstellung vornehmen.</string>
 
 
-    // (Drawer-) Menu Items
+    // Menu Items
 
     <string name="menu2">Wetterinfos</string>
-
     <string name="action_exit">App verlassen</string>
     <string name="action_share">Wetterbericht teilen</string>
     <string name="action_share_screenshot">Bildschirmfoto teilen</string>
     <string name="action_share_link">Link als Text teilen</string>
     <string name="action_save_screenshot">Bildschirmfoto speichern</string>
-
     <string name="action_search">Suche …</string>
     <string name="action_bookmarks">Lesezeichen</string>
     <string name="action_settings">Einstellungen</string>
+
 
     // Settings
 
@@ -38,27 +38,37 @@
         funktionieren. Javascript stellt allerdings ein Sicherheitsrisiko dar.</string>
 
     <string name="action_license">Lizenz</string>
-    <string name="action_license_summary">App ist unter der GPL3-Lizenz lizenziert.</string>
+    <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
+
+    <string name="action_forecastStart">Bundesland</string>
+    <string name="action_forecastStart_summary">Von welchem Bundesland soll der Wetterbericht geladen werden?</string>
 
     <string name="action_clearCache">Cache leeren</string>
     <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
     <string name="action_clearCache_dialog">Möchtest du wirklich den Cache leeren? Alle offline gespeicherten Seiten werden gelöscht.</string>
 
     <string name="action_start">Start und Titelbar-Klick</string>
-    <string name="action_start_summary">Was möchtest du sehen: Entweder das erste Lesezeidchen oder die Lesezeichenliste?</string>
+    <string name="action_start_summary">Was möchtest du sehen: Entweder den Startschirm oder den Lesezeichenfavorit?</string>
 
 
     // DWD = German Weather Service
 
     <string name="dwd">Deutscher Wetterdienst</string>
-    <string name="meteo">Meteoblue | Wetterkarten</string>
-
     <string name="action_thema">DWD - Thema des Tages</string>
-    <string name="action_karten">Strömungsfilm</string>
+    <string name="action_karten">Wetterkarten</string>
     <string name="action_lexikon">DWD - Wetterlexikon</string>
-    <string name="action_radar">Regenvorhersage</string>
+    <string name="action_forecast">Vorhersage</string>
     <string name="action_satellit">Satellitenbild</string>
     <string name="action_webSearch">Web Suche</string>
+    <string name="action_radar">Regenradar</string>
+
+    <string name="text_des_1">Der Wetterbericht für dein bevorzugtes Bundesland.</string>
+    <string name="text_des_2">Zeigt den Regenradar (-film) von Deutschland.</string>
+    <string name="text_des_5">Jeden Tag eine neue, interressante Geschichte zum Thema Wetter.</string>
+    <string name="text_des_6">Das Wetterlexikon des Deutschen Wetterdienstes.</string>
+    <string name="text_des_3">Zeigt mehrere (Vorhersage-) Wetterkarten von Europa und der Welt.</string>
+    <string name="text_des_4">Aktuelle und vergangene Satellitenbilder der ganzen Welt.</string>
+    <string name="text_des_7">Startpage: eine sichere und auf Privatshäre bedachte Suchmaschiene.</string>
 
 
     // Dialog // Snackbar
@@ -71,17 +81,32 @@
     <string name="delete_bookmark">Lesezeichen löschen</string>
     <string name="edit_url">URL bearbeiten</string>
     <string name="edit_title">Titel bearbeiten</string>
-    <string name="edit_fav">Als Favorit setzen</string>
+    <string name="edit_fav">Als Favorit speichern</string>
 
     <string name="toast_screenshot">Bildschirmfoto wird gespeichert unter:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
+    <string name="toast_setBookmark">Erfolgreich als Favorit gespeichert.</string>
 
-    // Floating Action Buttons - Titles
+
+    // Context Menu
+
+    <string name="context_saveImage">Bild speichern</string>
+    <string name="context_shareImage">Bild teilen</string>
+    <string name="context_externalBrowser">Im Browser öffnen</string>
+    <string name="context_linkCopy">Link kopieren</string>
+
+    <string name="context_linkCopy_toast">Link erfolgreich kopiert</string>
+    <string name="context_shareImage_toast">Bild kann nicht geteilt werden: kein URL</string>
+    <string name="context_saveImage_toast">Bild gespeichert unter:</string>
+
+
+    // Tab - Titles
 
     <string name="fab1_title">Übersicht</string>
     <string name="fab2_title">Stündlich</string>
     <string name="fab3_title">Trend</string>
+
 
     // Bookmarks
 
@@ -90,7 +115,26 @@
     <string name="cannot_remove">Du brauchst mindestens ein Lesezeichen!</string>
     <string name="added">Lesezeichen wird hinzugefügt.</string>
 
+
+    //States
+
+    <string name="state_1">für Deutschland</string>
+    <string name="state_2">für Baden-Württemberg</string>
+    <string name="state_3">für Bayern</string>
+    <string name="state_4">für Berlin und Brandenburg</string>
+    <string name="state_5">für Hessen</string>
+    <string name="state_6">für Mecklenburg-Vorpommern</string>
+    <string name="state_7">für Niedersachsen und Bremen</string>
+    <string name="state_8">für Nordrhein-Westfalen</string>
+    <string name="state_9">für Rheinland-Pfalz und Saarland</string>
+    <string name="state_10">für Sachsen</string>
+    <string name="state_11">für Sachsen-Anhalt</string>
+    <string name="state_12">für Schleswig-Holstein und Hamburg</string>
+    <string name="state_13">für Thüringen</string>
+
+
     //License Dialog
+
     <string name="about_title" tools:keep="@string/about_title">Copyright © 2016  by Gaukler Faun</string>
     <string name="about_text" tools:keep="@string/about_text">
         This program is free software: you can redistribute it and/or modify
@@ -107,33 +151,41 @@
         along with this program.  If not, see http://www.gnu.org/licenses.
     </string>
 
+
     //Changelog Dialog
+
     <string name="changelog_text" tools:keep="@string/changelog_text">
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>v3.0:&lt;/b>&lt;br>
-        &#8226; zum Tab Layout gewechselt&lt;br>&lt;br>
+        &lt;b>v 3.0:&lt;/b>&lt;br>
+        &#8226; Tab Layout&lt;br>
+        &#8226; Kontextmenü&lt;br>
+        &#8226; Lesezeichen als Favorit setzen&lt;br>
+        &#8226; Pinch to Zoom&lt;br>
+        &#8226; Wetterinformationen nur vom DWD&lt;br>
+        &#8226; Bundesland auswählen&lt;br>
+        &#8226; weitere Verbesserungen&lt;br>&lt;br>
 
-        &lt;b>v2.3.1:&lt;/b>&lt;br>
+        &lt;b>v 2.3.1:&lt;/b>&lt;br>
         &#8226; fixed Splashscreen bei manchen Geräten&lt;br>
         &#8226; bug fixes&lt;br>&lt;br>
 
-        &lt;b>v2.3:&lt;/b>&lt;br>
+        &lt;b>v 2.3:&lt;/b>&lt;br>
         &#8226; fixed Einstellungen verlassen&lt;br>
         &#8226; Javascript Einstellung&lt;br>
         &#8226; Hilfe Einstellungen&lt;br>
         &#8226; App-Größe reduziert&lt;br>
         &#8226; fixed einige \"force close\" Fehler&lt;br>&lt;br>
 
-        &lt;b>v2.1.1 - 2.2:&lt;/b>&lt;br>
+        &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build Fehler&lt;br>&lt;br>
 
-        &lt;b>v2.1:&lt;/b>&lt;br>
+        &lt;b>v 2.1:&lt;/b>&lt;br>
         &#8226; Mind SDK 16&lt;br>
         &#8226; fixed App beenden&lt;br>&lt;br>
 
-        &lt;b>v2.0:&lt;/b>&lt;br>
+        &lt;b>v 2.0:&lt;/b>&lt;br>
         &#8226; Einstellungen&lt;br>
         &#8226; mit dem ersten Lesezeichen …&lt;br>
         &#8226; … oder der Lesezeichenliste starten&lt;br>
@@ -143,49 +195,48 @@
         &#8226; Startbildschirm
     </string>
 
-    //Help Dialogs
 
-    <string name="notagain">Nicht mehr anzeigen</string>
+    //Help Dialogs
 
     <string name="firstSearch_title">Lesezeichen speichern</string>
     <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
-
     <string name="firstSearch_text">
-        Um ein Lesezeichen zu speichern einfach das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst ist es wichtig,
+        Um ein Lesezeichen zu speichern einfach das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst, ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
         die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
 
         Wenn du das Icon gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
         eingeben (im Normalfall den Namen der Stadt).&lt;br>&lt;br>
 
-        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
-        indem du auf die Titelleiste klickst. Um zur Lesezeichenliste zurückzukehren kannst du auch den Pfeil in der Titelleiste
+        Du kannst zur Startschirm oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
+        indem du auf die Titelleiste klickst. Um zum Startschirm zurückzukehren kannst du auch den Pfeil in der Titelleiste
         klicken. Nach unten wischen um die Seite neu zu laden.</string>
 
 
     <string name="firstBrowser_title">Browser</string>
     <string name="firstBrowser_title_summary">Noch einmal anzeigen: Funktionen des Browsers?</string>
-
     <string name="firstBrowser_text">
-        Deine Lesezeichen werden in diesem Browser angezeigt. Wenn du keine Internetverbindung hast, werden sie
-        offline (aus dem Cache) geladen.&lt;br>&lt;br>
+        Deine Lesezeichen werden in dieser Webview angezeigt. Eine Webview zeigt Internetseiten in Apps an.
+        Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.&lt;br>&lt;br>
 
-        Du kannst zur Lesezeichenliste oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
-        indem du auf die Titelleiste klickst. Um zur Lesezeichenliste zurückzukehren kannst du auch den Pfeil in der Titelleiste
+        In der Webview gibt es ein Kontextmenü, dass sich bei einem langen Klick auf Bilder oder Links öffnet.&lt;br>&lt;br>
+
+        Du kannst zum Startschirm oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
+        indem du auf die Titelleiste klickst. Um zum Startschirm zurückzukehren kannst du auch den Pfeil in der Titelleiste
         klicken. Nach unten wischen um die Seite neu zu laden.</string>
 
-    <string name="firstBookmark_title">Lesezeichenliste</string>
-    <string name="firstBookmark_title_summary">Noch einmal anzeigen: Funktion der Lesezeichenliste?</string>
-
+    <string name="firstBookmark_title">Startschirm</string>
+    <string name="firstBookmark_title_summary">Noch einmal anzeigen: Funktion des Startschirms?</string>
     <string name="firstBookmark_text">
-        &lt;i>Die Liste:&lt;/i>&lt;br>
+        &lt;i>Die Tabs:&lt;/i>&lt;br>
 
-        Das ist deine Lesezeichenliste. Du kannst ein Lesezeichen als Favorit setzen, indem du lange darauf klickst.
-        Es kann beim Start der App oder beim Klick auf die Titelbar geladen werden (siehe Einstellungen).&lt;br>&lt;br>
+        Im linken Tab kannst du Wetterinformationen des DWDs abrufen. In den
+        Einstellungen kannst du dein Bundesland auswählen. Im rechten Tab werden deine Lesezeichen angezeigt.&lt;br>&lt;br>
 
         &lt;i>Lesezeichen bearbeiten:&lt;/i>&lt;br>
 
-        Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst dann den Titel oder die URL des
+        Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst ein Lesezeichen als Favorit setzen
+        (Es kann beim Start der App oder beim Klick auf die Titelbar geladen werden - siehe Einstellungen), den Titel oder die URL des
         Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein). Wenn du
         Probleme hast die stündliche Vorhersage oder den 10 Tage-Trend einer gespeicherten Stadt zu öffnen, musst du die
         URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/Deutschlandwetter/name_deiner_stadt.
@@ -204,26 +255,5 @@
         Du kannst Bildschirmfotos der gesamten Internetseite machen (auch von dem Teil, der gerade nicht auf dem
         Bildschirm zu sehen ist). Damit dies richtig funktioniert, solltest du warten, bis die Internetseite komplett geladen
         ist, um sicherzustellen, dass die gesamte Internetseite aufgenommen wird.</string>
-
-    //String arrays
-
-    <array name="splash_images">
-        <item>@drawable/splash1</item>
-        <item>@drawable/splash2</item>
-        <item>@drawable/splash3</item>
-        <item>@drawable/splash4</item>
-        <item>@drawable/splash5</item>
-    </array>
-
-    <string-array name="listArrayStart">
-        <item>Lesezeichenliste</item>
-        <item>Das erste Lesezeichen</item>
-    </string-array>
-
-    <string-array name="listValuesStart">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
-
+    
 </resources>

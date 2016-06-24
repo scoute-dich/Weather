@@ -23,6 +23,14 @@
             android:entries="@array/listArrayStart"
             android:entryValues="@array/listValuesStart" />
 
+        <ListPreference
+            android:title="@string/action_forecastStart"
+            android:summary="@string/action_forecastStart_summary"
+            android:key="forecast"
+            android:defaultValue="http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html"
+            android:entries="@array/listArrayForecast"
+            android:entryValues="@array/listValuesForecast" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

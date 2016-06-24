@@ -1,10 +1,13 @@
 package de.baumann.weather.fragmentsMain;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,55 +15,109 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.baumann.weather.Browser;
 import de.baumann.weather.R;
-import de.baumann.weather.helper.BrowserDatabase;
 import de.baumann.weather.helper.CustomListAdapter;
 
 
 public class FragmentInfo extends Fragment {
 
-    private ListView listView = null;
-
-
+    private String state;
+    private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] itemname ={
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String forecast = sharedPref.getString("forecast", "http://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html");
+
+        switch (forecast) {
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html":
+                state = getString(R.string.state_1);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html":
+                state = getString(R.string.state_2);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/bayern/vhs_bay_node.html":
+                state = getString(R.string.state_3);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/berlin_brandenburg/vhs_bbb_node.html":
+                state = getString(R.string.state_4);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/hessen/vhs_hes_node.html":
+                state = getString(R.string.state_5);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/mecklenburg_vorpommern/vhs_mvp_node.html":
+                state = getString(R.string.state_6);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/niedersachsen_bremen/vhs_nib_node.html":
+                state = getString(R.string.state_7);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/nordrhein_westfalen/vhs_nrw_node.html":
+                state = getString(R.string.state_8);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/rheinland-pfalz_saarland/vhs_rps_node.html":
+                state = getString(R.string.state_9);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachsen/vhs_sac_node.html":
+                state = getString(R.string.state_10);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html":
+                state = getString(R.string.state_11);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html":
+                state = getString(R.string.state_12);
+                break;
+            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html":
+                state = getString(R.string.state_13);
+                break;
+        }
+
+
+        final String[] itemname ={
+                getString(R.string.action_forecast) + " " + state,
+                getString(R.string.action_radar),
+                getString(R.string.action_karten),
+                getString(R.string.action_satellit),
                 getString(R.string.action_thema),
                 getString(R.string.action_lexikon),
-                getString(R.string.action_karten),
-                getString(R.string.action_radar),
-                getString(R.string.action_satellit),
                 getString(R.string.action_webSearch),
         };
 
         final String[] itemURL ={
+                forecast,
+                "http://www.dwd.de/DE/leistungen/radarbild_film/radarbild_film.html",
+                "http://www.dwd.de/DE/leistungen/hobbymet_wk_europa/hobbyeuropakarten.html?nn=357606",
+                "http://www.dwd.de/DE/leistungen/satellit_metsat8000stc/satellit_metsat8000stc.html?nn=357606",
                 "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null",
                 "http://www.dwd.de/DE/service/lexikon/lexikon_node.html",
-                "https://www.meteoblue.com/de/wetter/karte/film/europa",
-                "https://www.meteoblue.com/de/wetter/karte/niederschlag_1h/europa",
-                "https://www.meteoblue.com/de/wetter/karte/satellit/europa",
                 "https://startpage.com/",
         };
 
+            final String[] itemDES ={
+                getString(R.string.text_des_1),
+                getString(R.string.text_des_2),
+                getString(R.string.text_des_3),
+                getString(R.string.text_des_4),
+                getString(R.string.text_des_5),
+                getString(R.string.text_des_6),
+                getString(R.string.text_des_7),
+        };
+
         Integer[] imgid={
-                R.drawable.img1,
-                R.drawable.img2,
-                R.drawable.img3,
-                R.drawable.img4,
-                R.drawable.img5,
-                R.drawable.img6,
+                R.drawable.img_01,
+                R.drawable.img_02,
+                R.drawable.img_03,
+                R.drawable.img_04,
+                R.drawable.img_05,
+                R.drawable.img_06,
+                R.drawable.img_07,
         };
 
         View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
+
 
         setHasOptionsMenu(true);
 
@@ -72,7 +129,7 @@ public class FragmentInfo extends Fragment {
             images.recycle();
         }
 
-        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemname, itemURL, imgid);
+        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemname, itemURL, itemDES, imgid);
         listView = (ListView)rootView.findViewById(R.id.bookmarks);
         listView.setAdapter(adapter);
 
@@ -87,6 +144,33 @@ public class FragmentInfo extends Fragment {
                 intent.putExtra("url", Selecteditem);
                 startActivityForResult(intent, 100);
                 getActivity().finish();
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final String title = itemname[+position];
+                final String url = itemURL[+position];
+
+                final CharSequence[] options = {getString(R.string.edit_fav)};
+                new AlertDialog.Builder(getActivity())
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
+
+                                if (options[item].equals (getString(R.string.edit_fav))) {
+                                    final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                    sharedPref.edit()
+                                            .putString("favoriteURL", url)
+                                            .putString("favoriteTitle", title)
+                                            .apply();
+                                    Snackbar.make(listView, R.string.toast_setBookmark, Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                        }).show();
+
+                return true;
             }
         });
 

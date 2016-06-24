@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -161,10 +160,10 @@ public class FragmentBookmark extends Fragment {
                                             .putString("favoriteURL", url)
                                             .putString("favoriteTitle", title)
                                             .apply();
+                                    Snackbar.make(listView, R.string.toast_setBookmark, Snackbar.LENGTH_LONG).show();
                                 }
 
                                 if (options[item].equals(getString(R.string.delete_bookmark))) {
-
 
                                     try {
                                         BrowserDatabase db = new BrowserDatabase(getActivity());
@@ -254,7 +253,7 @@ public class FragmentBookmark extends Fragment {
                     mapList,
                     R.layout.list_item,
                     new String[] {"title", "url"},
-                    new int[] {R.id.item, R.id.textView1}
+                    new int[] {R.id.item, R.id.textView0}
             );
 
             listView.setAdapter(simpleAdapter);

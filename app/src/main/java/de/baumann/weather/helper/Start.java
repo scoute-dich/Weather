@@ -2,17 +2,11 @@ package de.baumann.weather.helper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.baumann.weather.Browser;
-import de.baumann.weather.R;
 import de.baumann.weather.Weather;
 
 public class Start extends AppCompatActivity  {

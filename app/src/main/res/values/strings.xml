@@ -9,19 +9,18 @@
         weather. In the permissions section you can grant the \"write storage permission\".</string>
 
 
-    // (Drawer-) Menu Items
+    // Menu Items
 
     <string name="menu2">Weather infos</string>
-
     <string name="action_exit">Exit app</string>
     <string name="action_share">Share weather report</string>
     <string name="action_share_screenshot">Share screenshot</string>
     <string name="action_share_link">Share link as text</string>
     <string name="action_save_screenshot">Save screenshot</string>
-
     <string name="action_search">Search …</string>
     <string name="action_bookmarks">Bookmarks</string>
     <string name="action_settings">Settings</string>
+
 
     // Settings
 
@@ -37,26 +36,37 @@
         known to be a security risk.</string>
 
     <string name="action_license">License</string>
-    <string name="action_license_summary">App is licensed under GPL3</string>
+    <string name="action_license_summary">The app is completely open source and licensed under GPL3.</string>
+
+    <string name="action_forecastStart">State</string>
+    <string name="action_forecastStart_summary">From which German state should the forecast be displayed?</string>
 
     <string name="action_clearCache">Clear cache</string>
     <string name="action_clearCache_summary">Clear cache of application. All cached websites will be lost …</string>
     <string name="action_clearCache_dialog">Do you really ant to clear cache? All cached websites will be lost.</string>
 
     <string name="action_start">Start and actionbar click</string>
-    <string name="action_start_summary">What do you want to see: Either the first bookmark or the bookmark list?</string>
+    <string name="action_start_summary">What do you want to see: Either the main screen or the bookmark list?</string>
+
 
     // DWD = German Weather Service
 
     <string name="dwd">Deutscher Wetterdienst</string>
-    <string name="meteo">Meteoblue | Weather chart</string>
-
     <string name="action_thema">DWD - Topic of the day</string>
-    <string name="action_karten">Wind animation</string>
+    <string name="action_karten">Weather maps</string>
     <string name="action_lexikon">DWD - weather encyclopedia</string>
-    <string name="action_radar">Rain forecast</string>
+    <string name="action_forecast">Forecast</string>
     <string name="action_satellit">Satellite view</string>
     <string name="action_webSearch">Web search</string>
+    <string name="action_radar">Rain forecast</string>
+
+    <string name="text_des_1">The weather forecast for your preferred state (Germany only).</string>
+    <string name="text_des_2">Displays the rain (or film of the last hours) radar over Germany.</string>
+    <string name="text_des_5">Every day an other interesting thema concerning the actual weather.</string>
+    <string name="text_des_6">The weather encyclopedia from the DWD (German Weather Service).</string>
+    <string name="text_des_3">Available are several (forecast) weather cards from Europe and the world.</string>
+    <string name="text_des_4">Actual and past satellite pictures from all over the world.</string>
+    <string name="text_des_7">Startpage: a secure privacy friendly search page.</string>
 
 
     // Dialog // Snackbar
@@ -74,12 +84,27 @@
     <string name="toast_screenshot">Saving screenshot as:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Clearing cache …</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
+    <string name="toast_setBookmark">Successfully set as favorite.</string>
 
-    // Floating Action Buttons - Titles
+
+    // Context Menu
+
+    <string name="context_saveImage">Save image</string>
+    <string name="context_shareImage">Share image</string>
+    <string name="context_externalBrowser">Open in external browser</string>
+    <string name="context_linkCopy">Copy link</string>
+
+    <string name="context_linkCopy_toast">Link successfully copied</string>
+    <string name="context_shareImage_toast">Cannot share image: no URL</string>
+    <string name="context_saveImage_toast">Saved image to location:</string>
+
+
+    // Tab - Titles
 
     <string name="fab1_title">Overview</string>
     <string name="fab2_title">Hourly</string>
     <string name="fab3_title">Trend</string>
+
 
     // Bookmarks
 
@@ -87,6 +112,24 @@
     <string name="remove_confirmation">Bookmark will be removed. OK?</string>
     <string name="cannot_remove">You need at least one bookmark!</string>
     <string name="added">Adding bookmark.</string>
+
+
+    //States
+
+    <string name="state_1">for Germany</string>
+    <string name="state_2">for Baden-Württemberg</string>
+    <string name="state_3">for Bayern</string>
+    <string name="state_4">for Berlin and Brandenburg</string>
+    <string name="state_5">for Hessen</string>
+    <string name="state_6">for Mecklenburg-Vorpommern</string>
+    <string name="state_7">for Niedersachsen and Bremen</string>
+    <string name="state_8">for Nordrhein-Westfalen</string>
+    <string name="state_9">for Rheinland-Pfalz and Saarland</string>
+    <string name="state_10">for Sachsen</string>
+    <string name="state_11">for Sachsen-Anhalt</string>
+    <string name="state_12">for Schleswig-Holstein and Hamburg</string>
+    <string name="state_13">for Thüringen</string>
+
 
     //License Dialog
 
@@ -106,34 +149,41 @@
         along with this program.  If not, see http://www.gnu.org/licenses.
     </string>
 
+
     //Changelog Dialog
 
     <string name="changelog_text" tools:keep="@string/changelog_text">
         &lt;i>For more informations visit the project site on github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
-        &lt;b>v3.0:&lt;/b>&lt;br>
-        &#8226; switched to tab layout&lt;br>&lt;br>
+        &lt;b>v 3.0:&lt;/b>&lt;br>
+        &#8226; tab layout&lt;br>
+        &#8226; context menu&lt;br>
+        &#8226; set favorite bookmark&lt;br>
+        &#8226; pinch to zoom&lt;br>
+        &#8226; weather infos only from the DWD&lt;br>
+        &#8226; choose state for forecast (Germany)&lt;br>
+        &#8226; more improvements&lt;br>&lt;br>
 
-        &lt;b>v2.3.1:&lt;/b>&lt;br>
+        &lt;b>v 2.3.1:&lt;/b>&lt;br>
         &#8226; fixed splashscreen on some devices&lt;br>
         &#8226; bug fixes&lt;br>&lt;br>
 
-        &lt;b>v2.3:&lt;/b>&lt;br>
+        &lt;b>v 2.3:&lt;/b>&lt;br>
         &#8226; fixed settings go back&lt;br>
         &#8226; added javascript option in settings&lt;br>
         &#8226; added help options in settings&lt;br>
         &#8226; reduced app size&lt;br>
         &#8226; fixed some force closes issues&lt;br>&lt;br>
 
-        &lt;b>v2.1.1 - 2.2:&lt;/b>&lt;br>
+        &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
         &#8226; fixed F-Droid build issues&lt;br>&lt;br>
 
-        &lt;b>v2.1:&lt;/b>&lt;br>
+        &lt;b>v 2.1:&lt;/b>&lt;br>
         &#8226; mind SDK 16&lt;br>
         &#8226; fixed exit app&lt;br>&lt;br>
 
-        &lt;b>v2.0:&lt;/b>&lt;br>
+        &lt;b>v 2.0:&lt;/b>&lt;br>
         &#8226; settings activity&lt;br>
         &#8226; start with first bookmark or …&lt;br>
         &#8226; … with bookmark list&lt;br>
@@ -143,13 +193,11 @@
         &#8226; splashscreen
     </string>
 
-    //Help Dialogs
 
-    <string name="notagain">Do not show again</string>
+    //Help Dialogs
 
     <string name="firstSearch_title">Saving bookmarks</string>
     <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>
-
     <string name="firstSearch_text">
         To save a bookmark simply click the icon at the toolbar. If you want to bookmark a city it is
         important, that the \"Überblick\" button on the website is blue and checked. Otherwise it is
@@ -158,36 +206,35 @@
         If you clicked the icon a popup appears. You can now edit the title of the bookmark.
         Normally you enter the name of the city.&lt;br>&lt;br>
 
-        You can switch back to the bookmark list or to your favorite (look into the settings) by clicking the toolbar.
-        To go back to the bookmark list you can also press the arrow at the toolbar. Swipe down to reload the website.
+        You can switch back to the main screen or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the main screen you can also press the arrow at the toolbar. Swipe down to reload the website.
     </string>
-
 
     <string name="firstBrowser_title">Browser</string>
     <string name="firstBrowser_title_summary">Show again: Functionality of the browser?</string>
-
     <string name="firstBrowser_text">
-        Your bookmarked websites are shown in this browser. If you have no internet connection they will be loaded offline from
-        the cache.&lt;br>&lt;br>
+        Your bookmarked websites are shown in this webview. A webview displays websites in an app. If you have no internet
+        connection they will be loaded offline from the cache.&lt;br>&lt;br>
 
-        You can switch back to the bookmark list or to your favorite (look into the settings) by clicking the toolbar.
-        To go back to the bookmark list you can also press the arrow at the toolbar. Swipe down to reload the website.</string>
+        In the webview there is a context menu, which opens on long pressing a link or image.&lt;br>&lt;br>
 
-    <string name="firstBookmark_title">Bookmark list</string>
-    <string name="firstBookmark_title_summary">Show again: Tip about the bookmark list?</string>
+        You can switch back to the main screen or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the main screen you can also press the arrow at the toolbar. Swipe down to reload the website.</string>
 
+    <string name="firstBookmark_title">Main screen</string>
+    <string name="firstBookmark_title_summary">Show again: Tip about the main screen?</string>
     <string name="firstBookmark_text">
-        &lt;i>The list:&lt;/i>&lt;br>
-
-        This is your bookmark list. You can set your favorite by long pressing a bookmark.
-        It can be loaded on app start or on title bar click (look in the settings).&lt;br>&lt;br>
+        &lt;i>The tabs:&lt;/i>&lt;br>
+        In the left tab you can open weather informations from the DWD. You can configure your
+        preferred state (Germany only) in the settings. In the right tab you can see your bookmarks.&lt;br>&lt;br>
 
         &lt;i>Edit bookmarks:&lt;/i>&lt;br>
 
-        Long click on a bookmark opens a popup menu. You can edit title and URL of the bookmark or delete it (at least
-        one bookmark is needed). If you have problems to open the hourly or the 10 day forecast of a bookmarked city
-        you must control the URL. It should look like this: http://www.wetterdienst.de/Deutschlandwetter/name_of_yor_city.
-        If this is not the case, correct it.&lt;br>&lt;br>
+        Long click on a bookmark opens a popup menu. You can set your favorite bookmark
+        (It can be loaded on app start or on title bar click - look in the settings.), edit title and URL of the bookmark or
+        delete it (at least one bookmark is needed). If you have problems to open the hourly or the 10 day forecast of a
+        bookmarked city you must control the URL. It should look like this:
+        http://www.wetterdienst.de/Deutschlandwetter/name_of_yor_city. If this is not the case, correct it.&lt;br>&lt;br>
 
         &lt;i>Search new cities:&lt;/i>&lt;br>
 
@@ -196,29 +243,8 @@
 
     <string name="firstScreenshot_title">Making screenshots</string>
     <string name="firstScreenshot_title_summary">Show again: Taking screenshots?</string>
-
     <string name="firstScreenshot_text">
         You can make screenshots of the whole website (even of the part which is outside of your display.
         Before taking the screenshot wait until the website is fully loaded, to ensure that the whole website is captured.</string>
-
-    //String arrays
-
-    <array name="splash_images">
-        <item>@drawable/splash1</item>
-        <item>@drawable/splash2</item>
-        <item>@drawable/splash3</item>
-        <item>@drawable/splash4</item>
-        <item>@drawable/splash5</item>
-    </array>
-
-    <string-array name="listArrayStart">
-        <item>Bookmark list</item>
-        <item>First bookmark in list</item>
-    </string-array>
-
-    <string-array name="listValuesStart">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
 
 </resources>

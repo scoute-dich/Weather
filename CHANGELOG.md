@@ -1,5 +1,11 @@
 ### v3.0
-- switched to tab layout
+- tab layout
+- context menu
+- set favorite bookmark
+- pinch to zoom
+- weather infos only from the DWD
+- choose state for forecast (Germany)
+- more improvements
 
 ### v2.3.1
 - fixed splashscreen on some devices

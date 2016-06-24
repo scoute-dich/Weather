@@ -69,8 +69,8 @@ public class Main extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new FragmentBookmark(), String.valueOf(getString(R.string.action_bookmarks)));
         adapter.addFragment(new FragmentInfo(), String.valueOf(getString(R.string.menu2)));
+        adapter.addFragment(new FragmentBookmark(), String.valueOf(getString(R.string.action_bookmarks)));
 
         viewPager.setAdapter(adapter);
     }

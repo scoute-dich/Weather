@@ -2,6 +2,9 @@ package de.baumann.weather.fragmentsWeather;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +25,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +46,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.baumann.weather.R;
+import de.baumann.weather.helper.ImageDownloadTask;
 
 public class FragmentForecast extends Fragment {
 
@@ -49,6 +54,12 @@ public class FragmentForecast extends Fragment {
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+    private static final int ID_SAVE_IMAGE = 10;
+    private static final int ID_IMAGE_EXTERNAL_BROWSER = 11;
+    private static final int ID_COPY_LINK = 12;
+    private static final int ID_SHARE_LINK = 13;
+    private static final int ID_SHARE_IMAGE = 14;
 
     private boolean isNetworkUnAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -129,7 +140,127 @@ public class FragmentForecast extends Fragment {
             }
         });
 
+        registerForContextMenu(mWebView);
+
         return rootView;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        WebView w = (WebView)v;
+        WebView.HitTestResult result = w.getHitTestResult();
+
+        MenuItem.OnMenuItemClickListener handler = new MenuItem.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                WebView.HitTestResult result = mWebView.getHitTestResult();
+                String url = result.getExtra();
+                switch (item.getItemId()) {
+                    //Save image to external memory
+                    case ID_SAVE_IMAGE: {
+                        if (android.os.Build.VERSION.SDK_INT >= 23) {
+                            int hasWRITE_EXTERNAL_STORAGE = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage(R.string.permissions)
+                                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    if (android.os.Build.VERSION.SDK_INT >= 23)
+                                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                                REQUEST_CODE_ASK_PERMISSIONS);
+                                                }
+                                            })
+                                            .setNegativeButton(getString(R.string.no), null)
+                                            .show();
+                                }
+                                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        REQUEST_CODE_ASK_PERMISSIONS);
+                            }
+                        }
+
+                        File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
+                        if (!directory.exists()) {
+                            //noinspection ResultOfMethodCallIgnored
+                            directory.mkdirs();
+                        }
+
+                        if (url != null) {
+                            Uri source = Uri.parse(url);
+                            DownloadManager.Request request = new DownloadManager.Request(source);
+                            File destinationFile = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                    + source.getLastPathSegment());
+                            request.setDestinationUri(Uri.fromFile(destinationFile));
+                            ((DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
+                            Snackbar.make(mWebView, R.string.context_saveImage_toast + " " +
+                                    destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                    break;
+
+                    case ID_SHARE_IMAGE:
+                        if(url != null) {
+                            final Uri source = Uri.parse(url);
+                            final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
+                            new ImageDownloadTask(local.getPath()) {
+                                @Override
+                                protected void onPostExecute(Bitmap result) {
+                                    Uri myUri= Uri.fromFile(new File(local.getPath()));
+                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                    sharingIntent.setType("image/*");
+                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+                                    sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    getActivity().startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                                }
+                            }.execute(url);
+                        } else {
+                            Snackbar.make(mWebView, R.string.context_shareImage_toast, Snackbar.LENGTH_LONG).show();
+                        }
+                        break;
+
+                    case ID_IMAGE_EXTERNAL_BROWSER:
+                        if (url != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            getActivity().startActivity(intent);
+                        }
+                        break;
+
+                    //Copy url to clipboard
+                    case ID_COPY_LINK:
+                        if (url != null) {
+                            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                            clipboard.setPrimaryClip(ClipData.newPlainText("text", url));
+                            Snackbar.make(mWebView, R.string.context_linkCopy_toast, Snackbar.LENGTH_LONG).show();
+                        }
+                        break;
+
+                    //Try to share link to other apps
+                    case ID_SHARE_LINK:
+                        if (url != null) {
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                            sendIntent.setType("text/plain");
+                            getActivity().startActivity(Intent.createChooser(sendIntent, getResources()
+                                    .getText(R.string.state_1)));
+                        }
+                        break;
+                }
+                return true;
+            }
+        };
+
+        if(result.getType() == WebView.HitTestResult.IMAGE_TYPE){
+            menu.add(0, ID_SAVE_IMAGE, 0, getString(R.string.context_saveImage)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_SHARE_IMAGE, 0, getString(R.string.context_shareImage)).setOnMenuItemClickListener(handler);
+        } else if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
+            menu.add(0, ID_COPY_LINK, 0, getString(R.string.context_linkCopy)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_SHARE_LINK, 0, getString(R.string.action_share_link)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
+        }
     }
 
     @Override
