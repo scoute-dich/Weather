@@ -1,6 +1,7 @@
 ### v3.0
 - tab layout
 - context menu
+- downloads
 - set favorite bookmark
 - pinch to zoom
 - weather infos only from the DWD

@@ -83,10 +83,13 @@
     <string name="edit_title">Titel bearbeiten</string>
     <string name="edit_fav">Als Favorit speichern</string>
 
-    <string name="toast_screenshot">Bildschirmfoto wird gespeichert unter:</string>
+    <string name="toast_screenshot">Bildschirmfoto gespeichert unter:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
     <string name="toast_setBookmark">Erfolgreich als Favorit gespeichert.</string>
+
+    <string name="toast_download">Lade herunter:</string>
+    <string name="toast_download_1">Möchtest du herunterladen:</string>
 
 
     // Context Menu
@@ -161,8 +164,9 @@
         &lt;b>v 3.0:&lt;/b>&lt;br>
         &#8226; Tab Layout&lt;br>
         &#8226; Kontextmenü&lt;br>
+        &#8226; Downloads&lt;br>
         &#8226; Lesezeichen als Favorit setzen&lt;br>
-        &#8226; Pinch to Zoom&lt;br>
+        &#8226; Pinch to Zoom (für Bilder)&lt;br>
         &#8226; Wetterinformationen nur vom DWD&lt;br>
         &#8226; Bundesland auswählen&lt;br>
         &#8226; weitere Verbesserungen&lt;br>&lt;br>

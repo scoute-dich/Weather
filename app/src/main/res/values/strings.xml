@@ -81,10 +81,13 @@
     <string name="edit_title">Edit title</string>
     <string name="edit_fav">Set as favorite</string>
 
-    <string name="toast_screenshot">Saving screenshot as:</string>
+    <string name="toast_screenshot">Saved screenshot to location:</string>
     <string name="toast_clearCache" tools:keep="@string/toast_clearCache">Clearing cache …</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
     <string name="toast_setBookmark">Successfully set as favorite.</string>
+
+    <string name="toast_download">Downloading file:</string>
+    <string name="toast_download_1">Do you want to download:</string>
 
 
     // Context Menu
@@ -159,8 +162,9 @@
         &lt;b>v 3.0:&lt;/b>&lt;br>
         &#8226; tab layout&lt;br>
         &#8226; context menu&lt;br>
+        &#8226; downloads&lt;br>
         &#8226; set favorite bookmark&lt;br>
-        &#8226; pinch to zoom&lt;br>
+        &#8226; pinch to zoom (for pictures)&lt;br>
         &#8226; weather infos only from the DWD&lt;br>
         &#8226; choose state for forecast (Germany)&lt;br>
         &#8226; more improvements&lt;br>&lt;br>

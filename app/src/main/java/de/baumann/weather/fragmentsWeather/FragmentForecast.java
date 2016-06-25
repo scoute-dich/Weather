@@ -31,6 +31,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -104,6 +106,9 @@ public class FragmentForecast extends Fragment {
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setDisplayZoomControls(false);
+        registerForContextMenu(mWebView);
 
         if (sharedPref.getBoolean ("java", false)){
             mWebView.getSettings().setJavaScriptEnabled(true);
@@ -140,7 +145,34 @@ public class FragmentForecast extends Fragment {
             }
         });
 
-        registerForContextMenu(mWebView);
+        mWebView.setDownloadListener(new DownloadListener() {
+
+            public void onDownloadStart(final String url, String userAgent,
+                                        final String contentDisposition, final String mimetype,
+                                        long contentLength) {
+
+                final String filename= URLUtil.guessFileName(url, contentDisposition, mimetype);
+                Snackbar snackbar = Snackbar
+                        .make(mWebView, getString(R.string.toast_download_1) + " " + filename, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getString(R.string.yes), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(url));
+
+                                request.allowScanningByMediaScanner();
+                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                DownloadManager dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+                                dm.enqueue(request);
+
+                                Snackbar.make(mWebView, getString(R.string.toast_download) + " " +
+                                        filename , Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                snackbar.show();
+            }
+        });
 
         return rootView;
     }
@@ -194,7 +226,7 @@ public class FragmentForecast extends Fragment {
                                     + source.getLastPathSegment());
                             request.setDestinationUri(Uri.fromFile(destinationFile));
                             ((DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
-                            Snackbar.make(mWebView, R.string.context_saveImage_toast + " " +
+                            Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " +
                                     destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
                         }
                     }
