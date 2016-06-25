@@ -4,8 +4,8 @@
     // Application
 
     <string name="app_name">Wetter</string>
-    <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit das Bildschirmfoto
-        gespeichert werden kann. Danach solltest du die Anwendung komplett schließen oder das Telefon neu starten.
+    <string name="permissions">Du musst der App Zugriff auf den Gerätespeicher gewähren, damit Bildschirmfotos und Downloads
+        gespeichert werden können. Danach solltest du die Anwendung komplett schließen oder das Telefon neu starten.
         Wenn du den Zugriff verweigerst und die Funktion später doch nutzen willst, kannst du die Berechtigung
         nachträglich erteilen. Öffne dafür: Systemeinstellungen - Apps - Wetter. Im Bereich Berechtigungen kannst
         dann die entsprechende Einstellung vornehmen.</string>

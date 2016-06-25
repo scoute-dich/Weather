@@ -56,7 +56,6 @@ public class FragmentOverview extends Fragment {
     private WebView mWebView;
     private SwipeRefreshLayout swipeView;
     private ProgressBar progressBar;
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     private static final int ID_SAVE_IMAGE = 10;
     private static final int ID_IMAGE_EXTERNAL_BROWSER = 11;
@@ -192,28 +191,6 @@ public class FragmentOverview extends Fragment {
                 switch (item.getItemId()) {
                     //Save image to external memory
                     case ID_SAVE_IMAGE: {
-                        if (android.os.Build.VERSION.SDK_INT >= 23) {
-                            int hasWRITE_EXTERNAL_STORAGE = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                    new AlertDialog.Builder(getActivity())
-                                            .setMessage(R.string.permissions)
-                                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                                }
-                                            })
-                                            .setNegativeButton(getString(R.string.no), null)
-                                            .show();
-                                }
-                                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                        REQUEST_CODE_ASK_PERMISSIONS);
-                            }
-                        }
-
                         File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                         if (!directory.exists()) {
                             //noinspection ResultOfMethodCallIgnored
@@ -370,30 +347,6 @@ public class FragmentOverview extends Fragment {
     }
 
     private void screenshot() {
-
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int hasWRITE_EXTERNAL_STORAGE = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.no), null)
-                            .show();
-                    return;
-                }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
-                return;
-            }
-        }
 
         File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
         if (!directory.exists()) {

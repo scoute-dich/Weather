@@ -210,6 +210,29 @@ public class Browser extends AppCompatActivity  {
             }
         });
 
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    new AlertDialog.Builder(Browser.this)
+                            .setMessage(R.string.permissions)
+                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (android.os.Build.VERSION.SDK_INT >= 23)
+                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                REQUEST_CODE_ASK_PERMISSIONS);
+                                }
+                            })
+                            .setNegativeButton(getString(R.string.cancel), null)
+                            .show();
+                    return;
+                }
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+            }
+        }
+
     }
 
     @Override
@@ -238,28 +261,6 @@ public class Browser extends AppCompatActivity  {
                 switch (item.getItemId()) {
                     //Save image to external memory
                     case ID_SAVE_IMAGE: {
-                        if (android.os.Build.VERSION.SDK_INT >= 23) {
-                            int hasWRITE_EXTERNAL_STORAGE = Browser.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                    new AlertDialog.Builder(Browser.this)
-                                            .setMessage(R.string.permissions)
-                                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                                }
-                                            })
-                                            .setNegativeButton(getString(R.string.no), null)
-                                            .show();
-                                }
-                                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                        REQUEST_CODE_ASK_PERMISSIONS);
-                            }
-                        }
-
                         File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                         if (!directory.exists()) {
                             //noinspection ResultOfMethodCallIgnored
@@ -460,9 +461,7 @@ public class Browser extends AppCompatActivity  {
                                     startActivity(Intent.createChooser(sharingIntent, "Share using"));
                                 }
                                 if (options[item].equals(getString(R.string.action_share_screenshot))) {
-
                                     screenshot();
-
                                     new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                     Date date = new Date();
                                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
@@ -511,29 +510,6 @@ public class Browser extends AppCompatActivity  {
     }
 
     private void screenshot() {
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Browser.this)
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.no), null)
-                            .show();
-                    return;
-                }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
-                return;
-            }
-        }
 
         File directory = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
         if (!directory.exists()) {
