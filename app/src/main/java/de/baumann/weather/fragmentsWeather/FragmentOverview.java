@@ -255,8 +255,8 @@ public class FragmentOverview extends Fragment {
 
         if(result.getType() == WebView.HitTestResult.IMAGE_TYPE){
             menu.add(0, ID_SAVE_IMAGE, 0, getString(R.string.context_saveImage)).setOnMenuItemClickListener(handler);
-            menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
             menu.add(0, ID_SHARE_IMAGE, 0, getString(R.string.context_shareImage)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
         } else if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
             menu.add(0, ID_COPY_LINK, 0, getString(R.string.context_linkCopy)).setOnMenuItemClickListener(handler);
             menu.add(0, ID_SHARE_LINK, 0, getString(R.string.action_share_link)).setOnMenuItemClickListener(handler);
