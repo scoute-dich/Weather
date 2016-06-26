@@ -74,7 +74,6 @@
     // Dialog // Snackbar
 
     <string name="yes">OK</string>
-    <string name="no">NEIN</string>
     <string name="cancel">Abbrechen</string>
 
     <string name="edit_bookmark" tools:keep="@string/edit_bookmark">Lesezeichen bearbeiten</string>

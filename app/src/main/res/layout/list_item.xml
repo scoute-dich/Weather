@@ -8,8 +8,9 @@
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="match_parent"
-        android:src="@drawable/img_00"
-        android:layout_margin="16dp" />
+        android:src="@drawable/img_0"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp" />
 
     <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"

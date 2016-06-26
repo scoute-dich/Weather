@@ -107,13 +107,13 @@ public class FragmentInfo extends Fragment {
         };
 
         Integer[] imgid={
-                R.drawable.img_01,
-                R.drawable.img_02,
-                R.drawable.img_03,
-                R.drawable.img_04,
-                R.drawable.img_05,
-                R.drawable.img_06,
-                R.drawable.img_07,
+                R.drawable.img_1,
+                R.drawable.img_2,
+                R.drawable.img_3,
+                R.drawable.img_4,
+                R.drawable.img_5,
+                R.drawable.img_6,
+                R.drawable.img_7,
         };
 
         View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
