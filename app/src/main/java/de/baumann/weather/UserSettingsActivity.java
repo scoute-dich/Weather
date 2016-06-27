@@ -214,10 +214,6 @@ public class UserSettingsActivity extends AppCompatActivity {
             }
         }
 
-        if (id == R.id.action_exit) {
-            finishAffinity();
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }

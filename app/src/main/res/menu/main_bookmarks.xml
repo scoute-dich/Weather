@@ -10,11 +10,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_exit"
-        android:orderInCategory="100"
-        android:title="@string/action_exit" />
-
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings" />

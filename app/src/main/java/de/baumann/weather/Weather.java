@@ -66,8 +66,17 @@ public class Weather extends AppCompatActivity {
                     }
                 }
             });
-        }
 
+            if (sharedPref.getBoolean ("longPress", false)){
+                toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        finish();
+                        return true;
+                    }
+                });
+            }
+        }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -105,6 +114,11 @@ public class Weather extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final String startTab = sharedPref.getString("tabWeather", "0");
+        final int startTabInt = Integer.parseInt(startTab);
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new FragmentOverview(), String.valueOf(getString(R.string.fab1_title)));
@@ -112,6 +126,8 @@ public class Weather extends AppCompatActivity {
         adapter.addFragment(new FragmentForecast(), String.valueOf(getString(R.string.fab3_title)));
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(startTabInt,true);
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -189,10 +205,6 @@ public class Weather extends AppCompatActivity {
             Intent intent_in = new Intent(Weather.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
-            finish();
-        }
-
-        if (id == R.id.action_exit) {
             finish();
         }
 

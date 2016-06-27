@@ -14,7 +14,6 @@
     // Menu Items
 
     <string name="menu2">Wetterinfos</string>
-    <string name="action_exit">App verlassen</string>
     <string name="action_share">Wetterbericht teilen</string>
     <string name="action_share_screenshot">Bildschirmfoto teilen</string>
     <string name="action_share_link">Link als Text teilen</string>
@@ -37,6 +36,9 @@
     <string name="action_java_summary">Manche Funktionen der Internetseiten benötigen Javascript um zu
         funktionieren. Javascript stellt allerdings ein Sicherheitsrisiko dar.</string>
 
+    <string name="action_longPress">App verlassen</string>
+    <string name="action_longPress_summary">Lange auf die Titelleiste drücken um die App zu verlassen</string>
+
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
 
@@ -47,8 +49,14 @@
     <string name="action_clearCache_summary">Den Cache der Anwendung leeren. Alle offline gespeicherten Seiten werden gelöscht …</string>
     <string name="action_clearCache_dialog">Möchtest du wirklich den Cache leeren? Alle offline gespeicherten Seiten werden gelöscht.</string>
 
-    <string name="action_start">Start und Titelbar-Klick</string>
+    <string name="action_start">App Start und Titelleiste-Klick</string>
     <string name="action_start_summary">Was möchtest du sehen: Entweder den Startschirm oder den Lesezeichenfavorit?</string>
+
+    <string name="action_tabMain">Tabs: Startschirm</string>
+    <string name="action_tabMain_summary">Welcher Tab soll standardmäßig auf dem Startschirm geöffnet werden?</string>
+
+    <string name="action_tabWeather">Tabs: Wetter</string>
+    <string name="action_tabWeather_summary">Welcher Tab soll standardmäßig bei der Wettervorhersage geöffnet werden?</string>
 
 
     // DWD = German Weather Service
@@ -160,6 +168,11 @@
         &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
 
+        &lt;b>v 3.1:&lt;/b>&lt;br>
+        &#8226; App beenden: lang Titelleiste drücken&lt;br>
+        &#8226; Tab Einstellungen&lt;br>
+        &#8226; fixed F-Droid Buildfehler&lt;br>&lt;br>
+
         &lt;b>v 3.0:&lt;/b>&lt;br>
         &#8226; Tab Layout&lt;br>
         &#8226; Kontextmenü&lt;br>
@@ -182,7 +195,7 @@
         &#8226; fixed einige \"force close\" Fehler&lt;br>&lt;br>
 
         &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
-        &#8226; fixed F-Droid build Fehler&lt;br>&lt;br>
+        &#8226; fixed F-Droid Buildfehler&lt;br>&lt;br>
 
         &lt;b>v 2.1:&lt;/b>&lt;br>
         &#8226; Mind SDK 16&lt;br>

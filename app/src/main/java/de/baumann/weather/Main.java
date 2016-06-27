@@ -67,6 +67,16 @@ public class Main extends AppCompatActivity {
                     }
                 }
             });
+
+            if (sharedPref.getBoolean ("longPress", false)){
+                toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        finish();
+                        return true;
+                    }
+                });
+            }
         }
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
@@ -94,12 +104,17 @@ public class Main extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final String startTab = sharedPref.getString("tabMain", "0");
+        final int startTabInt = Integer.parseInt(startTab);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new FragmentInfo(), String.valueOf(getString(R.string.menu2)));
         adapter.addFragment(new FragmentBookmark(), String.valueOf(getString(R.string.action_bookmarks)));
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(startTabInt,true);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -147,10 +162,6 @@ public class Main extends AppCompatActivity {
             Intent intent_in = new Intent(Main.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
-            finish();
-        }
-
-        if (id == R.id.action_exit) {
             finish();
         }
 

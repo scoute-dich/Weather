@@ -1,4 +1,9 @@
-### v3.0
+### v 3.1:
+- long press title bar to exit
+- tab settings
+- fixed F-Droid build issue
+
+### v 3.0
 - tab layout
 - context menu
 - downloads
@@ -8,26 +13,25 @@
 - choose state for forecast (Germany)
 - more improvements
 
-### v2.3.1
+### v 2.3.1
 - fixed splashscreen on some devices
 - bug fixes
 
-### v2.3
+### v 2.3
 - fixed settings go back
 - added javascript option in settings
 - added help options in settings
 - reduced app size
 - fixed some force closes issues
 
-### v2.1.1 - 2.2
+### v 2.1.1 - 2.2
 - fixed F-Droid build issues
         
-### v2.1
+### v 2.1
 - fixed app closing
 - mind sdk 16
 
-### v2.0
-
+### v 2.0
 - settings activity
 - start with first bookmark or …
 - … with bookmark list
@@ -36,10 +40,8 @@
 - ui improvements
 - splashscreen
 
-### v1.2
-
+### v 1.2
 - added english
 
-### v1.0
-
+### v 1.0
 - first release

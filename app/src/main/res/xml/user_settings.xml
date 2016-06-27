@@ -4,16 +4,13 @@
     <PreferenceCategory
         android:title="@string/pref_2">
 
-        <CheckBoxPreference
-            android:title="@string/action_java"
-            android:summary="@string/action_java_summary"
-            android:key="java"
-            android:defaultValue="true" />
-
-        <Preference
-            android:title="@string/action_clearCache"
-            android:summary="@string/action_clearCache_summary"
-            android:key="clearCache" />
+        <ListPreference
+            android:title="@string/action_forecastStart"
+            android:summary="@string/action_forecastStart_summary"
+            android:key="forecast"
+            android:defaultValue="http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html"
+            android:entries="@array/listArrayForecast"
+            android:entryValues="@array/listValuesForecast" />
 
         <ListPreference
             android:title="@string/action_start"
@@ -23,13 +20,38 @@
             android:entries="@array/listArrayStart"
             android:entryValues="@array/listValuesStart" />
 
+        <CheckBoxPreference
+            android:title="@string/action_longPress"
+            android:summary="@string/action_longPress_summary"
+            android:key="longPress"
+            android:defaultValue="true" />
+
         <ListPreference
-            android:title="@string/action_forecastStart"
-            android:summary="@string/action_forecastStart_summary"
-            android:key="forecast"
-            android:defaultValue="http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html"
-            android:entries="@array/listArrayForecast"
-            android:entryValues="@array/listValuesForecast" />
+            android:title="@string/action_tabMain"
+            android:summary="@string/action_tabMain_summary"
+            android:key="tabMain"
+            android:defaultValue="1"
+            android:entries="@array/listArrayTabMain"
+            android:entryValues="@array/listValuesTabMain" />
+
+        <ListPreference
+            android:title="@string/action_tabWeather"
+            android:summary="@string/action_tabWeather_summary"
+            android:key="tabWeather"
+            android:defaultValue="1"
+            android:entries="@array/listArrayTabWeather"
+            android:entryValues="@array/listValuesTabWeather" />
+
+        <Preference
+            android:title="@string/action_clearCache"
+            android:summary="@string/action_clearCache_summary"
+            android:key="clearCache" />
+
+        <CheckBoxPreference
+            android:title="@string/action_java"
+            android:summary="@string/action_java_summary"
+            android:key="java"
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 
