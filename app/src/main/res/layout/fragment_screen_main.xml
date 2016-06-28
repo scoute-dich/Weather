@@ -20,6 +20,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/splash1"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/app_contDesc_3" />
+        android:contentDescription="@string/app_contDesc_1" />
 
 </RelativeLayout>
