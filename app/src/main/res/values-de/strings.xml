@@ -9,6 +9,9 @@
         Wenn du den Zugriff verweigerst und die Funktion später doch nutzen willst, kannst du die Berechtigung
         nachträglich erteilen. Öffne dafür: Systemeinstellungen - Apps - Wetter. Im Bereich Berechtigungen kannst
         dann die entsprechende Einstellung vornehmen.</string>
+    <string name="app_share_screenshot">Bildschirmfoto Teilen mit:</string>
+    <string name="app_share_image">Bild Teilen mit:</string>
+    <string name="app_share_link">Link Teilen mit:</string>
 
 
     // Tab - Titles

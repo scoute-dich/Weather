@@ -220,7 +220,7 @@ public class FragmentOverview extends Fragment {
                                     sharingIntent.setType("image/*");
                                     sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
                                     sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    getActivity().startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                                    getActivity().startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
                                 }
                             }.execute(url);
                         } else {
@@ -252,7 +252,7 @@ public class FragmentOverview extends Fragment {
                             sendIntent.putExtra(Intent.EXTRA_TEXT, url);
                             sendIntent.setType("text/plain");
                             getActivity().startActivity(Intent.createChooser(sendIntent, getResources()
-                                    .getText(R.string.state_1)));
+                                    .getText(R.string.app_share_link)));
                         }
                         break;
                 }
@@ -313,7 +313,7 @@ public class FragmentOverview extends Fragment {
                                         sharingIntent.setType("text/plain");
                                         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                         sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
                                     }
                                     if (options[item].equals(getString(R.string.menu_share_screenshot))) {
 
@@ -330,7 +330,7 @@ public class FragmentOverview extends Fragment {
                                         Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
                                                 + dateFormat.format(date) + ".jpg"));
                                         sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
                                     }
                                     if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                         screenshot();

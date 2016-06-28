@@ -7,6 +7,9 @@
         completely close the app or restart the phone. If you don\'t permit the storage access but want to use the
         screenshot function at a later time, you can grant the permission later. Please open then: system settings - apps -
         weather. In the permissions section you can grant the \"write storage permission\".</string>
+    <string name="app_share_screenshot">Share screenshot using:</string>
+    <string name="app_share_image">Share image using:</string>
+    <string name="app_share_link">Share link using:</string>
 
 
     // Tab - Titles

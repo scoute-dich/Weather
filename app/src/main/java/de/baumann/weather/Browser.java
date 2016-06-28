@@ -302,7 +302,7 @@ public class Browser extends AppCompatActivity  {
                                     sharingIntent.setType("image/*");
                                     sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
                                     sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    Browser.this.startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                                    Browser.this.startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
                                 }
                             }.execute(url);
                         } else {
@@ -334,7 +334,7 @@ public class Browser extends AppCompatActivity  {
                             sendIntent.putExtra(Intent.EXTRA_TEXT, url);
                             sendIntent.setType("text/plain");
                             Browser.this.startActivity(Intent.createChooser(sendIntent, getResources()
-                                    .getText(R.string.state_1)));
+                                    .getString(R.string.app_share_link)));
                         }
                         break;
                 }
@@ -388,8 +388,6 @@ public class Browser extends AppCompatActivity  {
                 dialog.show();
             } else {
                 try {
-
-
                     final EditText input = new EditText(this);
                     input.setText(mWebView.getTitle());
                     final BrowserDatabase db = new BrowserDatabase(this);
@@ -463,7 +461,7 @@ public class Browser extends AppCompatActivity  {
                                     sharingIntent.setType("text/plain");
                                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                     sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
                                 }
                                 if (options[item].equals(getString(R.string.menu_share_screenshot))) {
                                     screenshot();
@@ -478,7 +476,7 @@ public class Browser extends AppCompatActivity  {
                                     Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
                                             + dateFormat.format(date) + ".jpg"));
                                     sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                    startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
                                 }
                                 if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                     screenshot();

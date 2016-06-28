@@ -1,6 +1,7 @@
-### v 3.1:
+### v 3.1 - 3.1.1:
 - long press title bar to exit
 - tab settings
+- corrected strings
 - fixed F-Droid build issue
 
 ### v 3.0
