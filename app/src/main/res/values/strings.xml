@@ -10,6 +10,9 @@
     <string name="app_share_screenshot">Share screenshot using:</string>
     <string name="app_share_image">Share image using:</string>
     <string name="app_share_link">Share link using:</string>
+    <string name="app_contDesc_1">header</string>
+    <string name="app_contDesc_2">icon</string>
+    <string name="app_contDesc_3">splashscreen</string>
 
 
     // Tab - Titles

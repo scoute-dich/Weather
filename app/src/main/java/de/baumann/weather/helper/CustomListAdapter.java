@@ -2,6 +2,7 @@ package de.baumann.weather.helper;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,37 +15,38 @@ import de.baumann.weather.R;
 public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] itemname;
+    private final String[] itemTITLE;
     private final String[] itemURL;
     private final String[] itemDES;
     private final Integer[] imgid;
 
-    public CustomListAdapter(Activity context, String[] itemname, String[] itemURL, String[] itemDES, Integer[] imgid) {
-        super(context, R.layout.list_item, itemname);
-        // TODO Auto-generated constructor stub
+    public CustomListAdapter(Activity context, String[] itemTITLE, String[] itemURL, String[] itemDES, Integer[] imgid) {
+        super(context, R.layout.list_item, itemTITLE);
 
         this.context=context;
-        this.itemname=itemname;
+        this.itemTITLE=itemTITLE;
         this.itemURL=itemURL;
         this.itemDES=itemDES;
         this.imgid=imgid;
     }
 
-    public View getView(int position,View view,ViewGroup parent) {
-        LayoutInflater inflater=context.getLayoutInflater();
+    public View getView(int position,View rowView,ViewGroup parent) {
 
-        View rowView=inflater.inflate(R.layout.list_item, null,true);
+        if (rowView == null) {
+            LayoutInflater infInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = infInflater.inflate(R.layout.list_item, parent, false);
+        }
 
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.item);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
-        TextView destxt = (TextView) rowView.findViewById(R.id.textView0);
+        TextView textTITLE = (TextView) rowView.findViewById(R.id.textView_title);
+        TextView textURL = (TextView) rowView.findViewById(R.id.textView_url);
+        TextView textDES = (TextView) rowView.findViewById(R.id.textView_des);
 
-        txtTitle.setText(itemname[position]);
         imageView.setImageResource(imgid[position]);
-        extratxt.setText(itemURL[position]);
-        destxt.setText(itemDES[position]);
+        textTITLE.setText(itemTITLE[position]);
+        textURL.setText(itemURL[position]);
+        textDES.setText(itemDES[position]);
         return rowView;
-
     }
 }

@@ -44,14 +44,13 @@ public class FragmentBookmark extends Fragment {
         setHasOptionsMenu(true);
         checkFirstRun();
 
-        ImageView imgHeader = (ImageView) rootView.findViewById(R.id.imageView3);
+        ImageView imgHeader = (ImageView) rootView.findViewById(R.id.imageView_header);
         if(imgHeader != null) {
             TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
             int choice = (int) (Math.random() * images.length());
             imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash1));
             images.recycle();
         }
-
 
         listView = (ListView)rootView.findViewById(R.id.bookmarks);
 
@@ -253,7 +252,7 @@ public class FragmentBookmark extends Fragment {
                     mapList,
                     R.layout.list_item,
                     new String[] {"title", "url"},
-                    new int[] {R.id.item, R.id.textView0}
+                    new int[] {R.id.textView_title, R.id.textView_des}
             );
 
             listView.setAdapter(simpleAdapter);

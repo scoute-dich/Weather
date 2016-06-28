@@ -9,18 +9,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView3"
+        android:layout_below="@+id/imageView_header"
         android:layout_marginBottom="46dp"
         android:paddingBottom="8dp" />
-
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="275dp"
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView_header"
         android:layout_centerHorizontal="true"
         android:src="@drawable/splash1"
         android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/app_contDesc_3" />
 
 </RelativeLayout>

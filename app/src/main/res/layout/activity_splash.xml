@@ -11,5 +11,6 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/app_contDesc_3" />
+
 </RelativeLayout>

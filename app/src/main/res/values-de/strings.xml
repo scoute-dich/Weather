@@ -12,6 +12,9 @@
     <string name="app_share_screenshot">Bildschirmfoto Teilen mit:</string>
     <string name="app_share_image">Bild Teilen mit:</string>
     <string name="app_share_link">Link Teilen mit:</string>
+    <string name="app_contDesc_1">Header</string>
+    <string name="app_contDesc_2">Icon</string>
+    <string name="app_contDesc_3">Splashscreen</string>
 
 
     // Tab - Titles

@@ -76,7 +76,7 @@ public class FragmentInfo extends Fragment {
         }
 
 
-        final String[] itemname ={
+        final String[] itemTITLE ={
                 getString(R.string.dwd_forecast) + " " + state,
                 getString(R.string.dwd_radar),
                 getString(R.string.dwd_karten),
@@ -121,7 +121,7 @@ public class FragmentInfo extends Fragment {
 
         setHasOptionsMenu(true);
 
-        ImageView imgHeader = (ImageView) rootView.findViewById(R.id.imageView3);
+        ImageView imgHeader = (ImageView) rootView.findViewById(R.id.imageView_header);
         if(imgHeader != null) {
             TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
             int choice = (int) (Math.random() * images.length());
@@ -129,7 +129,7 @@ public class FragmentInfo extends Fragment {
             images.recycle();
         }
 
-        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemname, itemURL, itemDES, imgid);
+        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemTITLE, itemURL, itemDES, imgid);
         listView = (ListView)rootView.findViewById(R.id.bookmarks);
         listView.setAdapter(adapter);
 
@@ -150,7 +150,7 @@ public class FragmentInfo extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                final String title = itemname[+position];
+                final String title = itemTITLE[+position];
                 final String url = itemURL[+position];
 
                 final CharSequence[] options = {getString(R.string.bookmark_edit_fav)};

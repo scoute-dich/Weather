@@ -9,15 +9,18 @@
         android:layout_width="24dp"
         android:layout_height="match_parent"
         android:src="@drawable/img_0"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="16dp"
+        android:contentDescription="@string/app_contDesc_2" />
 
     <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/item"
+            android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
@@ -30,7 +33,7 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:id="@+id/textView0"
+            android:id="@+id/textView_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -41,7 +44,7 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView_url"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:textSize="12sp"
@@ -49,4 +52,5 @@
             android:lines="1" />
 
     </LinearLayout>
+
 </LinearLayout>
