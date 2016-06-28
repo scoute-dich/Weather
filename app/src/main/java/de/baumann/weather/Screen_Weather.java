@@ -30,7 +30,7 @@ import de.baumann.weather.fragmentsWeather.FragmentHourly;
 import de.baumann.weather.fragmentsWeather.FragmentOverview;
 import de.baumann.weather.helper.Start;
 
-public class Weather extends AppCompatActivity {
+public class Screen_Weather extends AppCompatActivity {
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -38,7 +38,7 @@ public class Weather extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
+        setContentView(R.layout.activity_screen_weather);
 
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -54,12 +54,12 @@ public class Weather extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (startType.equals("2")) {
-                        Intent intent_in = new Intent(Weather.this, Start.class);
+                        Intent intent_in = new Intent(Screen_Weather.this, Start.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
                     } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Weather.this, Main.class);
+                        Intent intent_in = new Intent(Screen_Weather.this, Screen_Main.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
@@ -93,9 +93,9 @@ public class Weather extends AppCompatActivity {
             int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Weather.this)
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(Screen_Weather.this)
+                            .setMessage(R.string.app_permissions)
+                            .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (android.os.Build.VERSION.SDK_INT >= 23)
@@ -103,7 +103,7 @@ public class Weather extends AppCompatActivity {
                                                 REQUEST_CODE_ASK_PERMISSIONS);
                                 }
                             })
-                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setNegativeButton(getString(R.string.toast_cancel), null)
                             .show();
                     return;
                 }
@@ -121,9 +121,9 @@ public class Weather extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new FragmentOverview(), String.valueOf(getString(R.string.fab1_title)));
-        adapter.addFragment(new FragmentHourly(), String.valueOf(getString(R.string.fab2_title)));
-        adapter.addFragment(new FragmentForecast(), String.valueOf(getString(R.string.fab3_title)));
+        adapter.addFragment(new FragmentOverview(), String.valueOf(getString(R.string.title_overview)));
+        adapter.addFragment(new FragmentHourly(), String.valueOf(getString(R.string.title_hourly)));
+        adapter.addFragment(new FragmentForecast(), String.valueOf(getString(R.string.title_trend)));
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(startTabInt,true);
@@ -165,10 +165,10 @@ public class Weather extends AppCompatActivity {
             final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
             Linkify.addLinks(s, Linkify.WEB_URLS);
 
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(Weather.this)
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(Screen_Weather.this)
                     .setTitle(R.string.firstBrowser_title)
                     .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
@@ -183,7 +183,7 @@ public class Weather extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent_in = new Intent(Weather.this, Main.class);
+        Intent intent_in = new Intent(Screen_Weather.this, Screen_Main.class);
         startActivity(intent_in);
         overridePendingTransition(0, 0);
         finish();
@@ -202,14 +202,14 @@ public class Weather extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Weather.this, UserSettingsActivity.class);
+            Intent intent_in = new Intent(Screen_Weather.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
         }
 
         if (id == android.R.id.home) {
-            Intent intent_in = new Intent(Weather.this, Main.class);
+            Intent intent_in = new Intent(Screen_Weather.this, Screen_Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();

@@ -29,7 +29,7 @@ import android.view.WindowManager;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.baumann.weather.Main;
+import de.baumann.weather.Screen_Main;
 import de.baumann.weather.R;
 
 
@@ -57,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent_in);
                     overridePendingTransition(0, 0);
                 } else if (startType.equals("1")){
-                    Intent intent_in = new Intent(SplashActivity.this, Main.class);
+                    Intent intent_in = new Intent(SplashActivity.this, Screen_Main.class);
                     startActivity(intent_in);
                     overridePendingTransition(0, 0);
                 }

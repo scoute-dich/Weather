@@ -28,7 +28,7 @@ import java.util.HashMap;
 
 import de.baumann.weather.Browser;
 import de.baumann.weather.R;
-import de.baumann.weather.Weather;
+import de.baumann.weather.Screen_Weather;
 import de.baumann.weather.helper.BrowserDatabase;
 
 
@@ -39,7 +39,7 @@ public class FragmentBookmark extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_screen_main, container, false);
 
         setHasOptionsMenu(true);
         checkFirstRun();
@@ -62,7 +62,7 @@ public class FragmentBookmark extends Fragment {
                 String url = map.get("url");
 
                 if (url.contains("m.wetterdienst")) {
-                    Intent intent = new Intent(getActivity(), Weather.class);
+                    Intent intent = new Intent(getActivity(), Screen_Weather.class);
                     intent.putExtra("url", map.get("url"));
                     intent.putExtra("url2", map.get("url") + "stuendlich");
                     intent.putExtra("url3", map.get("url") + "10-Tage");
@@ -87,12 +87,12 @@ public class FragmentBookmark extends Fragment {
                 final String title = map.get("title");
                 final String url = map.get("url");
 
-                final CharSequence[] options = {getString(R.string.edit_title), getString(R.string.edit_url), getString(R.string.edit_fav), getString(R.string.delete_bookmark)};
+                final CharSequence[] options = {getString(R.string.bookmark_edit_title), getString(R.string.bookmark_edit_url), getString(R.string.bookmark_edit_fav), getString(R.string.bookmark_remove_bookmark)};
                 new AlertDialog.Builder(getActivity())
                         .setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals(getString(R.string.edit_title))) {
+                                if (options[item].equals(getString(R.string.bookmark_edit_title))) {
                                     try {
                                         final EditText input = new EditText(getActivity());
                                         input.setText(title);
@@ -100,8 +100,8 @@ public class FragmentBookmark extends Fragment {
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(getActivity())
                                                 .setView(input)
-                                                .setMessage(R.string.edit_title)
-                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                .setMessage(R.string.bookmark_edit_title)
+                                                .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         String inputTag = input.getText().toString().trim();
@@ -110,7 +110,7 @@ public class FragmentBookmark extends Fragment {
                                                         setBookmarkList();
                                                     }
                                                 })
-                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                                .setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         dialog.cancel();
@@ -122,7 +122,7 @@ public class FragmentBookmark extends Fragment {
                                         e.printStackTrace();
                                     }
                                 }
-                                if (options[item].equals(getString(R.string.edit_url))) {
+                                if (options[item].equals(getString(R.string.bookmark_edit_url))) {
                                     try {
                                         final EditText input = new EditText(getActivity());
                                         input.setText(url);
@@ -130,8 +130,8 @@ public class FragmentBookmark extends Fragment {
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(getActivity())
                                                 .setView(input)
-                                                .setMessage(R.string.edit_url)
-                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                .setMessage(R.string.bookmark_edit_url)
+                                                .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         String inputTag = input.getText().toString().trim();
@@ -140,7 +140,7 @@ public class FragmentBookmark extends Fragment {
                                                         setBookmarkList();
                                                     }
                                                 })
-                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                                .setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
                                                     public void onClick(DialogInterface dialog, int whichButton) {
                                                         dialog.cancel();
@@ -154,16 +154,16 @@ public class FragmentBookmark extends Fragment {
 
                                 }
 
-                                if (options[item].equals (getString(R.string.edit_fav))) {
+                                if (options[item].equals (getString(R.string.bookmark_edit_fav))) {
                                     final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                                     sharedPref.edit()
                                             .putString("favoriteURL", url)
                                             .putString("favoriteTitle", title)
                                             .apply();
-                                    Snackbar.make(listView, R.string.toast_setBookmark, Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(listView, R.string.bookmark_setFav, Snackbar.LENGTH_LONG).show();
                                 }
 
-                                if (options[item].equals(getString(R.string.delete_bookmark))) {
+                                if (options[item].equals(getString(R.string.bookmark_remove_bookmark))) {
 
                                     try {
                                         BrowserDatabase db = new BrowserDatabase(getActivity());
@@ -172,13 +172,13 @@ public class FragmentBookmark extends Fragment {
 
                                         if (count == 1) {
                                             Snackbar snackbar = Snackbar
-                                                    .make(listView, R.string.cannot_remove, Snackbar.LENGTH_LONG);
+                                                    .make(listView, R.string.bookmark_remove_cannot, Snackbar.LENGTH_LONG);
                                             snackbar.show();
 
                                         } else {
                                             Snackbar snackbar = Snackbar
-                                                    .make(listView, R.string.remove_confirmation, Snackbar.LENGTH_LONG)
-                                                    .setAction(R.string.yes, new View.OnClickListener() {
+                                                    .make(listView, R.string.bookmark_remove_confirmation, Snackbar.LENGTH_LONG)
+                                                    .setAction(R.string.toast_yes, new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View view) {
                                                             try {
@@ -272,7 +272,7 @@ public class FragmentBookmark extends Fragment {
             final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.firstBookmark_title)
                     .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();

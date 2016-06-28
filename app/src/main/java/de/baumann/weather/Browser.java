@@ -97,7 +97,7 @@ public class Browser extends AppCompatActivity  {
                         overridePendingTransition(0, 0);
                         finish();
                     } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Browser.this, Main.class);
+                        Intent intent_in = new Intent(Browser.this, Screen_Main.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
@@ -181,7 +181,7 @@ public class Browser extends AppCompatActivity  {
                         setTitle(R.string.dwd);
                     } else {
                         mWebView.scrollTo(0, 0);
-                        setTitle(R.string.action_search);
+                        setTitle(R.string.menu_search);
                     }
 
                 } else {
@@ -200,7 +200,7 @@ public class Browser extends AppCompatActivity  {
                 final String filename= URLUtil.guessFileName(url, contentDisposition, mimetype);
                 Snackbar snackbar = Snackbar
                         .make(mWebView, getString(R.string.toast_download_1) + " " + filename, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(getString(R.string.yes), new View.OnClickListener() {
+                        .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 DownloadManager.Request request = new DownloadManager.Request(
@@ -225,8 +225,8 @@ public class Browser extends AppCompatActivity  {
             if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     new AlertDialog.Builder(Browser.this)
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            .setMessage(R.string.app_permissions)
+                            .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (android.os.Build.VERSION.SDK_INT >= 23)
@@ -234,7 +234,7 @@ public class Browser extends AppCompatActivity  {
                                                 REQUEST_CODE_ASK_PERMISSIONS);
                                 }
                             })
-                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setNegativeButton(getString(R.string.toast_cancel), null)
                             .show();
                     return;
                 }
@@ -250,7 +250,7 @@ public class Browser extends AppCompatActivity  {
         if (mWebView.canGoBack()) {
             mWebView.goBack();
         } else {
-            Intent intent_in = new Intent(Browser.this, Main.class);
+            Intent intent_in = new Intent(Browser.this, Screen_Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -348,7 +348,7 @@ public class Browser extends AppCompatActivity  {
             menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
         } else if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
             menu.add(0, ID_COPY_LINK, 0, getString(R.string.context_linkCopy)).setOnMenuItemClickListener(handler);
-            menu.add(0, ID_SHARE_LINK, 0, getString(R.string.action_share_link)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_SHARE_LINK, 0, getString(R.string.menu_share_link)).setOnMenuItemClickListener(handler);
             menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
         }
     }
@@ -376,7 +376,7 @@ public class Browser extends AppCompatActivity  {
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                         .setTitle(R.string.firstSearch_title)
                         .setMessage(s)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
@@ -395,17 +395,17 @@ public class Browser extends AppCompatActivity  {
                     final BrowserDatabase db = new BrowserDatabase(this);
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
                             .setView(input)
-                            .setMessage(R.string.edit_title)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            .setMessage(R.string.bookmark_edit_title)
+                            .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     String inputTag = input.getText().toString().trim();
                                     db.addBookmark(inputTag, mWebView.getUrl());
                                     db.close();
-                                    Snackbar.make(mWebView, R.string.added, Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_LONG).show();
                                 }
                             })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     dialog.cancel();
@@ -427,7 +427,7 @@ public class Browser extends AppCompatActivity  {
         }
 
         if (id == android.R.id.home) {
-            Intent intent_in = new Intent(Browser.this, Main.class);
+            Intent intent_in = new Intent(Browser.this, Screen_Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -442,7 +442,7 @@ public class Browser extends AppCompatActivity  {
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
                         .setTitle(R.string.firstScreenshot_title)
                         .setMessage(s)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
@@ -453,19 +453,19 @@ public class Browser extends AppCompatActivity  {
                         });
                 dialog.show();
             } else {
-                final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
+                final CharSequence[] options = {getString(R.string.menu_share_link), getString(R.string.menu_share_screenshot), getString(R.string.menu_save_screenshot)};
                 new AlertDialog.Builder(Browser.this)
                         .setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals(getString(R.string.action_share_link))) {
+                                if (options[item].equals(getString(R.string.menu_share_link))) {
                                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                                     sharingIntent.setType("text/plain");
                                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                     sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
                                     startActivity(Intent.createChooser(sharingIntent, "Share using"));
                                 }
-                                if (options[item].equals(getString(R.string.action_share_screenshot))) {
+                                if (options[item].equals(getString(R.string.menu_share_screenshot))) {
                                     screenshot();
                                     new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                     Date date = new Date();
@@ -480,7 +480,7 @@ public class Browser extends AppCompatActivity  {
                                     sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
                                     startActivity(Intent.createChooser(sharingIntent, "Share using"));
                                 }
-                                if (options[item].equals(getString(R.string.action_save_screenshot))) {
+                                if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                     screenshot();
                                 }
                             }
@@ -501,7 +501,7 @@ public class Browser extends AppCompatActivity  {
             final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                     .setTitle(R.string.firstBrowser_title)
                     .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
@@ -530,7 +530,7 @@ public class Browser extends AppCompatActivity  {
             final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                     .setTitle(R.string.firstScreenshot_title)
                     .setMessage(s)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();

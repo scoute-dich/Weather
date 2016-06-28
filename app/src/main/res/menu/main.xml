@@ -5,20 +5,20 @@
     <item
         android:id="@+id/action_share"
         android:orderInCategory="100"
-        android:title="@string/action_share"
+        android:title="@string/menu_share"
         android:icon="@drawable/ic_share"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_saveBookmark"
         android:orderInCategory="100"
-        android:title="@string/action_bookmarks"
+        android:title="@string/title_bookmarks"
         android:icon="@drawable/ic_bookmark"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings" />
+        android:title="@string/menu_settings" />
 
 </menu>

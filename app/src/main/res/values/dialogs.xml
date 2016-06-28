@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //License Dialog
+
+    <string name="about_title">Copyright © 2016  by Gaukler Faun</string>
+    <string name="about_text">
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see http://www.gnu.org/licenses.
+    </string>
+
+
+    //Changelog Dialog
+
+    <string name="changelog_text">
+        &lt;i>For more informations visit the project site on github:&lt;br>
+        https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v 3.1:&lt;/b>&lt;br>
+        &#8226; long press title bar to exit&lt;br>
+        &#8226; tab settings&lt;br>
+        &#8226; fixed F-Droid build issue&lt;br>&lt;br>
+
+        &lt;b>v 3.0:&lt;/b>&lt;br>
+        &#8226; tab layout&lt;br>
+        &#8226; context menu&lt;br>
+        &#8226; downloads&lt;br>
+        &#8226; set favorite bookmark&lt;br>
+        &#8226; pinch to zoom (for pictures)&lt;br>
+        &#8226; weather infos only from the DWD&lt;br>
+        &#8226; choose state for forecast (Germany)&lt;br>
+        &#8226; more improvements&lt;br>&lt;br>
+
+        &lt;b>v 2.3.1:&lt;/b>&lt;br>
+        &#8226; fixed splashscreen on some devices&lt;br>
+        &#8226; bug fixes&lt;br>&lt;br>
+
+        &lt;b>v 2.3:&lt;/b>&lt;br>
+        &#8226; fixed settings go back&lt;br>
+        &#8226; added javascript option in settings&lt;br>
+        &#8226; added help options in settings&lt;br>
+        &#8226; reduced app size&lt;br>
+        &#8226; fixed some force closes issues&lt;br>&lt;br>
+
+        &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
+        &#8226; fixed F-Droid build issues&lt;br>&lt;br>
+
+        &lt;b>v 2.1:&lt;/b>&lt;br>
+        &#8226; mind SDK 16&lt;br>
+        &#8226; fixed exit app&lt;br>&lt;br>
+
+        &lt;b>v 2.0:&lt;/b>&lt;br>
+        &#8226; settings activity&lt;br>
+        &#8226; start with first bookmark or …&lt;br>
+        &#8226; … with bookmark list&lt;br>
+        &#8226; editable bookmarks&lt;br>
+        &#8226; help dialogs&lt;br>
+        &#8226; ui improvements&lt;br>
+        &#8226; splashscreen
+    </string>
+
+
+    //Help Dialogs
+
+    <string name="firstSearch_title">Saving bookmarks</string>
+    <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>
+    <string name="firstSearch_text">
+        To save a bookmark simply click the icon at the toolbar. If you want to bookmark a city it is
+        important, that the \"Überblick\" button on the website is blue and checked. Otherwise it is
+        later not possible to load the hourly und the 10 day trend forecast of a city.&lt;br>&lt;br>
+
+        If you clicked the icon a popup appears. You can now edit the title of the bookmark.
+        Normally you enter the name of the city.&lt;br>&lt;br>
+
+        You can switch back to the main screen or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the main screen you can also press the arrow at the toolbar. Swipe down to reload the website.</string>
+
+    <string name="firstBrowser_title">Browser</string>
+    <string name="firstBrowser_title_summary">Show again: Functionality of the browser?</string>
+    <string name="firstBrowser_text">
+        Your bookmarked websites are shown in this webview. A webview displays websites in an app. If you have no internet
+        connection they will be loaded offline from the cache.&lt;br>&lt;br>
+
+        In the webview there is a context menu, which opens on long pressing a link or image.&lt;br>&lt;br>
+
+        You can switch back to the main screen or to your favorite (look into the settings) by clicking the toolbar.
+        To go back to the main screen you can also press the arrow at the toolbar. Swipe down to reload the website.</string>
+
+    <string name="firstBookmark_title">Main screen</string>
+    <string name="firstBookmark_title_summary">Show again: Tip about the main screen?</string>
+    <string name="firstBookmark_text">
+        &lt;i>The tabs:&lt;/i>&lt;br>
+        In the left tab you can open weather informations from the DWD. You can configure your
+        preferred state (Germany only) in the settings. In the right tab you can see your bookmarks.&lt;br>&lt;br>
+
+        &lt;i>Edit bookmarks:&lt;/i>&lt;br>
+
+        Long click on a bookmark opens a popup menu. You can set your favorite bookmark
+        (It can be loaded on app start or on title bar click - look in the settings.), edit title and URL of the bookmark or
+        delete it (at least one bookmark is needed). If you have problems to open the hourly or the 10 day forecast of a
+        bookmarked city you must control the URL. It should look like this:
+        http://www.wetterdienst.de/Deutschlandwetter/name_of_yor_city. If this is not the case, correct it.&lt;br>&lt;br>
+
+        &lt;i>Search new cities:&lt;/i>&lt;br>
+
+        If you click the magnifier at the toolbar the website of wetterdienst.de opens. There you can search worldwide for cities.
+        Just enter the name in the search field and make your joice.</string>
+
+    <string name="firstScreenshot_title">Making screenshots</string>
+    <string name="firstScreenshot_title_summary">Show again: Taking screenshots?</string>
+    <string name="firstScreenshot_text">
+        You can make screenshots of the whole website (even of the part which is outside of your display.
+        Before taking the screenshot wait until the website is fully loaded, to ensure that the whole website is captured.</string>
+
+</resources>

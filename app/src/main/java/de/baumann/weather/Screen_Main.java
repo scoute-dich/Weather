@@ -29,14 +29,14 @@ import de.baumann.weather.fragmentsMain.FragmentBookmark;
 import de.baumann.weather.fragmentsMain.FragmentInfo;
 import de.baumann.weather.helper.Start;
 
-public class Main extends AppCompatActivity {
+public class Screen_Main extends AppCompatActivity {
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_screen_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -55,12 +55,12 @@ public class Main extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (startType.equals("2")) {
-                        Intent intent_in = new Intent(Main.this, Start.class);
+                        Intent intent_in = new Intent(Screen_Main.this, Start.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
                     } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Main.this, Main.class);
+                        Intent intent_in = new Intent(Screen_Main.this, Screen_Main.class);
                         startActivity(intent_in);
                         overridePendingTransition(0, 0);
                         finish();
@@ -83,9 +83,9 @@ public class Main extends AppCompatActivity {
             int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Main.this)
-                            .setMessage(R.string.permissions)
-                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(Screen_Main.this)
+                            .setMessage(R.string.app_permissions)
+                            .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (android.os.Build.VERSION.SDK_INT >= 23)
@@ -93,7 +93,7 @@ public class Main extends AppCompatActivity {
                                                 REQUEST_CODE_ASK_PERMISSIONS);
                                 }
                             })
-                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setNegativeButton(getString(R.string.toast_cancel), null)
                             .show();
                     return;
                 }
@@ -110,8 +110,8 @@ public class Main extends AppCompatActivity {
         final int startTabInt = Integer.parseInt(startTab);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new FragmentInfo(), String.valueOf(getString(R.string.menu2)));
-        adapter.addFragment(new FragmentBookmark(), String.valueOf(getString(R.string.action_bookmarks)));
+        adapter.addFragment(new FragmentInfo(), String.valueOf(getString(R.string.title_weatherInfo)));
+        adapter.addFragment(new FragmentBookmark(), String.valueOf(getString(R.string.title_bookmarks)));
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(startTabInt,true);
@@ -159,7 +159,7 @@ public class Main extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Main.this, UserSettingsActivity.class);
+            Intent intent_in = new Intent(Screen_Main.this, UserSettingsActivity.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -171,10 +171,10 @@ public class Main extends AppCompatActivity {
                 final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
                 Linkify.addLinks(s, Linkify.WEB_URLS);
 
-                final AlertDialog.Builder dialog = new AlertDialog.Builder(Main.this)
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(Screen_Main.this)
                         .setTitle(R.string.firstSearch_title)
                         .setMessage(s)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
@@ -185,7 +185,7 @@ public class Main extends AppCompatActivity {
                         });
                 dialog.show();
             } else {
-                Intent intent_in = new Intent(Main.this, Browser.class);
+                Intent intent_in = new Intent(Screen_Main.this, Browser.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
                 finish();

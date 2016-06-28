@@ -35,10 +35,10 @@ public class UserSettingsActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            setTitle(R.string.action_settings);
+            setTitle(R.string.menu_settings);
         }
 
-        // Display the fragment as the activity_main content
+        // Display the fragment as the activity_screen_main content
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
@@ -62,7 +62,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
                             .setMessage(s)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     File dir = getActivity().getCacheDir();
@@ -87,7 +87,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                                     Toast.makeText(activity,R.string.toast_clearCache,Toast.LENGTH_SHORT).show();
                                 }
                             })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     dialog.cancel();
@@ -114,7 +114,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.action_changelog)
                             .setMessage( s )
-                            .setPositiveButton(getString(R.string.yes),
+                            .setPositiveButton(getString(R.string.toast_yes),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             dialog.cancel();
@@ -140,7 +140,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.about_title)
                             .setMessage(s)
-                            .setPositiveButton(getString(R.string.yes),
+                            .setPositiveButton(getString(R.string.toast_yes),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             dialog.cancel();
@@ -175,7 +175,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
             finish();
         } else if (startType.equals("1")) {
-            Intent intent_in = new Intent(UserSettingsActivity.this, Main.class);
+            Intent intent_in = new Intent(UserSettingsActivity.this, Screen_Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -207,7 +207,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 finish();
             } else if (startType.equals("1")) {
-                Intent intent_in = new Intent(UserSettingsActivity.this, Main.class);
+                Intent intent_in = new Intent(UserSettingsActivity.this, Screen_Main.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
                 finish();

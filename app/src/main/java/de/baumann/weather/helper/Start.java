@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import de.baumann.weather.Browser;
-import de.baumann.weather.Weather;
+import de.baumann.weather.Screen_Weather;
 
 public class Start extends AppCompatActivity  {
 
@@ -21,7 +21,7 @@ public class Start extends AppCompatActivity  {
         String startTitle = sharedPref.getString("favoriteTitle", "http://m.wetterdienst.de/");
 
         if (startURL.contains("m.wetterdienst.de")) {
-            Intent intent = new Intent(Start.this, Weather.class);
+            Intent intent = new Intent(Start.this, Screen_Weather.class);
             intent.putExtra("url", startURL);
             intent.putExtra("url2", startURL + "stuendlich");
             intent.putExtra("url3", startURL + "10-Tage");

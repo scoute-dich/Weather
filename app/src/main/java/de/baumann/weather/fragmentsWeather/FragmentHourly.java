@@ -69,7 +69,7 @@ public class FragmentHourly extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_screen_weather, container, false);
 
         setHasOptionsMenu(true);
 
@@ -151,7 +151,7 @@ public class FragmentHourly extends Fragment {
                 final String filename= URLUtil.guessFileName(url, contentDisposition, mimetype);
                 Snackbar snackbar = Snackbar
                         .make(mWebView, getString(R.string.toast_download_1) + " " + filename, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(getString(R.string.yes), new View.OnClickListener() {
+                        .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 DownloadManager.Request request = new DownloadManager.Request(
@@ -265,7 +265,7 @@ public class FragmentHourly extends Fragment {
             menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
         } else if (result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
             menu.add(0, ID_COPY_LINK, 0, getString(R.string.context_linkCopy)).setOnMenuItemClickListener(handler);
-            menu.add(0, ID_SHARE_LINK, 0, getString(R.string.action_share_link)).setOnMenuItemClickListener(handler);
+            menu.add(0, ID_SHARE_LINK, 0, getString(R.string.menu_share_link)).setOnMenuItemClickListener(handler);
             menu.add(0, ID_IMAGE_EXTERNAL_BROWSER, 0, getString(R.string.context_externalBrowser)).setOnMenuItemClickListener(handler);
         }
     }
@@ -291,7 +291,7 @@ public class FragmentHourly extends Fragment {
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.firstScreenshot_title)
                             .setMessage(s)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     dialog.cancel();
@@ -302,19 +302,19 @@ public class FragmentHourly extends Fragment {
                             });
                     dialog.show();
                 } else {
-                    final CharSequence[] options = {getString(R.string.action_share_link), getString(R.string.action_share_screenshot), getString(R.string.action_save_screenshot)};
+                    final CharSequence[] options = {getString(R.string.menu_share_link), getString(R.string.menu_share_screenshot), getString(R.string.menu_save_screenshot)};
                     new AlertDialog.Builder(getActivity())
                             .setItems(options, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int item) {
-                                    if (options[item].equals(getString(R.string.action_share_link))) {
+                                    if (options[item].equals(getString(R.string.menu_share_link))) {
                                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                                         sharingIntent.setType("text/plain");
                                         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                         sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
                                         startActivity(Intent.createChooser(sharingIntent, "Share using"));
                                     }
-                                    if (options[item].equals(getString(R.string.action_share_screenshot))) {
+                                    if (options[item].equals(getString(R.string.menu_share_screenshot))) {
 
                                         screenshot();
 
@@ -331,7 +331,7 @@ public class FragmentHourly extends Fragment {
                                         sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
                                         startActivity(Intent.createChooser(sharingIntent, "Share using"));
                                     }
-                                    if (options[item].equals(getString(R.string.action_save_screenshot))) {
+                                    if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                         screenshot();
                                     }
                                 }

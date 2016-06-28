@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.baumann.weather.Weather">
+    tools:context=".Screen_Weather">
 
     <ListView android:id="@+id/bookmarks"
         android:layout_width="match_parent"

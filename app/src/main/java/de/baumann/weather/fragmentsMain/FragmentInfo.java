@@ -77,13 +77,13 @@ public class FragmentInfo extends Fragment {
 
 
         final String[] itemname ={
-                getString(R.string.action_forecast) + " " + state,
-                getString(R.string.action_radar),
-                getString(R.string.action_karten),
-                getString(R.string.action_satellit),
-                getString(R.string.action_thema),
-                getString(R.string.action_lexikon),
-                getString(R.string.action_webSearch),
+                getString(R.string.dwd_forecast) + " " + state,
+                getString(R.string.dwd_radar),
+                getString(R.string.dwd_karten),
+                getString(R.string.dwd_satellit),
+                getString(R.string.dwd_thema),
+                getString(R.string.dwd_lexikon),
+                getString(R.string.dwd_webSearch),
         };
 
         final String[] itemURL ={
@@ -116,7 +116,7 @@ public class FragmentInfo extends Fragment {
                 R.drawable.img_7,
         };
 
-        View rootView = inflater.inflate(R.layout.fragment_bookmarks, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_screen_main, container, false);
 
 
         setHasOptionsMenu(true);
@@ -153,19 +153,19 @@ public class FragmentInfo extends Fragment {
                 final String title = itemname[+position];
                 final String url = itemURL[+position];
 
-                final CharSequence[] options = {getString(R.string.edit_fav)};
+                final CharSequence[] options = {getString(R.string.bookmark_edit_fav)};
                 new AlertDialog.Builder(getActivity())
                         .setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
 
-                                if (options[item].equals (getString(R.string.edit_fav))) {
+                                if (options[item].equals (getString(R.string.bookmark_edit_fav))) {
                                     final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                                     sharedPref.edit()
                                             .putString("favoriteURL", url)
                                             .putString("favoriteTitle", title)
                                             .apply();
-                                    Snackbar.make(listView, R.string.toast_setBookmark, Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(listView, R.string.bookmark_setFav, Snackbar.LENGTH_LONG).show();
                                 }
                             }
                         }).show();
