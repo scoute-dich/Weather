@@ -57,7 +57,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference pref)
                 {
 
-                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.action_clearCache_dialog)));
+                    SpannableString s;
+                    s = new SpannableString(Html.fromHtml(getString(R.string.action_clearCache_dialog)));
+
                     Linkify.addLinks(s, Linkify.WEB_URLS);
 
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
@@ -108,7 +110,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference pref)
                 {
 
-                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.changelog_text)));
+                    SpannableString s;
+                    s = new SpannableString(Html.fromHtml(getString(R.string.changelog_text)));
+
                     Linkify.addLinks(s, Linkify.WEB_URLS);
 
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
@@ -134,7 +138,9 @@ public class UserSettingsActivity extends AppCompatActivity {
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference pref) {
 
-                    final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.about_text)));
+                    SpannableString s;
+                    s = new SpannableString(Html.fromHtml(getString(R.string.about_text)));
+
                     Linkify.addLinks(s, Linkify.WEB_URLS);
 
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
