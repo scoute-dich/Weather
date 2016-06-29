@@ -124,10 +124,13 @@
 
     <string name="firstScreenshot_title">Bildschirmfoto aufnehmen</string>
     <string name="firstScreenshot_title_summary">Noch einmal anzeigen: Bildschirmfotos richtig aufnehmen?</string>
-
     <string name="firstScreenshot_text">
         Du kannst Bildschirmfotos der gesamten Internetseite machen (auch von dem Teil, der gerade nicht auf dem
         Bildschirm zu sehen ist). Damit dies richtig funktioniert, solltest du warten, bis die Internetseite komplett geladen
         ist, um sicherzustellen, dass die gesamte Internetseite aufgenommen wird.</string>
+
+
+    <string name="perm_notShow_title">Berechtigungsdialog</string>
+    <string name="perm_notShow_title_summary">Noch einmal anzeigen: Berechtigungsdialog?</string>
 
 </resources>

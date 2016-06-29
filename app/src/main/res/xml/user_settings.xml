@@ -82,6 +82,12 @@
             android:key="first_screenshot"
             android:defaultValue="true" />
 
+        <CheckBoxPreference
+            android:title="@string/perm_notShow_title"
+            android:summary="@string/perm_notShow_title_summary"
+            android:key="perm_notShow"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

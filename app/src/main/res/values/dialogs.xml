@@ -123,4 +123,7 @@
         You can make screenshots of the whole website (even of the part which is outside of your display.
         Before taking the screenshot wait until the website is fully loaded, to ensure that the whole website is captured.</string>
 
+    <string name="perm_notShow_title">Permission dialog</string>
+    <string name="perm_notShow_title_summary">Show again: Permission dialog?</string>
+
 </resources>

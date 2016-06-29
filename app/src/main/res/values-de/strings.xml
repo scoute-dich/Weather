@@ -107,11 +107,13 @@
 
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Abbrechen</string>
+    <string name="toast_notAgain">Nicht anzeigen</string>
     <string name="toast_screenshot">Bildschirmfoto gespeichert unter:</string>
     <string name="toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
     <string name="toast_download">Lade herunter:</string>
     <string name="toast_download_1">Möchtest du herunterladen:</string>
+    <string name="toast_perm">Berechtigungen gewährt?</string>
 
 
     // Bookmarks

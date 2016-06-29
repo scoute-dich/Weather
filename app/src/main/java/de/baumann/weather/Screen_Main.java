@@ -80,25 +80,37 @@ public class Screen_Main extends AppCompatActivity {
         }
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Screen_Main.this)
-                            .setMessage(R.string.app_permissions)
-                            .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.toast_cancel), null)
-                            .show();
-                    return;
+            if (sharedPref.getBoolean ("perm_notShow", false)){
+                int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        new AlertDialog.Builder(Screen_Main.this)
+                                .setMessage(R.string.app_permissions)
+                                .setNeutralButton(R.string.toast_notAgain, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
+                                        dialog.cancel();
+                                        sharedPref.edit()
+                                                .putBoolean("perm_notShow", false)
+                                                .apply();
+                                    }
+                                })
+                                .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (android.os.Build.VERSION.SDK_INT >= 23)
+                                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                    REQUEST_CODE_ASK_PERMISSIONS);
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.toast_cancel), null)
+                                .show();
+                        return;
+                    }
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQUEST_CODE_ASK_PERMISSIONS);
                 }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
             }
         }
     }

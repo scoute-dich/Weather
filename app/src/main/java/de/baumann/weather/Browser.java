@@ -1,6 +1,7 @@
 package de.baumann.weather;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ClipData;
@@ -70,6 +71,7 @@ public class Browser extends AppCompatActivity  {
         return activeNetworkInfo == null || !activeNetworkInfo.isConnected();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,25 +223,37 @@ public class Browser extends AppCompatActivity  {
         });
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
-            int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(Browser.this)
-                            .setMessage(R.string.app_permissions)
-                            .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (android.os.Build.VERSION.SDK_INT >= 23)
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.toast_cancel), null)
-                            .show();
-                    return;
+            if (sharedPref.getBoolean ("perm_notShow", false)){
+                int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        new AlertDialog.Builder(Browser.this)
+                                .setMessage(R.string.app_permissions)
+                                .setNeutralButton(R.string.toast_notAgain, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
+                                        dialog.cancel();
+                                        sharedPref.edit()
+                                                .putBoolean("perm_notShow", false)
+                                                .apply();
+                                    }
+                                })
+                                .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (android.os.Build.VERSION.SDK_INT >= 23)
+                                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                                    REQUEST_CODE_ASK_PERMISSIONS);
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.toast_cancel), null)
+                                .show();
+                        return;
+                    }
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQUEST_CODE_ASK_PERMISSIONS);
                 }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
             }
         }
 
@@ -277,34 +291,63 @@ public class Browser extends AppCompatActivity  {
                             directory.mkdirs();
                         }
 
-                        if (url != null) {
-                            Uri source = Uri.parse(url);
-                            DownloadManager.Request request = new DownloadManager.Request(source);
-                            File destinationFile = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                    + source.getLastPathSegment());
-                            request.setDestinationUri(Uri.fromFile(destinationFile));
-                            ((DownloadManager) Browser.this.getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
-                            Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " +
-                                    destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
+                        try {
+                            if (url != null) {
+                                Uri source = Uri.parse(url);
+                                DownloadManager.Request request = new DownloadManager.Request(source);
+                                File destinationFile = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                        + source.getLastPathSegment());
+                                request.setDestinationUri(Uri.fromFile(destinationFile));
+                                ((DownloadManager) Browser.this.getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
+                                Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " +
+                                        destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Snackbar.make(mWebView, R.string.toast_perm , Snackbar.LENGTH_LONG).show();
                         }
                     }
                     break;
 
                     case ID_SHARE_IMAGE:
                         if(url != null) {
-                            final Uri source = Uri.parse(url);
-                            final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
-                            new ImageDownloadTask(local.getPath()) {
-                                @Override
-                                protected void onPostExecute(Bitmap result) {
-                                    Uri myUri= Uri.fromFile(new File(local.getPath()));
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("image/*");
-                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
-                                    sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    Browser.this.startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+
+                            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                                int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                                    Snackbar.make(mWebView, R.string.toast_perm , Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    final Uri source = Uri.parse(url);
+                                    final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
+                                    new ImageDownloadTask(local.getPath()) {
+                                        @Override
+                                        protected void onPostExecute(Bitmap result) {
+                                            Uri myUri= Uri.fromFile(new File(local.getPath()));
+                                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                            sharingIntent.setType("image/*");
+                                            sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+                                            sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                            Browser.this.startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+                                        }
+                                    }.execute(url);
                                 }
-                            }.execute(url);
+
+                            } else {
+                                final Uri source = Uri.parse(url);
+                                final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
+                                new ImageDownloadTask(local.getPath()) {
+                                    @Override
+                                    protected void onPostExecute(Bitmap result) {
+                                        Uri myUri= Uri.fromFile(new File(local.getPath()));
+                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                        sharingIntent.setType("image/*");
+                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+                                        sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        Browser.this.startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+                                    }
+                                }.execute(url);
+                            }
+
                         } else {
                             Snackbar.make(mWebView, R.string.context_shareImage_toast, Snackbar.LENGTH_LONG).show();
                         }
@@ -465,18 +508,21 @@ public class Browser extends AppCompatActivity  {
                                 }
                                 if (options[item].equals(getString(R.string.menu_share_screenshot))) {
                                     screenshot();
-                                    new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
+
                                     Date date = new Date();
                                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+                                    File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
 
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("image/png");
-                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                            + dateFormat.format(date) + ".jpg"));
-                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+                                    if (file.exists()) {
+                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                        sharingIntent.setType("image/png");
+                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                        Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                                + dateFormat.format(date) + ".jpg"));
+                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+                                    }
                                 }
                                 if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                     screenshot();
@@ -543,9 +589,6 @@ public class Browser extends AppCompatActivity  {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
 
-        String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
-        Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
-
         mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                 View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -568,21 +611,24 @@ public class Browser extends AppCompatActivity  {
 
         try {
             OutputStream fOut;
-            File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
+            File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg");
             fOut = new FileOutputStream(file);
 
             bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
             fOut.flush();
             fOut.close();
             bm.recycle();
+
+            String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
+            Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
+
+            Uri uri = Uri.fromFile(file);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+            sendBroadcast(intent);
+
         } catch (Exception e) {
             e.printStackTrace();
+            Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_LONG).show();
         }
-
-        File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                + dateFormat.format(date) + ".jpg");
-        Uri uri = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-        sendBroadcast(intent);
     }
 }

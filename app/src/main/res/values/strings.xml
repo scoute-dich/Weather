@@ -105,11 +105,13 @@
 
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Cancel</string>
+    <string name="toast_notAgain">Never show</string>
     <string name="toast_screenshot">Saved screenshot to location:</string>
     <string name="toast_clearCache">Clearing cache …</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
     <string name="toast_download">Downloading file:</string>
     <string name="toast_download_1">Do you want to download:</string>
+    <string name="toast_perm">Permissions granted?</string>
 
 
     // Bookmarks

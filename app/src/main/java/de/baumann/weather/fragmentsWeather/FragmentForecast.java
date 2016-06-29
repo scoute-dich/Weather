@@ -1,5 +1,7 @@
 package de.baumann.weather.fragmentsWeather;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ClipData;
@@ -8,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -66,6 +69,7 @@ public class FragmentForecast extends Fragment {
         return activeNetworkInfo == null || !activeNetworkInfo.isConnected();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -194,34 +198,63 @@ public class FragmentForecast extends Fragment {
                             directory.mkdirs();
                         }
 
-                        if (url != null) {
-                            Uri source = Uri.parse(url);
-                            DownloadManager.Request request = new DownloadManager.Request(source);
-                            File destinationFile = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                    + source.getLastPathSegment());
-                            request.setDestinationUri(Uri.fromFile(destinationFile));
-                            ((DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
-                            Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " +
-                                    destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
+                        try {
+                            if (url != null) {
+                                Uri source = Uri.parse(url);
+                                DownloadManager.Request request = new DownloadManager.Request(source);
+                                File destinationFile = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                        + source.getLastPathSegment());
+                                request.setDestinationUri(Uri.fromFile(destinationFile));
+                                ((DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE)).enqueue(request);
+                                Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " +
+                                        destinationFile.getAbsolutePath() , Snackbar.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Snackbar.make(mWebView, R.string.toast_perm , Snackbar.LENGTH_LONG).show();
                         }
                     }
                     break;
 
                     case ID_SHARE_IMAGE:
                         if(url != null) {
-                            final Uri source = Uri.parse(url);
-                            final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
-                            new ImageDownloadTask(local.getPath()) {
-                                @Override
-                                protected void onPostExecute(Bitmap result) {
-                                    Uri myUri= Uri.fromFile(new File(local.getPath()));
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("image/*");
-                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
-                                    sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                    getActivity().startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+
+                            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                                int hasWRITE_EXTERNAL_STORAGE = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+                                    Snackbar.make(mWebView, R.string.toast_perm , Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    final Uri source = Uri.parse(url);
+                                    final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
+                                    new ImageDownloadTask(local.getPath()) {
+                                        @Override
+                                        protected void onPostExecute(Bitmap result) {
+                                            Uri myUri= Uri.fromFile(new File(local.getPath()));
+                                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                            sharingIntent.setType("image/*");
+                                            sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+                                            sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                            getActivity().startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+                                        }
+                                    }.execute(url);
                                 }
-                            }.execute(url);
+
+                            } else {
+                                final Uri source = Uri.parse(url);
+                                final Uri local = Uri.parse(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"+source.getLastPathSegment());
+                                new ImageDownloadTask(local.getPath()) {
+                                    @Override
+                                    protected void onPostExecute(Bitmap result) {
+                                        Uri myUri= Uri.fromFile(new File(local.getPath()));
+                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                        sharingIntent.setType("image/*");
+                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+                                        sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        getActivity().startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_image))));
+                                    }
+                                }.execute(url);
+                            }
+
                         } else {
                             Snackbar.make(mWebView, R.string.context_shareImage_toast, Snackbar.LENGTH_LONG).show();
                         }
@@ -315,21 +348,22 @@ public class FragmentForecast extends Fragment {
                                         startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
                                     }
                                     if (options[item].equals(getString(R.string.menu_share_screenshot))) {
-
                                         screenshot();
 
-                                        new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/");
                                         Date date = new Date();
                                         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
+                                        File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
 
-                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                        sharingIntent.setType("image/png");
-                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                        Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                                                + dateFormat.format(date) + ".jpg"));
-                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+                                        if (file.exists()) {
+                                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                            sharingIntent.setType("image/png");
+                                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                            sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                            Uri bmpUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
+                                                    + dateFormat.format(date) + ".jpg"));
+                                            sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                            startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+                                        }
                                     }
                                     if (options[item].equals(getString(R.string.menu_save_screenshot))) {
                                         screenshot();
@@ -351,11 +385,28 @@ public class FragmentForecast extends Fragment {
             directory.mkdirs();
         }
 
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (sharedPref.getBoolean ("first_screenshot", false)){
+            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstScreenshot_text)));
+            Linkify.addLinks(s, Linkify.WEB_URLS);
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(s)
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
+        }
+
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HH-mm", Locale.getDefault());
-
-        String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
-        Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
 
         mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                 View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
@@ -379,21 +430,24 @@ public class FragmentForecast extends Fragment {
 
         try {
             OutputStream fOut;
-            File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/", dateFormat.format(date) + ".jpg");
+            File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg");
             fOut = new FileOutputStream(file);
 
             bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
             fOut.flush();
             fOut.close();
             bm.recycle();
+
+            String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
+            Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
+
+            Uri uri = Uri.fromFile(file);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+            getActivity().sendBroadcast(intent);
+
         } catch (Exception e) {
             e.printStackTrace();
+            Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_LONG).show();
         }
-
-        File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/"
-                + dateFormat.format(date) + ".jpg");
-        Uri uri = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-        getActivity().sendBroadcast(intent);
     }
 }
