@@ -14,12 +14,14 @@ import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -86,6 +88,14 @@ public class FragmentBookmark extends Fragment {
                 final String title = map.get("title");
                 final String url = map.get("url");
 
+                final LinearLayout layout = new LinearLayout(getActivity());
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setGravity(Gravity.CENTER_HORIZONTAL);
+                final EditText input = new EditText(getActivity());
+                input.setSingleLine(true);
+                layout.setPadding(30, 0, 50, 0);
+                layout.addView(input);
+
                 final CharSequence[] options = {getString(R.string.bookmark_edit_title), getString(R.string.bookmark_edit_url), getString(R.string.bookmark_edit_fav), getString(R.string.bookmark_remove_bookmark)};
                 new AlertDialog.Builder(getActivity())
                         .setItems(options, new DialogInterface.OnClickListener() {
@@ -93,12 +103,11 @@ public class FragmentBookmark extends Fragment {
                             public void onClick(DialogInterface dialog, int item) {
                                 if (options[item].equals(getString(R.string.bookmark_edit_title))) {
                                     try {
-                                        final EditText input = new EditText(getActivity());
-                                        input.setText(title);
                                         final BrowserDatabase db = new BrowserDatabase(getActivity());
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
+                                        input.setText(title);
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(getActivity())
-                                                .setView(input)
+                                                .setView(layout)
                                                 .setMessage(R.string.bookmark_edit_title)
                                                 .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
@@ -123,12 +132,11 @@ public class FragmentBookmark extends Fragment {
                                 }
                                 if (options[item].equals(getString(R.string.bookmark_edit_url))) {
                                     try {
-                                        final EditText input = new EditText(getActivity());
                                         input.setText(url);
                                         final BrowserDatabase db = new BrowserDatabase(getActivity());
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
                                         final AlertDialog.Builder dialog2 = new AlertDialog.Builder(getActivity())
-                                                .setView(input)
+                                                .setView(layout)
                                                 .setMessage(R.string.bookmark_edit_url)
                                                 .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 

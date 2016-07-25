@@ -1,4 +1,4 @@
-### v 3.1 - 3.1.2:
+### v 3.1 - 3.1.2.1:
 - long press title bar to exit
 - tab settings
 - permission dialogs

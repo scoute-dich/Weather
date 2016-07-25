@@ -29,6 +29,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.EditText;
 
@@ -433,11 +435,18 @@ public class Browser extends AppCompatActivity  {
                 dialog.show();
             } else {
                 try {
+                    final LinearLayout layout = new LinearLayout(this);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    layout.setGravity(Gravity.CENTER_HORIZONTAL);
                     final EditText input = new EditText(this);
+                    input.setSingleLine(true);
+                    layout.setPadding(30, 0, 50, 0);
+                    layout.addView(input);
+
                     input.setText(mWebView.getTitle());
                     final BrowserDatabase db = new BrowserDatabase(this);
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
-                            .setView(input)
+                            .setView(layout)
                             .setMessage(R.string.bookmark_edit_title)
                             .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
