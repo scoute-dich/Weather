@@ -22,6 +22,7 @@ package de.baumann.weather.helper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
@@ -50,23 +51,29 @@ public class SplashActivity extends AppCompatActivity {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         final String startType = sharedPref.getString("startType", "1");
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (startType.equals("2")) {
-                    Intent intent_in = new Intent(SplashActivity.this, Start.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
-                } else if (startType.equals("1")){
-                    Intent intent_in = new Intent(SplashActivity.this, Screen_Main.class);
-                    startActivity(intent_in);
-                    overridePendingTransition(0, 0);
+        if (startType.equals("2")) {
+
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    Intent mainIntent = new Intent(SplashActivity.this, Start.class);
+                    mainIntent.putExtra("id", "1");
+                    startActivity(mainIntent);
+                    SplashActivity.this.finish();
+                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 }
-                finish();
-            }
-        }, 3000);
+            }, 2000);
+        } else if (startType.equals("1")){
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
 
+                    Intent mainIntent = new Intent(SplashActivity.this, Screen_Main.class);
+                    mainIntent.putExtra("id", "1");
+                    startActivity(mainIntent);
+                    SplashActivity.this.finish();
+                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                }
+            }, 2000);
+        }
     }
-
 }
