@@ -1,5 +1,7 @@
 [![F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdfilter=baumann&fdid=de.baumann.weather)
 
+[![Donate](https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NP6TGYDYP9SHY)
+
 # Weather
 A small android webview application to show weather informations from wetterdienst.de and the DWD (German Weather Service). App is organized in tabs. It is mainly for German user, as the displayed websites are in german. Features:
 
