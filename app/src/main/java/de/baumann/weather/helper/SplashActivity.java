@@ -25,10 +25,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.baumann.weather.Screen_Main;
 import de.baumann.weather.R;
@@ -41,9 +37,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
 
@@ -62,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
                     SplashActivity.this.finish();
                     overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 }
-            }, 2000);
+            }, 1000);
         } else if (startType.equals("1")){
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -73,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                     SplashActivity.this.finish();
                     overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 }
-            }, 2000);
+            }, 1000);
         }
     }
 }

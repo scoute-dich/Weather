@@ -27,13 +27,18 @@
     //Changelog Dialog
 
     <string name="changelog_text">
-        &lt;i>For more informations visit the project site on github:&lt;br>
+        &lt;i>For more information visit the project site on github:&lt;br>
         https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
+
+        &lt;b>v 3.2:&lt;/b>&lt;br>
+        &#8226; Bookmark popup&lt;br>
+        &#8226; Shortcut on homescreen&lt;br>
+        &#8226; New splashscreen&lt;br>&lt;br>
 
         &lt;b>v 3.1.3:&lt;/b>&lt;br>
         &#8226; fixed toolbar layout&lt;br>&lt;br>
 
-        &lt;b>v 3.1 - 3.1.2.2:&lt;/b>&lt;br>
+        &lt;b>v 3.1 - 3.1.2:&lt;/b>&lt;br>
         &#8226; long press title bar to exit&lt;br>
         &#8226; tab settings&lt;br>
         &#8226; permission dialogs&lt;br>

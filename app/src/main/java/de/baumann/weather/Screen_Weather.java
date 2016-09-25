@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ import java.util.List;
 import de.baumann.weather.fragmentsWeather.FragmentForecast;
 import de.baumann.weather.fragmentsWeather.FragmentHourly;
 import de.baumann.weather.fragmentsWeather.FragmentOverview;
+import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.Start;
 
 public class Screen_Weather extends AppCompatActivity {
@@ -203,9 +205,6 @@ public class Screen_Weather extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent_in = new Intent(Screen_Weather.this, Screen_Main.class);
-        startActivity(intent_in);
-        overridePendingTransition(0, 0);
         finish();
     }
 
@@ -226,6 +225,17 @@ public class Screen_Weather extends AppCompatActivity {
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
+        }
+
+        if (id == R.id.action_bookmark) {
+            Intent intent_in = new Intent(Screen_Weather.this, Popup_bookmarks.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+finish();
+                }
+            }, 7000);
         }
 
         if (id == android.R.id.home) {

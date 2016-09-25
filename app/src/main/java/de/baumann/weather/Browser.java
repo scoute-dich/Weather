@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -53,6 +54,7 @@ import java.util.Locale;
 
 import de.baumann.weather.helper.BrowserDatabase;
 import de.baumann.weather.helper.ImageDownloadTask;
+import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.Start;
 
 public class Browser extends AppCompatActivity  {
@@ -260,7 +262,6 @@ public class Browser extends AppCompatActivity  {
                 }
             }
         }
-
     }
 
     @Override
@@ -469,6 +470,17 @@ public class Browser extends AppCompatActivity  {
                     e.printStackTrace();
                 }
             }
+        }
+
+        if (id == R.id.action_bookmark) {
+            Intent intent_in = new Intent(Browser.this, Popup_bookmarks.class);
+            startActivity(intent_in);
+            overridePendingTransition(0, 0);
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    finish();
+                }
+            }, 7000);
         }
 
         if (id == R.id.action_settings) {

@@ -30,6 +30,7 @@ import java.util.List;
 
 import de.baumann.weather.fragmentsMain.FragmentBookmark;
 import de.baumann.weather.fragmentsMain.FragmentInfo;
+import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.Start;
 
 public class Screen_Main extends AppCompatActivity {
@@ -212,7 +213,26 @@ public class Screen_Main extends AppCompatActivity {
             }
         }
 
+        if (id == R.id.action_shortcut) {
+            Intent i = new Intent(getApplicationContext(), Popup_bookmarks.class);
+            i.setAction(Intent.ACTION_MAIN);
+
+            Intent shortcut = new Intent();
+            shortcut.setAction(Intent.ACTION_MAIN);
+            shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
+            shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, (getString(R.string.app_name)) + " | " + getString(R.string.title_bookmarks));
+            shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
+            shortcut.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            sendBroadcast(shortcut);
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
 }

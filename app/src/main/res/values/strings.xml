@@ -32,6 +32,7 @@
     <string name="menu_save_screenshot">Save screenshot</string>
     <string name="menu_search">Search …</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_shortcut">Create shortcut</string>
 
 
     // Context Menu

@@ -1,3 +1,8 @@
+### v 3.2:
+- Bookmark popup&lt;br>
+- Shortcut on homescreen&lt;br>
+- New splashscreen&lt;br>&lt;br>
+
 ### v 3.1 - 3.1.2.2:
 - long press title bar to exit
 - tab settings
