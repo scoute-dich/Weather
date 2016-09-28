@@ -135,14 +135,36 @@ public class FragmentHourly extends Fragment {
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress);
-                if (progress == 100) {
-                    progressBar.setVisibility(View.GONE);
-                    mWebView.scrollTo(0, 400);
 
-                } else {
-                    progressBar.setVisibility(View.VISIBLE);
-
+                if (progress > 0 && progress <= 60) {
+                    mWebView.loadUrl("javascript:(function() { " +
+                            "var head = document.getElementsByClassName('logo')[0];" +
+                            "head.parentNode.removeChild(head);" +
+                            "var head2 = document.getElementsByClassName('navbar navbar-default')[0];" +
+                            "head2.parentNode.removeChild(head2);" +
+                            "var head3 = document.getElementsByClassName('frc_head')[0];" +
+                            "head3.parentNode.removeChild(head3);" +
+                            "var head4 = document.getElementsByClassName('hrcolor')[0];" +
+                            "head4.parentNode.removeChild(head4);" +
+                            "document.getElementsByTagName('hr')[0].style.display=\"none\"; " +
+                            "})()");
                 }
+
+                if (progress > 60) {
+                    mWebView.loadUrl("javascript:(function() { " +
+                            "var head = document.getElementsByClassName('logo')[0];" +
+                            "head.parentNode.removeChild(head);" +
+                            "var head2 = document.getElementsByClassName('navbar navbar-default')[0];" +
+                            "head2.parentNode.removeChild(head2);" +
+                            "var head3 = document.getElementsByClassName('frc_head')[0];" +
+                            "head3.parentNode.removeChild(head3);" +
+                            "var head4 = document.getElementsByClassName('hrcolor')[0];" +
+                            "head4.parentNode.removeChild(head4);" +
+                            "document.getElementsByTagName('hr')[0].style.display=\"none\"; " +
+                            "})()");
+                }
+
+                progressBar.setVisibility(progress == 100 ? View.GONE : View.VISIBLE);
             }
         });
 
