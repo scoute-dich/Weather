@@ -74,13 +74,13 @@ public class FragmentOverview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_screen_weather, container, false);
-
-        setHasOptionsMenu(true);
 
         if (android.os.Build.VERSION.SDK_INT >= 21)
             WebView.enableSlowWholeDocumentDraw();
 
+        View rootView = inflater.inflate(R.layout.fragment_screen_weather, container, false);
+
+        setHasOptionsMenu(true);
 
         PreferenceManager.setDefaultValues(getActivity(), R.xml.user_settings, false);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -435,32 +435,27 @@ public class FragmentOverview extends Fragment {
         mWebView.measure(View.MeasureSpec.makeMeasureSpec(
                 View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        mWebView.layout(0, 0, mWebView.getMeasuredWidth(),
-                mWebView.getMeasuredHeight());
+        mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
         mWebView.setDrawingCacheEnabled(true);
         mWebView.buildDrawingCache();
-        Bitmap bm = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+        Bitmap bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
                 mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 
-        Canvas bigcanvas = new Canvas(bm);
+        Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
-        int iHeight = bm.getHeight();
-        bigcanvas.drawBitmap(bm, 0, iHeight, paint);
-        mWebView.draw(bigcanvas);
-        System.out.println("1111111111111111111111="
-                + bigcanvas.getWidth());
-        System.out.println("22222222222222222222222="
-                + bigcanvas.getHeight());
+        int iHeight = bitmap.getHeight();
+        canvas.drawBitmap(bitmap, 0, iHeight, paint);
+        mWebView.draw(canvas);
 
         try {
             OutputStream fOut;
             File file = new File(Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg");
             fOut = new FileOutputStream(file);
 
-            bm.compress(Bitmap.CompressFormat.PNG, 50, fOut);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
             fOut.flush();
             fOut.close();
-            bm.recycle();
+            bitmap.recycle();
 
             String filename = getString(R.string.toast_screenshot) + " " + Environment.getExternalStorageDirectory() + "/Pictures/Websites/" + dateFormat.format(date) + ".jpg";
             Snackbar.make(swipeView, filename, Snackbar.LENGTH_LONG).show();
