@@ -13,7 +13,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="275dp"
+        android:layout_height="200dp"
         android:id="@+id/imageView_header"
         android:layout_centerHorizontal="true"
         android:src="@drawable/splash1"
