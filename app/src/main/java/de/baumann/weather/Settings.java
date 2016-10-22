@@ -10,10 +10,12 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,23 +24,58 @@ import java.io.File;
 import de.baumann.weather.helper.Start;
 import de.baumann.weather.helper.helpers;
 
-
-public class UserSettingsActivity extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_user_settings);
+        setContentView(R.layout.activity_settings);
+
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setTitle(R.string.menu_settings);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(toolbar != null) {
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PreferenceManager.setDefaultValues(Settings.this, R.xml.user_settings, false);
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Settings.this);
+                    final String startType = sharedPref.getString("startType", "1");
+                    if (startType.equals("2")) {
+                        Intent intent_in = new Intent(Settings.this, Start.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    } else if (startType.equals("1")) {
+                        Intent intent_in = new Intent(Settings.this, Screen_Main.class);
+                        startActivity(intent_in);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+                }
+            });
+
+            if (sharedPref.getBoolean ("longPress", false)){
+                toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        finishAffinity();
+                        return true;
+                    }
+                });
+            }
+        }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            setTitle(R.string.menu_settings);
         }
-
         // Display the fragment as the activity_screen_main content
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
+                .replace(R.id.content_frame, new SettingsFragment())
                 .commit();
     }
 
@@ -159,12 +196,12 @@ public class UserSettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         final String startType = sharedPref.getString("startType", "1");
         if (startType.equals("2")) {
-            Intent intent_in = new Intent(UserSettingsActivity.this, Start.class);
+            Intent intent_in = new Intent(Settings.this, Start.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
         } else if (startType.equals("1")) {
-            Intent intent_in = new Intent(UserSettingsActivity.this, Screen_Main.class);
+            Intent intent_in = new Intent(Settings.this, Screen_Main.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();
@@ -191,12 +228,12 @@ public class UserSettingsActivity extends AppCompatActivity {
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             final String startType = sharedPref.getString("startType", "1");
             if (startType.equals("2")) {
-                Intent intent_in = new Intent(UserSettingsActivity.this, Start.class);
+                Intent intent_in = new Intent(Settings.this, Start.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
                 finish();
             } else if (startType.equals("1")) {
-                Intent intent_in = new Intent(UserSettingsActivity.this, Screen_Main.class);
+                Intent intent_in = new Intent(Settings.this, Screen_Main.class);
                 startActivity(intent_in);
                 overridePendingTransition(0, 0);
                 finish();

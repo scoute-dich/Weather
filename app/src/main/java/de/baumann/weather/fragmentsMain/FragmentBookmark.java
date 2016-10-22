@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -100,6 +101,11 @@ public class FragmentBookmark extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int item) {
                                 if (options[item].equals(getString(R.string.bookmark_edit_title))) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
+                                            helpers.showKeyboard(getActivity(),input);
+                                        }
+                                    }, 200);
                                     try {
                                         final BrowserDatabase db = new BrowserDatabase(getActivity());
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));
@@ -130,6 +136,11 @@ public class FragmentBookmark extends Fragment {
                                 }
                                 if (options[item].equals(getString(R.string.bookmark_edit_url))) {
                                     try {
+                                        new Handler().postDelayed(new Runnable() {
+                                            public void run() {
+                                                helpers.showKeyboard(getActivity(),input);
+                                            }
+                                        }, 200);
                                         input.setText(url);
                                         final BrowserDatabase db = new BrowserDatabase(getActivity());
                                         db.deleteBookmark((Integer.parseInt(seqnoStr)));

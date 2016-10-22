@@ -510,10 +510,16 @@ public class Browser extends AppCompatActivity  {
                     layout.setGravity(Gravity.CENTER_HORIZONTAL);
                     final EditText input = new EditText(this);
                     input.setSingleLine(true);
+                    input.setText(mWebView.getTitle());
                     layout.setPadding(30, 0, 50, 0);
                     layout.addView(input);
 
-                    input.setText(mWebView.getTitle());
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            helpers.showKeyboard(Browser.this,input);
+                        }
+                    }, 200);
+
                     final BrowserDatabase db = new BrowserDatabase(this);
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
                             .setView(layout)
@@ -553,7 +559,7 @@ public class Browser extends AppCompatActivity  {
         }
 
         if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Browser.this, UserSettingsActivity.class);
+            Intent intent_in = new Intent(Browser.this, Settings.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();

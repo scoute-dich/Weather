@@ -19,10 +19,14 @@
 
 package de.baumann.weather.helper;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -57,5 +61,10 @@ public class helpers {
         }
         Linkify.addLinks(s, Linkify.WEB_URLS);
         return s;
+    }
+
+    public static void showKeyboard(Activity from, EditText editText) {
+        InputMethodManager imm = (InputMethodManager) from.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 }

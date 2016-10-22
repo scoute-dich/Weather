@@ -178,7 +178,7 @@ public class Screen_Main extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Screen_Main.this, UserSettingsActivity.class);
+            Intent intent_in = new Intent(Screen_Main.this, Settings.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();

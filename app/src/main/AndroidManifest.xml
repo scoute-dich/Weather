@@ -51,8 +51,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".UserSettingsActivity"
+            android:name=".Settings"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name" />
 
         <activity

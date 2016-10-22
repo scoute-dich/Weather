@@ -217,7 +217,7 @@ public class Screen_Weather extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Screen_Weather.this, UserSettingsActivity.class);
+            Intent intent_in = new Intent(Screen_Weather.this, Settings.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
             finish();

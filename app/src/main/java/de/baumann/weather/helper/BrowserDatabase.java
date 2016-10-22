@@ -80,7 +80,7 @@ public class BrowserDatabase extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getReadableDatabase();
 
-        String sql = "SELECT seqno,title,url FROM bookmarks ORDER BY seqno";
+        String sql = "SELECT seqno,title,url FROM bookmarks ORDER BY title";
         Cursor c = db.rawQuery(sql, null);
         c.moveToFirst();
         for (int i = 0; i < c.getCount(); i++) {
