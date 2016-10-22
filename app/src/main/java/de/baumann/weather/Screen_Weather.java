@@ -18,9 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +31,7 @@ import de.baumann.weather.fragmentsWeather.FragmentHourly;
 import de.baumann.weather.fragmentsWeather.FragmentOverview;
 import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.Start;
+import de.baumann.weather.helper.helpers;
 
 public class Screen_Weather extends AppCompatActivity {
 
@@ -184,12 +182,10 @@ public class Screen_Weather extends AppCompatActivity {
     private void checkFirstRun () {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref.getBoolean ("first_browser", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBrowser_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
 
             final AlertDialog.Builder dialog = new AlertDialog.Builder(Screen_Weather.this)
                     .setTitle(R.string.firstBrowser_title)
-                    .setMessage(s)
+                    .setMessage(helpers.textSpannable(getString(R.string.firstBrowser_text)))
                     .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {

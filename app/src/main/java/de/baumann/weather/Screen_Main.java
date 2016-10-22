@@ -17,9 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +29,7 @@ import de.baumann.weather.fragmentsMain.FragmentBookmark;
 import de.baumann.weather.fragmentsMain.FragmentInfo;
 import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.Start;
+import de.baumann.weather.helper.helpers;
 
 public class Screen_Main extends AppCompatActivity {
 
@@ -189,12 +187,10 @@ public class Screen_Main extends AppCompatActivity {
         if (id == R.id.action_search) {
             final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             if (sharedPref.getBoolean ("first_search", false)) {
-                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstSearch_text)));
-                Linkify.addLinks(s, Linkify.WEB_URLS);
 
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(Screen_Main.this)
                         .setTitle(R.string.firstSearch_title)
-                        .setMessage(s)
+                        .setMessage(helpers.textSpannable(getString(R.string.firstSearch_text)))
                         .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {

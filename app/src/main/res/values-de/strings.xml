@@ -44,7 +44,6 @@
     <string name="context_externalBrowser">Im Browser öffnen</string>
     <string name="context_linkCopy">Link kopieren</string>
     <string name="context_linkCopy_toast">Link erfolgreich kopiert</string>
-    <string name="context_shareImage_toast">Bild kann nicht geteilt werden: kein URL</string>
     <string name="context_saveImage_toast">Bild gespeichert unter:</string>
 
 
@@ -109,12 +108,14 @@
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Abbrechen</string>
     <string name="toast_notAgain">Nicht anzeigen</string>
-    <string name="toast_screenshot">Bildschirmfoto gespeichert unter:</string>
     <string name="toast_clearCache">Cache wird geleert …</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
     <string name="toast_download">Lade herunter:</string>
     <string name="toast_download_1">Möchtest du herunterladen:</string>
     <string name="toast_perm">Berechtigungen gewährt?</string>
+    <string name="toast_download_2">Download vollständig. Downloadmanager öffnen?</string>
+    <string name="toast_screenshot_failed">Konnte Screenshot nicht erstellen.</string>
+
 
 
     // Bookmarks

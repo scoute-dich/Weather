@@ -10,10 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +20,7 @@ import android.widget.Toast;
 import java.io.File;
 
 import de.baumann.weather.helper.Start;
+import de.baumann.weather.helper.helpers;
 
 
 public class UserSettingsActivity extends AppCompatActivity {
@@ -57,13 +55,8 @@ public class UserSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference pref)
                 {
 
-                    SpannableString s;
-                    s = new SpannableString(Html.fromHtml(getString(R.string.action_clearCache_dialog)));
-
-                    Linkify.addLinks(s, Linkify.WEB_URLS);
-
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
-                            .setMessage(s)
+                            .setMessage(helpers.textSpannable(getString(R.string.action_clearCache_dialog)))
                             .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -110,14 +103,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference pref)
                 {
 
-                    SpannableString s;
-                    s = new SpannableString(Html.fromHtml(getString(R.string.changelog_text)));
-
-                    Linkify.addLinks(s, Linkify.WEB_URLS);
-
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.action_changelog)
-                            .setMessage( s )
+                            .setMessage( helpers.textSpannable(getString(R.string.changelog_text)) )
                             .setPositiveButton(getString(R.string.toast_yes),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
@@ -138,14 +126,9 @@ public class UserSettingsActivity extends AppCompatActivity {
             reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference pref) {
 
-                    SpannableString s;
-                    s = new SpannableString(Html.fromHtml(getString(R.string.about_text)));
-
-                    Linkify.addLinks(s, Linkify.WEB_URLS);
-
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.about_title)
-                            .setMessage(s)
+                            .setMessage(helpers.textSpannable(getString(R.string.about_text)))
                             .setPositiveButton(getString(R.string.toast_yes),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {

@@ -11,9 +11,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +29,7 @@ import de.baumann.weather.Browser;
 import de.baumann.weather.R;
 import de.baumann.weather.Screen_Weather;
 import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.helper.helpers;
 
 
 public class FragmentBookmark extends Fragment {
@@ -273,12 +271,10 @@ public class FragmentBookmark extends Fragment {
     private void checkFirstRun() {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (sharedPref.getBoolean ("first_bookmark", false)){
-            final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.firstBookmark_text)));
-            Linkify.addLinks(s, Linkify.WEB_URLS);
 
             final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.firstBookmark_title)
-                    .setMessage(s)
+                    .setMessage(helpers.textSpannable(getString(R.string.firstBookmark_text)))
                     .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
