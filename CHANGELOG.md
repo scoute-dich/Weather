@@ -1,3 +1,7 @@
+### v 3.3:
+- maintenance release
+- Android N support
+
 ### v 3.2:
 - Bookmark popup&lt;br>
 - Shortcut on homescreen&lt;br>
