@@ -1,3 +1,13 @@
+### v 3.4:
+- bug fix: deleted bookmark after cancel editing
+- bug fix: open several instances of app
+- improved: settings screen
+- improved: mobile layout (DWD)
+- improved: shortcuts on homescreen
+- improved: UI (icons, dialogs, menus)
+- added: confirmation on exit
+- added: Android N app shortcuts
+
 ### v 3.3:
 - maintenance release
 - Android N support

@@ -63,6 +63,7 @@ public class FragmentOverview extends Fragment {
     private Bitmap bitmap;
     private String shareString;
     private File shareFile;
+    private SharedPreferences sharedPref;
 
     private static final int ID_SAVE_IMAGE = 10;
     private static final int ID_IMAGE_EXTERNAL_BROWSER = 11;
@@ -89,7 +90,8 @@ public class FragmentOverview extends Fragment {
         setHasOptionsMenu(true);
 
         PreferenceManager.setDefaultValues(getActivity(), R.xml.user_settings, false);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.user_settings_help, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
@@ -116,11 +118,8 @@ public class FragmentOverview extends Fragment {
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         registerForContextMenu(mWebView);
-
-        if (sharedPref.getBoolean ("java", false)){
-            mWebView.getSettings().setJavaScriptEnabled(true);
-        }
 
         if (isNetworkUnAvailable()) { // loading offline
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -201,6 +200,7 @@ public class FragmentOverview extends Fragment {
             public void onProgressChanged(WebView view, int progress) {
 
                 progressBar.setProgress(progress);
+                progressBar.setVisibility(progress == 100 ? View.GONE : View.VISIBLE);
 
                 if (progress > 0 && progress <= 60) {
                     mWebView.loadUrl("javascript:(function() { " +
@@ -229,8 +229,6 @@ public class FragmentOverview extends Fragment {
                             "document.getElementsByTagName('hr')[0].style.display=\"none\"; " +
                             "})()");
                 }
-
-                progressBar.setVisibility(progress == 100 ? View.GONE : View.VISIBLE);
             }
         });
 
@@ -415,54 +413,41 @@ public class FragmentOverview extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_share:
 
-                final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                if (sharedPref.getBoolean ("first_screenshot", false)){
-
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.firstScreenshot_title)
-                            .setMessage(helpers.textSpannable(getString(R.string.firstScreenshot_text)))
-                            .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                    sharedPref.edit()
-                                            .putBoolean("first_screenshot", false)
-                                            .apply();
+                final CharSequence[] options = {
+                        getString(R.string.menu_share_link),
+                        getString(R.string.menu_share_screenshot),
+                        getString(R.string.menu_save_screenshot)};
+                new AlertDialog.Builder(getActivity())
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int item) {
+                                if (options[item].equals(getString(R.string.menu_share_link))) {
+                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                    sharingIntent.setType("text/plain");
+                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
                                 }
-                            });
-                    dialog.show();
-                } else {
-                    final CharSequence[] options = {getString(R.string.menu_share_link), getString(R.string.menu_share_screenshot), getString(R.string.menu_save_screenshot)};
-                    new AlertDialog.Builder(getActivity())
-                            .setItems(options, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int item) {
-                                    if (options[item].equals(getString(R.string.menu_share_link))) {
+                                if (options[item].equals(getString(R.string.menu_share_screenshot))) {
+                                    screenshot();
+
+                                    if (sharedPref.getBoolean ("first_screenshot", true)){
+                                        Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+                                    } else if (shareFile.exists()) {
                                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                        sharingIntent.setType("text/plain");
+                                        sharingIntent.setType("image/png");
                                         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                         sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
-                                    }
-                                    if (options[item].equals(getString(R.string.menu_share_screenshot))) {
-                                        screenshot();
-
-                                        if (shareFile.exists()) {
-                                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                            sharingIntent.setType("image/png");
-                                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                            sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                            Uri bmpUri = Uri.fromFile(shareFile);
-                                            sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                            startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
-                                        }
-                                    }
-                                    if (options[item].equals(getString(R.string.menu_save_screenshot))) {
-                                        screenshot();
+                                        Uri bmpUri = Uri.fromFile(shareFile);
+                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
                                     }
                                 }
-                            }).show();
-                }
+                                if (options[item].equals(getString(R.string.menu_save_screenshot))) {
+                                    screenshot();
+                                }
+                            }
+                        }).show();
                 return true;
         }
 
@@ -471,49 +456,66 @@ public class FragmentOverview extends Fragment {
 
     private void screenshot() {
 
-        shareFile = helpers.newFile();
+        if (sharedPref.getBoolean ("first_screenshot", false)){
 
-        try{
-            mWebView.measure(View.MeasureSpec.makeMeasureSpec(
-                    View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-            mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
-            mWebView.setDrawingCacheEnabled(true);
-            mWebView.buildDrawingCache();
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(helpers.textSpannable(getString(R.string.firstScreenshot_text)))
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
-            bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
-                    mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
+        } else {
+            shareFile = helpers.newFile();
 
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint();
-            int iHeight = bitmap.getHeight();
-            canvas.drawBitmap(bitmap, 0, iHeight, paint);
-            mWebView.draw(canvas);
+            try{
+                mWebView.measure(View.MeasureSpec.makeMeasureSpec(
+                        View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
+                mWebView.setDrawingCacheEnabled(true);
+                mWebView.buildDrawingCache();
 
-        }catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
-        }
+                bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+                        mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 
-        if (bitmap != null) {
-            try {
-                OutputStream fOut;
-                fOut = new FileOutputStream(shareFile);
+                Canvas canvas = new Canvas(bitmap);
+                Paint paint = new Paint();
+                int iHeight = bitmap.getHeight();
+                canvas.drawBitmap(bitmap, 0, iHeight, paint);
+                mWebView.draw(canvas);
 
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
-                fOut.flush();
-                fOut.close();
-                bitmap.recycle();
-
-                Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " + helpers.newFileName() , Snackbar.LENGTH_SHORT).show();
-
-                Uri uri = Uri.fromFile(shareFile);
-                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-                getActivity().sendBroadcast(intent);
-
-            } catch (Exception e) {
+            }catch (OutOfMemoryError e) {
                 e.printStackTrace();
-                Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+            }
+
+            if (bitmap != null) {
+                try {
+                    OutputStream fOut;
+                    fOut = new FileOutputStream(shareFile);
+
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
+                    fOut.flush();
+                    fOut.close();
+                    bitmap.recycle();
+
+                    Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " + helpers.newFileName() , Snackbar.LENGTH_SHORT).show();
+
+                    Uri uri = Uri.fromFile(shareFile);
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+                    getActivity().sendBroadcast(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_SHORT).show();
+                }
             }
         }
     }

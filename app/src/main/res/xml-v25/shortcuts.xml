@@ -1,0 +1,39 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="title_weatherInfo"
+        android:enabled="true"
+        android:icon="@drawable/qc_info"
+        android:shortcutShortLabel="@string/title_weatherInfo"
+        android:shortcutLongLabel="@string/title_weatherInfo"
+        android:shortcutDisabledMessage="@string/title_weatherInfo">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="de.baumann.weather"
+            android:targetClass="de.baumann.weather.helper.Popup_info" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list is what the user sees when they
+             launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="bookmarks"
+        android:enabled="true"
+        android:icon="@drawable/qc_bookmarks"
+        android:shortcutShortLabel="@string/title_bookmarks"
+        android:shortcutLongLabel="@string/title_bookmarks"
+        android:shortcutDisabledMessage="@string/title_bookmarks">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="de.baumann.weather"
+            android:targetClass="de.baumann.weather.helper.Popup_bookmarks" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list is what the user sees when they
+             launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+</shortcuts>
+        
+
