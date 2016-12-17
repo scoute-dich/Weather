@@ -1,6 +1,5 @@
 package de.baumann.weather;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -23,14 +22,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +39,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.EditText;
 
@@ -53,7 +49,6 @@ import java.net.URISyntaxException;
 
 import de.baumann.weather.helper.BrowserDatabase;
 import de.baumann.weather.helper.Popup_bookmarks;
-import de.baumann.weather.helper.Start;
 import de.baumann.weather.helper.helpers;
 
 public class Browser extends AppCompatActivity  {
@@ -64,8 +59,7 @@ public class Browser extends AppCompatActivity  {
     private Bitmap bitmap;
     private String shareString;
     private File shareFile;
-
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private SharedPreferences sharedPref;
 
     private static final int ID_SAVE_IMAGE = 10;
     private static final int ID_IMAGE_EXTERNAL_BROWSER = 11;
@@ -91,40 +85,15 @@ public class Browser extends AppCompatActivity  {
         setContentView(R.layout.activity_browser);
 
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings_help, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(toolbar != null) {
-            final String startType = sharedPref.getString("startType", "1");
-            toolbar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (startType.equals("2")) {
-                        Intent intent_in = new Intent(Browser.this, Start.class);
-                        startActivity(intent_in);
-                        overridePendingTransition(0, 0);
-                        finish();
-                    } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Browser.this, Screen_Main.class);
-                        startActivity(intent_in);
-                        overridePendingTransition(0, 0);
-                        finish();
-                    }
-                }
-            });
-
-            if (sharedPref.getBoolean ("longPress", false)){
-                toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        finish();
-                        return true;
-                    }
-                });
-            }
+            helpers.setupToolbar(toolbar, Browser.this);
         }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -157,11 +126,8 @@ public class Browser extends AppCompatActivity  {
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // load online by default
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         registerForContextMenu(mWebView);
-
-        if (sharedPref.getBoolean ("java", false)){
-            mWebView.getSettings().setJavaScriptEnabled(true);
-        }
 
         if (isNetworkUnAvailable()) { // loading offline
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -239,22 +205,32 @@ public class Browser extends AppCompatActivity  {
 
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
-                progressBar.setProgress(progress);
-                if (progress == 100) {
-                    progressBar.setVisibility(View.GONE);
 
-                    String url = mWebView.getUrl();
-                    if (url.contains("dwd")) {
-                        mWebView.scrollTo(0, 160);
-                        setTitle(R.string.dwd);
-                    } else {
-                        mWebView.scrollTo(0, 0);
-                        setTitle(R.string.menu_search);
-                    }
+                String url = mWebView.getUrl();
 
+                if (url != null && url.contains("dwd")) {
+                    setTitle(R.string.dwd);
+                } else if (url != null && url.equals("http://m.wetterdienst.de/")) {
+                    setTitle(R.string.menu_search);
                 } else {
-                    progressBar.setVisibility(View.VISIBLE);
+                    setTitle(mWebView.getTitle());
+                }
 
+                progressBar.setProgress(progress);
+                progressBar.setVisibility(progress == 100 ? View.GONE : View.VISIBLE);
+
+                if (url != null && url.contains("dwd") && progress > 0 && progress <= 60) {
+                    mWebView.loadUrl("javascript:(function() { " +
+                            "var head = document.getElementsByTagName('header')[0];"
+                            + "head.parentNode.removeChild(head);" +
+                            "})()");
+                }
+
+                if (url != null && url.contains("dwd") && progress > 60) {
+                    mWebView.loadUrl("javascript:(function() { " +
+                            "var head = document.getElementsByTagName('header')[0];"
+                            + "head.parentNode.removeChild(head);" +
+                            "})()");
                 }
             }
         });
@@ -287,52 +263,38 @@ public class Browser extends AppCompatActivity  {
                 snackbar.show();
             }
         });
-
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            if (sharedPref.getBoolean ("perm_notShow", false)){
-                int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        new AlertDialog.Builder(Browser.this)
-                                .setMessage(R.string.app_permissions)
-                                .setNeutralButton(R.string.toast_notAgain, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
-                                        dialog.cancel();
-                                        sharedPref.edit()
-                                                .putBoolean("perm_notShow", false)
-                                                .apply();
-                                    }
-                                })
-                                .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (android.os.Build.VERSION.SDK_INT >= 23)
-                                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                    REQUEST_CODE_ASK_PERMISSIONS);
-                                    }
-                                })
-                                .setNegativeButton(getString(R.string.toast_cancel), null)
-                                .show();
-                        return;
-                    }
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            REQUEST_CODE_ASK_PERMISSIONS);
-                }
-            }
-        }
+        helpers.grantPermissionsStorage(Browser.this);
     }
 
     @Override
     public void onBackPressed() {
         if (mWebView.canGoBack()) {
+            if (sharedPref.getBoolean ("longPress", false)){
+                Snackbar snackbar = Snackbar
+                        .make(mWebView, getString(R.string.toast_exit), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                finishAffinity();
+                            }
+                        });
+                snackbar.show();
+            }
             mWebView.goBack();
         } else {
-            Intent intent_in = new Intent(Browser.this, Screen_Main.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
+            if (sharedPref.getBoolean ("longPress", false)){
+                Snackbar snackbar = Snackbar
+                        .make(mWebView, getString(R.string.toast_exit), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                finishAffinity();
+                            }
+                        });
+                snackbar.show();
+            } else {
+                finishAffinity();
+            }
         }
     }
 
@@ -487,8 +449,7 @@ public class Browser extends AppCompatActivity  {
         int id = item.getItemId();
 
         if (id == R.id.action_saveBookmark) {
-            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            if (sharedPref.getBoolean ("first_search", false)) {
+            if (sharedPref.getBoolean ("first_search", true)) {
 
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                         .setTitle(R.string.firstSearch_title)
@@ -504,42 +465,40 @@ public class Browser extends AppCompatActivity  {
                         });
                 dialog.show();
             } else {
+
                 try {
-                    final LinearLayout layout = new LinearLayout(this);
-                    layout.setOrientation(LinearLayout.VERTICAL);
-                    layout.setGravity(Gravity.CENTER_HORIZONTAL);
-                    final EditText input = new EditText(this);
-                    input.setSingleLine(true);
-                    input.setText(mWebView.getTitle());
-                    layout.setPadding(30, 0, 50, 0);
-                    layout.addView(input);
 
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            helpers.showKeyboard(Browser.this,input);
+                    final BrowserDatabase db = new BrowserDatabase(Browser.this);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Browser.this);
+                    View dialogView = View.inflate(Browser.this, R.layout.dialog_edit_title, null);
+
+                    final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
+                    edit_title.setText(mWebView.getTitle());
+
+                    builder.setView(dialogView);
+                    builder.setTitle(R.string.bookmark_edit_title);
+                    builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            String inputTag = edit_title.getText().toString().trim();
+                            db.addBookmark(inputTag, mWebView.getUrl());
+                            db.close();
+                            Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_LONG).show();
                         }
-                    }, 200);
+                    });
+                    builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
-                    final BrowserDatabase db = new BrowserDatabase(this);
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
-                            .setView(layout)
-                            .setMessage(R.string.bookmark_edit_title)
-                            .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
 
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    String inputTag = input.getText().toString().trim();
-                                    db.addBookmark(inputTag, mWebView.getUrl());
-                                    db.close();
-                                    Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_LONG).show();
-                                }
-                            })
-                            .setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                }
-                            });
-                    dialog.show();
+                    final AlertDialog dialog2 = builder.create();
+                    // Display the custom alert dialog on interface
+                    dialog2.show();
+                    helpers.showKeyboard(Browser.this, edit_title);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -551,18 +510,6 @@ public class Browser extends AppCompatActivity  {
             Intent intent_in = new Intent(Browser.this, Popup_bookmarks.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    finish();
-                }
-            }, 7000);
-        }
-
-        if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Browser.this, Settings.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
         }
 
         if (id == android.R.id.home) {
@@ -573,63 +520,48 @@ public class Browser extends AppCompatActivity  {
         }
 
         if (id == R.id.action_share) {
-            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            if (sharedPref.getBoolean ("first_screenshot", false)){
-
-                final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
-                        .setTitle(R.string.firstScreenshot_title)
-                        .setMessage(helpers.textSpannable(getString(R.string.firstScreenshot_text)))
-                        .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.cancel();
-                                sharedPref.edit()
-                                        .putBoolean("first_screenshot", false)
-                                        .apply();
+            final CharSequence[] options = {
+                    getString(R.string.menu_share_link),
+                    getString(R.string.menu_share_screenshot),
+                    getString(R.string.menu_save_screenshot)};
+            new AlertDialog.Builder(Browser.this)
+                    .setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int item) {
+                            if (options[item].equals(getString(R.string.menu_share_link))) {
+                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                                sharingIntent.setType("text/plain");
+                                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                                startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
                             }
-                        });
-                dialog.show();
-            } else {
-                final CharSequence[] options = {getString(R.string.menu_share_link), getString(R.string.menu_share_screenshot), getString(R.string.menu_save_screenshot)};
-                new AlertDialog.Builder(Browser.this)
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals(getString(R.string.menu_share_link))) {
+                            if (options[item].equals(getString(R.string.menu_share_screenshot))) {
+                                screenshot();
+
+                                if (sharedPref.getBoolean ("first_screenshot", true)){
+                                    Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+                                } else if (shareFile.exists()) {
                                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("text/plain");
+                                    sharingIntent.setType("image/png");
                                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
                                     sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
-                                }
-                                if (options[item].equals(getString(R.string.menu_share_screenshot))) {
-                                    screenshot();
-
-                                    if (shareFile.exists()) {
-                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                        sharingIntent.setType("image/png");
-                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                        Uri bmpUri = Uri.fromFile(shareFile);
-                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
-                                    }
-                                }
-                                if (options[item].equals(getString(R.string.menu_save_screenshot))) {
-                                    screenshot();
+                                    Uri bmpUri = Uri.fromFile(shareFile);
+                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
                                 }
                             }
-                        }).show();
-            }
+                            if (options[item].equals(getString(R.string.menu_save_screenshot))) {
+                                screenshot();
+                            }
+                        }
+                    }).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
     private void checkFirstRunBrowser() {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_browser", false)){
+        if (sharedPref.getBoolean ("first_browser", true)){
 
             final AlertDialog.Builder dialog = new AlertDialog.Builder(Browser.this)
                     .setTitle(R.string.firstBrowser_title)
@@ -649,49 +581,66 @@ public class Browser extends AppCompatActivity  {
 
     private void screenshot() {
 
-        shareFile = helpers.newFile();
+        if (sharedPref.getBoolean ("first_screenshot", true)){
 
-        try{
-            mWebView.measure(View.MeasureSpec.makeMeasureSpec(
-                    View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-            mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
-            mWebView.setDrawingCacheEnabled(true);
-            mWebView.buildDrawingCache();
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.firstScreenshot_title)
+                    .setMessage(helpers.textSpannable(getString(R.string.firstScreenshot_text)))
+                    .setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
-            bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
-                    mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.cancel();
+                            sharedPref.edit()
+                                    .putBoolean("first_screenshot", false)
+                                    .apply();
+                        }
+                    });
+            dialog.show();
+        } else {
+            shareFile = helpers.newFile();
 
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint();
-            int iHeight = bitmap.getHeight();
-            canvas.drawBitmap(bitmap, 0, iHeight, paint);
-            mWebView.draw(canvas);
+            try{
+                mWebView.measure(View.MeasureSpec.makeMeasureSpec(
+                        View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
+                mWebView.setDrawingCacheEnabled(true);
+                mWebView.buildDrawingCache();
 
-        }catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
-        }
+                bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+                        mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 
-        if (bitmap != null) {
-            try {
-                OutputStream fOut;
-                fOut = new FileOutputStream(shareFile);
+                Canvas canvas = new Canvas(bitmap);
+                Paint paint = new Paint();
+                int iHeight = bitmap.getHeight();
+                canvas.drawBitmap(bitmap, 0, iHeight, paint);
+                mWebView.draw(canvas);
 
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
-                fOut.flush();
-                fOut.close();
-                bitmap.recycle();
-
-                Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " + helpers.newFileName() , Snackbar.LENGTH_SHORT).show();
-
-                Uri uri = Uri.fromFile(shareFile);
-                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-                sendBroadcast(intent);
-
-            } catch (Exception e) {
+            }catch (OutOfMemoryError e) {
                 e.printStackTrace();
-                Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+            }
+
+            if (bitmap != null) {
+                try {
+                    OutputStream fOut;
+                    fOut = new FileOutputStream(shareFile);
+
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut);
+                    fOut.flush();
+                    fOut.close();
+                    bitmap.recycle();
+
+                    Snackbar.make(mWebView, getString(R.string.context_saveImage_toast) + " " + helpers.newFileName() , Snackbar.LENGTH_SHORT).show();
+
+                    Uri uri = Uri.fromFile(shareFile);
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+                    sendBroadcast(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Snackbar.make(mWebView, R.string.toast_perm, Snackbar.LENGTH_SHORT).show();
+                }
             }
         }
     }

@@ -29,26 +29,27 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import de.baumann.weather.Browser;
 import de.baumann.weather.Screen_Main;
 import de.baumann.weather.R;
+import de.baumann.weather.Screen_Weather;
 
 
 public class SplashActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_splash);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 
+        setContentView(R.layout.activity_splash);
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings_help, false);
+
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         final String startType = sharedPref.getString("startType", "1");
 
@@ -57,14 +58,30 @@ public class SplashActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    Intent mainIntent = new Intent(SplashActivity.this, Start.class);
-                    mainIntent.putExtra("id", "1");
-                    startActivity(mainIntent);
-                    SplashActivity.this.finish();
-                    overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                    String startURL = sharedPref.getString("favoriteURL", "http://m.wetterdienst.de/");
+                    String startTitle = sharedPref.getString("favoriteTitle", "http://m.wetterdienst.de/");
+
+                    if (startURL.contains("m.wetterdienst.de")) {
+                        Intent intent = new Intent(SplashActivity.this, Screen_Weather.class);
+                        intent.putExtra("url", startURL);
+                        intent.putExtra("url2", startURL + "stuendlich");
+                        intent.putExtra("url3", startURL + "10-Tage");
+                        intent.putExtra("title", startTitle);
+                        startActivity(intent);
+                        SplashActivity.this.finish();
+                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, Browser.class);
+                        intent.putExtra("url", startURL);
+                        startActivity(intent);
+                        SplashActivity.this.finish();
+                        overridePendingTransition(R.anim.fadein,R.anim.fadeout);
+                    }
                 }
             }, 1000);
+
         } else if (startType.equals("1")){
+
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 

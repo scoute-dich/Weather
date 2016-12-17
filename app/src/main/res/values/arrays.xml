@@ -9,6 +9,9 @@
         <item>@drawable/splash3</item>
         <item>@drawable/splash4</item>
         <item>@drawable/splash5</item>
+        <item>@drawable/splash6</item>
+        <item>@drawable/splash7</item>
+        <item>@drawable/splash8</item>
     </array>
 
     <string-array name="listArrayStart">

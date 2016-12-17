@@ -1,15 +1,13 @@
 package de.baumann.weather;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,12 +28,12 @@ import de.baumann.weather.fragmentsWeather.FragmentForecast;
 import de.baumann.weather.fragmentsWeather.FragmentHourly;
 import de.baumann.weather.fragmentsWeather.FragmentOverview;
 import de.baumann.weather.helper.Popup_bookmarks;
-import de.baumann.weather.helper.Start;
 import de.baumann.weather.helper.helpers;
 
 public class Screen_Weather extends AppCompatActivity {
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private ViewPager viewPager;
+    private SharedPreferences sharedPref;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -49,7 +47,8 @@ public class Screen_Weather extends AppCompatActivity {
         }
 
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this, R.xml.user_settings_help, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,33 +56,7 @@ public class Screen_Weather extends AppCompatActivity {
         checkFirstRun();
 
         if(toolbar != null) {
-            final String startType = sharedPref.getString("startType", "1");
-            toolbar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (startType.equals("2")) {
-                        Intent intent_in = new Intent(Screen_Weather.this, Start.class);
-                        startActivity(intent_in);
-                        overridePendingTransition(0, 0);
-                        finish();
-                    } else if (startType.equals("1")) {
-                        Intent intent_in = new Intent(Screen_Weather.this, Screen_Main.class);
-                        startActivity(intent_in);
-                        overridePendingTransition(0, 0);
-                        finish();
-                    }
-                }
-            });
-
-            if (sharedPref.getBoolean ("longPress", false)){
-                toolbar.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        finish();
-                        return true;
-                    }
-                });
-            }
+            helpers.setupToolbar(toolbar, Screen_Weather.this);
         }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -91,51 +64,17 @@ public class Screen_Weather extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         assert tabLayout != null;
         tabLayout.setupWithViewPager(viewPager);
 
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            if (sharedPref.getBoolean ("perm_notShow", false)){
-                int hasWRITE_EXTERNAL_STORAGE = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if (hasWRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
-                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        new AlertDialog.Builder(Screen_Weather.this)
-                                .setMessage(R.string.app_permissions)
-                                .setNeutralButton(R.string.toast_notAgain, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplication());
-                                        dialog.cancel();
-                                        sharedPref.edit()
-                                                .putBoolean("perm_notShow", false)
-                                                .apply();
-                                    }
-                                })
-                                .setPositiveButton(getString(R.string.toast_yes), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (android.os.Build.VERSION.SDK_INT >= 23)
-                                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                    REQUEST_CODE_ASK_PERMISSIONS);
-                                    }
-                                })
-                                .setNegativeButton(getString(R.string.toast_cancel), null)
-                                .show();
-                        return;
-                    }
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            REQUEST_CODE_ASK_PERMISSIONS);
-                }
-            }
-        }
+        helpers.grantPermissionsStorage(Screen_Weather.this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         final String startTab = sharedPref.getString("tabWeather", "0");
         final int startTabInt = Integer.parseInt(startTab);
 
@@ -154,7 +93,7 @@ public class Screen_Weather extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -168,7 +107,7 @@ public class Screen_Weather extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -180,8 +119,7 @@ public class Screen_Weather extends AppCompatActivity {
     }
 
     private void checkFirstRun () {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPref.getBoolean ("first_browser", false)){
+        if (sharedPref.getBoolean ("first_browser", true)){
 
             final AlertDialog.Builder dialog = new AlertDialog.Builder(Screen_Weather.this)
                     .setTitle(R.string.firstBrowser_title)
@@ -201,7 +139,19 @@ public class Screen_Weather extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (sharedPref.getBoolean ("longPress", false)){
+            Snackbar snackbar = Snackbar
+                    .make(viewPager, getString(R.string.toast_exit), Snackbar.LENGTH_SHORT)
+                    .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finishAffinity();
+                        }
+                    });
+            snackbar.show();
+        } else {
+            finishAffinity();
+        }
     }
 
     @Override
@@ -216,22 +166,10 @@ public class Screen_Weather extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            Intent intent_in = new Intent(Screen_Weather.this, Settings.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
-            finish();
-        }
-
         if (id == R.id.action_bookmark) {
             Intent intent_in = new Intent(Screen_Weather.this, Popup_bookmarks.class);
             startActivity(intent_in);
             overridePendingTransition(0, 0);
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-finish();
-                }
-            }, 7000);
         }
 
         if (id == android.R.id.home) {

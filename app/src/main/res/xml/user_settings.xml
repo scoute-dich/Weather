@@ -5,29 +5,8 @@
         android:title="@string/pref_2">
 
         <ListPreference
-            android:title="@string/action_forecastStart"
-            android:summary="@string/action_forecastStart_summary"
-            android:key="forecast"
-            android:defaultValue="http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html"
-            android:entries="@array/listArrayForecast"
-            android:entryValues="@array/listValuesForecast" />
-
-        <ListPreference
-            android:title="@string/action_start"
-            android:summary="@string/action_start_summary"
-            android:key="startType"
-            android:defaultValue="1"
-            android:entries="@array/listArrayStart"
-            android:entryValues="@array/listValuesStart" />
-
-        <CheckBoxPreference
-            android:title="@string/action_longPress"
-            android:summary="@string/action_longPress_summary"
-            android:key="longPress"
-            android:defaultValue="true" />
-
-        <ListPreference
             android:title="@string/action_tabMain"
+            android:icon="@drawable/cellphone_iphone"
             android:summary="@string/action_tabMain_summary"
             android:key="tabMain"
             android:defaultValue="1"
@@ -36,57 +15,43 @@
 
         <ListPreference
             android:title="@string/action_tabWeather"
+            android:icon="@drawable/weather_partlycloudy"
             android:summary="@string/action_tabWeather_summary"
             android:key="tabWeather"
-            android:defaultValue="1"
+            android:defaultValue="0"
             android:entries="@array/listArrayTabWeather"
             android:entryValues="@array/listValuesTabWeather" />
 
+        <ListPreference
+            android:title="@string/action_forecastStart"
+            android:icon="@drawable/google_maps"
+            android:summary="@string/action_forecastStart_summary"
+            android:key="forecast"
+            android:defaultValue="http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html"
+            android:entries="@array/listArrayForecast"
+            android:entryValues="@array/listValuesForecast" />
+
+        <ListPreference
+            android:title="@string/action_start"
+            android:icon="@drawable/cursor_pointer"
+            android:summary="@string/action_start_summary"
+            android:key="startType"
+            android:defaultValue="1"
+            android:entries="@array/listArrayStart"
+            android:entryValues="@array/listValuesStart" />
+
+        <CheckBoxPreference
+            android:title="@string/action_longPress"
+            android:icon="@drawable/exit_to_app"
+            android:summary="@string/action_longPress_summary"
+            android:key="longPress"
+            android:defaultValue="true" />
+
         <Preference
-            android:title="@string/action_clearCache"
-            android:summary="@string/action_clearCache_summary"
+            android:title="@string/action_openSettings"
+            android:icon="@drawable/settings"
+            android:summary="@string/action_openSettings_summary"
             android:key="clearCache" />
-
-        <CheckBoxPreference
-            android:title="@string/action_java"
-            android:summary="@string/action_java_summary"
-            android:key="java"
-            android:defaultValue="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_3">
-
-        <CheckBoxPreference
-            android:title="@string/firstBookmark_title"
-            android:summary="@string/firstBookmark_title_summary"
-            android:key="first_bookmark"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:title="@string/firstBrowser_title"
-            android:summary="@string/firstBrowser_title_summary"
-            android:key="first_browser"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:title="@string/firstSearch_title"
-            android:summary="@string/firstSearch_title_summary"
-            android:key="first_search"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:title="@string/firstScreenshot_title"
-            android:summary="@string/firstScreenshot_title_summary"
-            android:key="first_screenshot"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:title="@string/perm_notShow_title"
-            android:summary="@string/perm_notShow_title_summary"
-            android:key="perm_notShow"
-            android:defaultValue="true" />
 
     </PreferenceCategory>
 
@@ -94,14 +59,28 @@
         android:title="@string/pref_1">
 
         <Preference
+            android:title="@string/action_help"
+            android:icon="@drawable/information_outline"
+            android:summary="@string/action_help_summary"
+            android:key="help" />
+
+        <Preference
             android:title="@string/action_changelog"
+            android:icon="@drawable/format_list_bulleted2"
             android:summary="@string/action_changelog_summary"
             android:key="changelog" />
 
         <Preference
             android:title="@string/action_license"
+            android:icon="@drawable/copyright"
             android:summary="@string/action_license_summary"
             android:key="license" />
+
+        <Preference
+            android:title="@string/action_donate"
+            android:icon="@drawable/coin"
+            android:summary="@string/action_donate_summary"
+            android:key="donate" />
 
     </PreferenceCategory>
 

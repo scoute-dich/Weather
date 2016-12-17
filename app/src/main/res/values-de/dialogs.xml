@@ -5,6 +5,9 @@
 
     <string name="about_title">Copyright © 2016  by Gaukler Faun</string>
     <string name="about_text">
+
+        Besuche für mehr Informationen die Projektseite auf Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -20,67 +23,11 @@
 
         &lt;b>Benutzte open source Projekte:&lt;/b>&lt;br>&lt;br>
 
-        &lt;i>browser&lt;/i>&lt;br>
-        https://github.com/yoshihiroando/browser</string>
+        browser&lt;br>
+        https://github.com/yoshihiroando/browser&lt;br>&lt;br>
 
-
-    //Changelog Dialog
-
-    <string name="changelog_text">
-        &lt;i>Für mehr Informationen besuche die Projektseite auf Github:&lt;br>
-        https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>v 3.2:&lt;/b>&lt;br>
-        &#8226; Lesezeichen Popup&lt;br>
-        &#8226; Verknüpfung auf Homescreen&lt;br>
-        &#8226; Neuer Splashscreen&lt;br>&lt;br>
-
-        &lt;b>v 3.1.3:&lt;/b>&lt;br>
-        &#8226; fixed Toolbar Layout&lt;br>&lt;br>
-
-        &lt;b>v 3.1 - 3.1.2:&lt;/b>&lt;br>
-        &#8226; App beenden: lang Titelleiste drücken&lt;br>
-        &#8226; Tab Einstellungen&lt;br>
-        &#8226; Berechtigungsdialoge&lt;br>
-        &#8226; Strings korrigiert&lt;br>
-        &#8226; fixed F-Droid Buildfehler&lt;br>&lt;br>
-
-        &lt;b>v 3.0:&lt;/b>&lt;br>
-        &#8226; Tab Layout&lt;br>
-        &#8226; Kontextmenü&lt;br>
-        &#8226; Downloads&lt;br>
-        &#8226; Lesezeichen als Favorit setzen&lt;br>
-        &#8226; Pinch to Zoom (für Bilder)&lt;br>
-        &#8226; Wetterinformationen nur vom DWD&lt;br>
-        &#8226; Bundesland auswählen&lt;br>
-        &#8226; weitere Verbesserungen&lt;br>&lt;br>
-
-        &lt;b>v 2.3.1:&lt;/b>&lt;br>
-        &#8226; fixed Splashscreen bei manchen Geräten&lt;br>
-        &#8226; bug fixes&lt;br>&lt;br>
-
-        &lt;b>v 2.3:&lt;/b>&lt;br>
-        &#8226; fixed Einstellungen verlassen&lt;br>
-        &#8226; Javascript Einstellung&lt;br>
-        &#8226; Hilfe Einstellungen&lt;br>
-        &#8226; App-Größe reduziert&lt;br>
-        &#8226; fixed einige \"force close\" Fehler&lt;br>&lt;br>
-
-        &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
-        &#8226; fixed F-Droid Buildfehler&lt;br>&lt;br>
-
-        &lt;b>v 2.1:&lt;/b>&lt;br>
-        &#8226; Mind SDK 16&lt;br>
-        &#8226; fixed App beenden&lt;br>&lt;br>
-
-        &lt;b>v 2.0:&lt;/b>&lt;br>
-        &#8226; Einstellungen&lt;br>
-        &#8226; mit dem ersten Lesezeichen …&lt;br>
-        &#8226; … oder der Lesezeichenliste starten&lt;br>
-        &#8226; Lesezeichen bearbeiten&lt;br>
-        &#8226; Hilfedialoge&lt;br>
-        &#8226; anpassen der Oberfläche&lt;br>
-        &#8226; Startbildschirm
+        MaterialDesignIcons&lt;br>
+        https://github.com/Templarian/MaterialDesign&lt;/i>
     </string>
 
 
@@ -89,7 +36,7 @@
     <string name="firstSearch_title">Lesezeichen speichern</string>
     <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
     <string name="firstSearch_text">
-        Um ein Lesezeichen zu speichern einfach das Icon in der Toolbar drücken. Wenn du eine Stadt speicherst, ist es wichtig,
+        Wenn du eine Stadt speicherst, ist es wichtig,
         dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
         die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
 
@@ -124,16 +71,17 @@
         &lt;i>Lesezeichen bearbeiten:&lt;/i>&lt;br>
 
         Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst ein Lesezeichen als Favorit setzen
-        (Es kann beim Start der App oder beim Klick auf die Titelbar geladen werden - siehe Einstellungen), den Titel oder die URL des
+        (es kann beim Start der App oder beim Klick auf die Titelbar geladen werden - siehe Einstellungen), den Titel oder die URL des
         Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein). Wenn du
         Probleme hast die stündliche Vorhersage oder den 10 Tage-Trend einer gespeicherten Stadt zu öffnen, musst du die
-        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/Deutschlandwetter/name_deiner_stadt.
+        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/[…]wetter/name_deiner_stadt.
         Wenn das nicht so ist, verbessere es.&lt;br>&lt;br>
 
         &lt;i>Nach neuen Städten suchen:&lt;/i>&lt;br>
 
         Wenn du die Lupe in der Toolbar klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
-        nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen</string>
+        nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen. Diese kannst du dann als
+        Lesezeichen speichern.</string>
 
 
     <string name="firstScreenshot_title">Bildschirmfoto aufnehmen</string>

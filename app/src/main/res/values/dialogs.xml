@@ -5,6 +5,8 @@
 
     <string name="about_title">Copyright © 2016  by Gaukler Faun</string>
     <string name="about_text">
+        For more information visit the project site on Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -20,67 +22,11 @@
 
         &lt;b>Used open source projects:&lt;/b>&lt;br>&lt;br>
 
-        &lt;i>browser&lt;/i>&lt;br>
-        https://github.com/yoshihiroando/browser</string>
+        browser&lt;br>
+        https://github.com/yoshihiroando/browser&lt;br>&lt;br>
 
-
-    //Changelog Dialog
-
-    <string name="changelog_text">
-        &lt;i>For more information visit the project site on github:&lt;br>
-        https://github.com/scoute-dich/Weather&lt;/i>&lt;br>&lt;br>
-
-        &lt;b>v 3.2:&lt;/b>&lt;br>
-        &#8226; Bookmark popup&lt;br>
-        &#8226; Shortcut on homescreen&lt;br>
-        &#8226; New splashscreen&lt;br>&lt;br>
-
-        &lt;b>v 3.1.3:&lt;/b>&lt;br>
-        &#8226; fixed toolbar layout&lt;br>&lt;br>
-
-        &lt;b>v 3.1 - 3.1.2:&lt;/b>&lt;br>
-        &#8226; long press title bar to exit&lt;br>
-        &#8226; tab settings&lt;br>
-        &#8226; permission dialogs&lt;br>
-        &#8226; corrected strings&lt;br>
-        &#8226; fixed F-Droid build issue&lt;br>&lt;br>
-
-        &lt;b>v 3.0:&lt;/b>&lt;br>
-        &#8226; tab layout&lt;br>
-        &#8226; context menu&lt;br>
-        &#8226; downloads&lt;br>
-        &#8226; set favorite bookmark&lt;br>
-        &#8226; pinch to zoom (for pictures)&lt;br>
-        &#8226; weather infos only from the DWD&lt;br>
-        &#8226; choose state for forecast (Germany)&lt;br>
-        &#8226; more improvements&lt;br>&lt;br>
-
-        &lt;b>v 2.3.1:&lt;/b>&lt;br>
-        &#8226; fixed splashscreen on some devices&lt;br>
-        &#8226; bug fixes&lt;br>&lt;br>
-
-        &lt;b>v 2.3:&lt;/b>&lt;br>
-        &#8226; fixed settings go back&lt;br>
-        &#8226; added javascript option in settings&lt;br>
-        &#8226; added help options in settings&lt;br>
-        &#8226; reduced app size&lt;br>
-        &#8226; fixed some force closes issues&lt;br>&lt;br>
-
-        &lt;b>v 2.1.1 - 2.2:&lt;/b>&lt;br>
-        &#8226; fixed F-Droid build issues&lt;br>&lt;br>
-
-        &lt;b>v 2.1:&lt;/b>&lt;br>
-        &#8226; mind SDK 16&lt;br>
-        &#8226; fixed exit app&lt;br>&lt;br>
-
-        &lt;b>v 2.0:&lt;/b>&lt;br>
-        &#8226; settings activity&lt;br>
-        &#8226; start with first bookmark or …&lt;br>
-        &#8226; … with bookmark list&lt;br>
-        &#8226; editable bookmarks&lt;br>
-        &#8226; help dialogs&lt;br>
-        &#8226; ui improvements&lt;br>
-        &#8226; splashscreen
+        MaterialDesignIcons&lt;br>
+        https://github.com/Templarian/MaterialDesign&lt;/i>
     </string>
 
 
@@ -89,7 +35,7 @@
     <string name="firstSearch_title">Saving bookmarks</string>
     <string name="firstSearch_title_summary">Show again: Saving bookmarks?</string>
     <string name="firstSearch_text">
-        To save a bookmark simply click the icon at the toolbar. If you want to bookmark a city it is
+        If you want to bookmark a city it is
         important, that the \"Überblick\" button on the website is blue and checked. Otherwise it is
         later not possible to load the hourly und the 10 day trend forecast of a city.&lt;br>&lt;br>
 
@@ -123,12 +69,12 @@
         (It can be loaded on app start or on title bar click - look in the settings.), edit title and URL of the bookmark or
         delete it (at least one bookmark is needed). If you have problems to open the hourly or the 10 day forecast of a
         bookmarked city you must control the URL. It should look like this:
-        http://www.wetterdienst.de/Deutschlandwetter/name_of_yor_city. If this is not the case, correct it.&lt;br>&lt;br>
+        http://www.wetterdienst.de/[…]wetter/name_of_yor_city. If this is not the case, correct it.&lt;br>&lt;br>
 
         &lt;i>Search new cities:&lt;/i>&lt;br>
 
         If you click the magnifier at the toolbar the website of wetterdienst.de opens. There you can search worldwide for cities.
-        Just enter the name in the search field and make your joice.</string>
+        Just enter the name in the search field and make your joice. You then can save the city as bookmark.</string>
 
     <string name="firstScreenshot_title">Making screenshots</string>
     <string name="firstScreenshot_title_summary">Show again: Taking screenshots?</string>
