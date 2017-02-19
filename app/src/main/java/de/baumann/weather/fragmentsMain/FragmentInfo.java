@@ -1,12 +1,11 @@
 package de.baumann.weather.fragmentsMain;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,7 +23,7 @@ import de.baumann.weather.helper.CustomListAdapter;
 public class FragmentInfo extends Fragment {
 
     private String state;
-    private ListView listView;
+    private ListView lv = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -118,7 +117,6 @@ public class FragmentInfo extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_screen_main, container, false);
 
-
         setHasOptionsMenu(true);
 
         ImageView imgHeader = (ImageView) rootView.findViewById(R.id.imageView_header);
@@ -129,11 +127,14 @@ public class FragmentInfo extends Fragment {
             images.recycle();
         }
 
-        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemTITLE, itemURL, itemDES, imgid);
-        listView = (ListView)rootView.findViewById(R.id.bookmarks);
-        listView.setAdapter(adapter);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        CustomListAdapter adapter=new CustomListAdapter(getActivity(), itemTITLE, itemURL, itemDES, imgid);
+        lv = (ListView) rootView.findViewById(R.id.list);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -147,33 +148,27 @@ public class FragmentInfo extends Fragment {
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                final String title = itemTITLE[+position];
-                final String url = itemURL[+position];
-
-                final CharSequence[] options = {getString(R.string.bookmark_edit_fav)};
-                new AlertDialog.Builder(getActivity())
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-
-                                if (options[item].equals (getString(R.string.bookmark_edit_fav))) {
-                                    final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                                    sharedPref.edit()
-                                            .putString("favoriteURL", url)
-                                            .putString("favoriteTitle", title)
-                                            .apply();
-                                    Snackbar.make(listView, R.string.bookmark_setFav, Snackbar.LENGTH_LONG).show();
-                                }
-                            }
-                        }).show();
-
-                return true;
-            }
-        });
-
         return rootView;
+    }
+
+    public void doBack() {
+        //BackPressed in activity will call this;
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.user_settings, false);
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.user_settings_help, false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if (sharedPref.getBoolean ("longPress", false)){
+            Snackbar snackbar = Snackbar
+                    .make(lv, getString(R.string.toast_exit), Snackbar.LENGTH_SHORT)
+                    .setAction(getString(R.string.toast_yes), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getActivity().finishAffinity();
+                        }
+                    });
+            snackbar.show();
+        } else {
+            getActivity().finishAffinity();
+        }
     }
 }

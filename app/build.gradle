@@ -6,7 +6,8 @@ android {
 
     defaultConfig {
         applicationId "de.baumann.weather"
-        minSdkVersion 16
+        vectorDrawables.useSupportLibrary = true
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 33
         versionName "3.4"
@@ -25,7 +26,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:design:25.0.1'
-    compile 'info.guardianproject.netcipher:netcipher:1.2.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
 }

@@ -33,12 +33,24 @@
 
         <ListPreference
             android:title="@string/action_start"
-            android:icon="@drawable/cursor_pointer"
+            android:icon="@drawable/gesture_tap"
             android:summary="@string/action_start_summary"
             android:key="startType"
             android:defaultValue="1"
             android:entries="@array/listArrayStart"
             android:entryValues="@array/listValuesStart" />
+
+        <Preference
+            android:title="@string/action_shortcut"
+            android:icon="@drawable/arrow_top_right"
+            android:summary="@string/action_shortcut_summary"
+            android:key="shortcuts" />
+
+        <Preference
+            android:title="@string/action_openSettings"
+            android:icon="@drawable/settings"
+            android:summary="@string/action_openSettings_summary"
+            android:key="clearCache" />
 
         <CheckBoxPreference
             android:title="@string/action_longPress"
@@ -46,12 +58,6 @@
             android:summary="@string/action_longPress_summary"
             android:key="longPress"
             android:defaultValue="true" />
-
-        <Preference
-            android:title="@string/action_openSettings"
-            android:icon="@drawable/settings"
-            android:summary="@string/action_openSettings_summary"
-            android:key="clearCache" />
 
     </PreferenceCategory>
 

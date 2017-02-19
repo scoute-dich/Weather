@@ -47,7 +47,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 
-import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.helper.DbAdapter_Bookmarks;
 import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.helpers;
 
@@ -466,43 +466,44 @@ public class Browser extends AppCompatActivity  {
                 dialog.show();
             } else {
 
-                try {
+                final DbAdapter_Bookmarks db = new DbAdapter_Bookmarks(this);
+                db.open();
 
-                    final BrowserDatabase db = new BrowserDatabase(Browser.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View dialogView = View.inflate(this, R.layout.dialog_edit_title, null);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Browser.this);
-                    View dialogView = View.inflate(Browser.this, R.layout.dialog_edit_title, null);
+                final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
+                edit_title.setHint(R.string.bookmark_edit_title);
+                edit_title.setText(mWebView.getTitle());
 
-                    final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
-                    edit_title.setText(mWebView.getTitle());
+                builder.setView(dialogView);
+                builder.setTitle(R.string.bookmark_edit_title);
+                builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
-                    builder.setView(dialogView);
-                    builder.setTitle(R.string.bookmark_edit_title);
-                    builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
 
-                        public void onClick(DialogInterface dialog, int whichButton) {
+                        String inputTag = edit_title.getText().toString().trim();
 
-                            String inputTag = edit_title.getText().toString().trim();
-                            db.addBookmark(inputTag, mWebView.getUrl());
-                            db.close();
+                        if(db.isExist(mWebView.getUrl())){
+                            Snackbar.make(edit_title, getString(R.string.toast_newTitle), Snackbar.LENGTH_LONG).show();
+                        }else{
+                            db.insert(inputTag, mWebView.getUrl(), "04", "", helpers.createDate());
+                            dialog.dismiss();
                             Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_LONG).show();
                         }
-                    });
-                    builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
+                    }
+                });
+                builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    });
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
 
-                    final AlertDialog dialog2 = builder.create();
-                    // Display the custom alert dialog on interface
-                    dialog2.show();
-                    helpers.showKeyboard(Browser.this, edit_title);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                final AlertDialog dialog2 = builder.create();
+                // Display the custom alert dialog on interface
+                dialog2.show();
+                helpers.showKeyboard(this,edit_title);
             }
         }
 

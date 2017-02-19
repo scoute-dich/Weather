@@ -1,3 +1,8 @@
+### v 3.5 (WIP)
+- improved: database model
+- improved: settings screen
+- added: no duplicate urls in bookmarks
+
 ### v 3.4:
 - bug fix: deleted bookmark after cancel editing
 - bug fix: open several instances of app
