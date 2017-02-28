@@ -410,45 +410,34 @@ public class FragmentHourly extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.action_share:
+        int id = item.getItemId();
 
-                final CharSequence[] options = {
-                        getString(R.string.menu_share_link),
-                        getString(R.string.menu_share_screenshot),
-                        getString(R.string.menu_save_screenshot)};
-                new AlertDialog.Builder(getActivity())
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-                                if (options[item].equals(getString(R.string.menu_share_link))) {
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("text/plain");
-                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
-                                }
-                                if (options[item].equals(getString(R.string.menu_share_screenshot))) {
-                                    screenshot();
+        if (id == R.id.menu_save_screenshot) {
+            screenshot();
+        }
 
-                                    if (sharedPref.getBoolean ("first_screenshot", true)){
-                                        Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
-                                    } else if (shareFile.exists()) {
-                                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                        sharingIntent.setType("image/png");
-                                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                        sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                        Uri bmpUri = Uri.fromFile(shareFile);
-                                        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                        startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
-                                    }
-                                }
-                                if (options[item].equals(getString(R.string.menu_save_screenshot))) {
-                                    screenshot();
-                                }
-                            }
-                        }).show();
-                return true;
+        if (id == R.id.menu_share_screenshot) {
+            screenshot();
+
+            if (sharedPref.getBoolean ("first_screenshot", true)){
+                Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+            } else if (shareFile.exists()) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("image/png");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                Uri bmpUri = Uri.fromFile(shareFile);
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+            }
+        }
+
+        if (id == R.id.menu_share_link) {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+            startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
         }
 
         return super.onOptionsItemSelected(item);

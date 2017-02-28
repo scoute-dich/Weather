@@ -82,7 +82,6 @@ public class FragmentInfo extends Fragment {
                 getString(R.string.dwd_satellit),
                 getString(R.string.dwd_thema),
                 getString(R.string.dwd_lexikon),
-                getString(R.string.dwd_webSearch),
         };
 
         final String[] itemURL ={
@@ -92,7 +91,6 @@ public class FragmentInfo extends Fragment {
                 "http://www.dwd.de/DE/leistungen/satellit_metsat8000stc/satellit_metsat8000stc.html?nn=357606",
                 "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null",
                 "http://www.dwd.de/DE/service/lexikon/lexikon_node.html",
-                "https://startpage.com/",
         };
 
             final String[] itemDES ={
@@ -102,7 +100,6 @@ public class FragmentInfo extends Fragment {
                 getString(R.string.text_des_4),
                 getString(R.string.text_des_5),
                 getString(R.string.text_des_6),
-                getString(R.string.text_des_7),
         };
 
         Integer[] imgid={
@@ -112,7 +109,6 @@ public class FragmentInfo extends Fragment {
                 R.drawable.img_4,
                 R.drawable.img_5,
                 R.drawable.img_6,
-                R.drawable.img_7,
         };
 
         View rootView = inflater.inflate(R.layout.fragment_screen_main, container, false);

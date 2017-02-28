@@ -1,6 +1,7 @@
 ### v 3.5 (WIP)
 - improved: database model
 - improved: settings screen
+- added: sub menus
 - added: no duplicate urls in bookmarks
 
 ### v 3.4:

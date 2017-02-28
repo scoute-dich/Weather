@@ -274,7 +274,7 @@ public class FragmentBookmarks extends Fragment {
                                 if (options[item].equals(getString(R.string.bookmark_edit_url))) {
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    View dialogView = View.inflate(getActivity(), R.layout.dialog_edit_title, null);
+                                    View dialogView = View.inflate(getActivity(), R.layout.dialog_edit_url, null);
 
                                     final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
                                     edit_title.setHint(R.string.bookmark_edit_url);
