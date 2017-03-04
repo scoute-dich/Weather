@@ -16,8 +16,6 @@
     <string name="app_share_screenshot">Share screenshot using:</string>
     <string name="app_share_image">Share image using:</string>
     <string name="app_share_link">Share link using:</string>
-    <string name="app_contDesc_1">header</string>
-    <string name="app_contDesc_2">icon</string>
     <string name="app_contDesc_3">splashscreen</string>
     <string name="app_hint_bookmark">Enter desired title</string>
     <string name="app_hint_url">Enter desired url</string>
@@ -40,7 +38,6 @@
     <string name="menu_save_screenshot">Save screenshot</string>
     <string name="menu_search">Search …</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_shortcut">Create shortcut</string>
     <string name="menu_bookmark">Add bookmark</string>
 
 
@@ -90,6 +87,9 @@
     <string name="action_openSettings_summary">Open via the system settings the app info of the app. There you can,
         depending on your Android version, manage several things (Storage, network traffic, permissions, …).</string>
 
+    <string name="action_shortcut">Shortcuts</string>
+    <string name="action_shortcut_summary">Create shortcuts on your desktop for fast access to your bookmarks or the weather infos.</string>
+
 
     // DWD = German Weather Service
 
@@ -124,18 +124,19 @@
     <string name="toast_screenshot_failed">Failed to create screenshot.</string>
     <string name="toast_exit">Do you want to exit?</string>
     <string name="toast_shortcut">Shortcut added to homescreen.</string>
+    <string name="toast_newTitle">Entry already exists.</string>
 
 
     // Bookmarks
 
     <string name="bookmark_remove_confirmation">Bookmark will be removed. OK?</string>
-    <string name="bookmark_remove_cannot">You need at least one bookmark!</string>
     <string name="bookmark_remove_bookmark">Delete bookmark</string>
     <string name="bookmark_added">Adding bookmark.</string>
     <string name="bookmark_setFav">Successfully set as favorite.</string>
     <string name="bookmark_edit_url">Edit URL</string>
     <string name="bookmark_edit_title">Edit title</string>
     <string name="bookmark_edit_fav">Set as favorite</string>
+    <string name="bookmark_setFav_not">You can only choose one favorite.</string>
 
 
     //States

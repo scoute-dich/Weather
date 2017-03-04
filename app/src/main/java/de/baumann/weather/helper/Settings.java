@@ -135,6 +135,63 @@ public class Settings extends AppCompatActivity {
             });
         }
 
+        private void addShortcutListener() {
+
+            final Activity activity = getActivity();
+            Preference reset = findPreference("shortcuts");
+
+            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference pref) {
+
+                    final CharSequence[] options = {
+                            getString(R.string.title_bookmarks),
+                            getString(R.string.title_weatherInfo)};
+                    new AlertDialog.Builder(getActivity())
+                            .setPositiveButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setItems(options, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int item) {
+                                    if (options[item].equals(getString(R.string.title_bookmarks))) {
+                                        Intent i = new Intent(getActivity().getApplicationContext(), Popup_bookmarks.class);
+                                        i.setAction(Intent.ACTION_MAIN);
+
+                                        Intent shortcut = new Intent();
+                                        shortcut.setAction(Intent.ACTION_MAIN);
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, (getString(R.string.app_name)) + " | " + getString(R.string.title_bookmarks));
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                                                Intent.ShortcutIconResource.fromContext(getActivity().getApplicationContext(), R.mipmap.ic_launcher));
+                                        shortcut.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+                                        getActivity().sendBroadcast(shortcut);
+                                        helpers.makeToast(activity, getString(R.string.toast_shortcut));
+                                    }
+                                    if (options[item].equals(getString(R.string.title_weatherInfo))) {
+                                        Intent i = new Intent(getActivity().getApplicationContext(), Popup_info.class);
+                                        i.setAction(Intent.ACTION_MAIN);
+
+                                        Intent shortcut = new Intent();
+                                        shortcut.setAction(Intent.ACTION_MAIN);
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, (getString(R.string.app_name)) + " | " + getString(R.string.title_weatherInfo));
+                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                                                Intent.ShortcutIconResource.fromContext(getActivity().getApplicationContext(), R.mipmap.ic_launcher));
+                                        shortcut.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+                                        getActivity().sendBroadcast(shortcut);
+                                        helpers.makeToast(activity, getString(R.string.toast_shortcut));
+                                    }
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
+        }
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -145,6 +202,7 @@ public class Settings extends AppCompatActivity {
             addClearCacheListener();
             addDonateListListener();
             add_helpChooseListener();
+            addShortcutListener();
         }
     }
 

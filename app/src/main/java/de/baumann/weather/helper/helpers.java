@@ -34,9 +34,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -52,6 +57,28 @@ import de.baumann.weather.Screen_Weather;
 public class helpers {
 
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+    public static String createDate () {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        return  format.format(date);
+    }
+
+    static void makeToast(Activity activity, String Text) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        View toastLayout = inflater.inflate(R.layout.toast,
+                (ViewGroup) activity.findViewById(R.id.toast_root_view));
+
+        TextView header = (TextView) toastLayout.findViewById(R.id.toast_message);
+        header.setText(Text);
+
+        Toast toast = new Toast(activity.getApplicationContext());
+        toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout);
+        toast.show();
+    }
 
 
     public static File newFile () {

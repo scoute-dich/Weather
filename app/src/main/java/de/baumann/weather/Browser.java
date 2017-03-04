@@ -47,7 +47,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 
-import de.baumann.weather.helper.BrowserDatabase;
+import de.baumann.weather.helper.DbAdapter_Bookmarks;
 import de.baumann.weather.helper.Popup_bookmarks;
 import de.baumann.weather.helper.helpers;
 
@@ -466,43 +466,52 @@ public class Browser extends AppCompatActivity  {
                 dialog.show();
             } else {
 
-                try {
+                final DbAdapter_Bookmarks db = new DbAdapter_Bookmarks(this);
+                db.open();
 
-                    final BrowserDatabase db = new BrowserDatabase(Browser.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final View dialogView = View.inflate(this, R.layout.dialog_edit_title, null);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Browser.this);
-                    View dialogView = View.inflate(Browser.this, R.layout.dialog_edit_title, null);
+                final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
+                edit_title.setHint(R.string.bookmark_edit_title);
+                edit_title.setText(mWebView.getTitle());
 
-                    final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
-                    edit_title.setText(mWebView.getTitle());
+                builder.setView(dialogView);
+                builder.setTitle(R.string.bookmark_edit_title);
+                builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
 
-                    builder.setView(dialogView);
-                    builder.setTitle(R.string.bookmark_edit_title);
-                    builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
 
-                        public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+                builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
 
-                            String inputTag = edit_title.getText().toString().trim();
-                            db.addBookmark(inputTag, mWebView.getUrl());
-                            db.close();
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+
+                final AlertDialog dialog2 = builder.create();
+                // Display the custom alert dialog on interface
+                dialog2.show();
+
+                dialog2.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Do stuff, possibly set wantToCloseDialog to true then...
+                        String inputTag = edit_title.getText().toString().trim();
+
+                        if(db.isExist(mWebView.getUrl())){
+                            Snackbar.make(edit_title, getString(R.string.toast_newTitle), Snackbar.LENGTH_LONG).show();
+                        }else{
+                            db.insert(inputTag, mWebView.getUrl(), "04", "", helpers.createDate());
+                            dialog2.dismiss();
                             Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_LONG).show();
                         }
-                    });
-                    builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
+                    }
+                });
 
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    final AlertDialog dialog2 = builder.create();
-                    // Display the custom alert dialog on interface
-                    dialog2.show();
-                    helpers.showKeyboard(Browser.this, edit_title);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                helpers.showKeyboard(this,edit_title);
             }
         }
 
@@ -519,42 +528,32 @@ public class Browser extends AppCompatActivity  {
             finish();
         }
 
-        if (id == R.id.action_share) {
-            final CharSequence[] options = {
-                    getString(R.string.menu_share_link),
-                    getString(R.string.menu_share_screenshot),
-                    getString(R.string.menu_save_screenshot)};
-            new AlertDialog.Builder(Browser.this)
-                    .setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int item) {
-                            if (options[item].equals(getString(R.string.menu_share_link))) {
-                                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                sharingIntent.setType("text/plain");
-                                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
-                            }
-                            if (options[item].equals(getString(R.string.menu_share_screenshot))) {
-                                screenshot();
+        if (id == R.id.menu_save_screenshot) {
+            screenshot();
+        }
 
-                                if (sharedPref.getBoolean ("first_screenshot", true)){
-                                    Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
-                                } else if (shareFile.exists()) {
-                                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                                    sharingIntent.setType("image/png");
-                                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
-                                    sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
-                                    Uri bmpUri = Uri.fromFile(shareFile);
-                                    sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-                                    startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
-                                }
-                            }
-                            if (options[item].equals(getString(R.string.menu_save_screenshot))) {
-                                screenshot();
-                            }
-                        }
-                    }).show();
+        if (id == R.id.menu_share_screenshot) {
+            screenshot();
+
+            if (sharedPref.getBoolean ("first_screenshot", true)){
+                Snackbar.make(mWebView, R.string.toast_screenshot_failed, Snackbar.LENGTH_SHORT).show();
+            } else if (shareFile.exists()) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("image/png");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+                Uri bmpUri = Uri.fromFile(shareFile);
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_screenshot))));
+            }
+        }
+
+        if (id == R.id.menu_share_link) {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mWebView.getTitle());
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+            startActivity(Intent.createChooser(sharingIntent, (getString(R.string.app_share_link))));
         }
 
         return super.onOptionsItemSelected(item);
