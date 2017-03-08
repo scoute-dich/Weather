@@ -27,6 +27,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -213,7 +214,7 @@ public class Browser extends AppCompatActivity  {
                 } else if (url != null && url.equals("http://m.wetterdienst.de/")) {
                     setTitle(R.string.menu_search);
                 } else {
-                    setTitle(mWebView.getTitle());
+                    setTitle(mWebView.getUrl().substring(31).replace("/",""));
                 }
 
                 progressBar.setProgress(progress);
@@ -474,7 +475,7 @@ public class Browser extends AppCompatActivity  {
 
                 final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
                 edit_title.setHint(R.string.bookmark_edit_title);
-                edit_title.setText(mWebView.getTitle());
+                edit_title.setText(mWebView.getUrl().substring(31).replace("/",""));
 
                 builder.setView(dialogView);
                 builder.setTitle(R.string.bookmark_edit_title);
