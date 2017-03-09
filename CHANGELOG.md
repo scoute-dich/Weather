@@ -1,4 +1,7 @@
-### v 3.5 (WIP)
+### v 3.6:
+- fill title based on URL scheme on bookmarking
+
+### v 3.5:
 - improved: database model
 - improved: settings screen
 - added: sub menus
