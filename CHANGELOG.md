@@ -1,4 +1,4 @@
-### v 3.6:
+### v 3.6 - 3.7:
 - fill title based on URL scheme on bookmarking
 
 ### v 3.5:
