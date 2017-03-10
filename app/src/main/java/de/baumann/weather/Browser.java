@@ -213,7 +213,7 @@ public class Browser extends AppCompatActivity  {
                 } else if (url != null && url.equals("http://m.wetterdienst.de/")) {
                     setTitle(R.string.menu_search);
                 } else if (url != null && url.startsWith("http://m.wetterdienst.de/Wetter/")) {
-                    setTitle(url.substring(31).replace("/",""));
+                    setTitle(url.substring(31).replace("/","").replace("_"," "));
                 } else {
                     setTitle(mWebView.getTitle());
                 }
@@ -477,7 +477,7 @@ public class Browser extends AppCompatActivity  {
                 final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
                 edit_title.setHint(R.string.bookmark_edit_title);
                 if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("http://m.wetterdienst.de/Wetter/"))
-                    edit_title.setText(mWebView.getUrl().substring(31).replace("/",""));
+                    edit_title.setText(mWebView.getUrl().substring(31).replace("/","").replace("_", " "));
                 else
                     edit_title.setText(mWebView.getTitle());
 
