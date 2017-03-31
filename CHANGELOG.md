@@ -1,3 +1,6 @@
+### v 3.8
+- fix: crash when opening settings on pre Lollipop devices
+
 ### v 3.6 - 3.7:
 - fill title based on URL scheme on bookmarking
 
