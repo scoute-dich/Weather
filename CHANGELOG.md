@@ -1,4 +1,4 @@
-### v 3.8 - v 3.9
+### v 3.8 - v 4.0
 - fix: crash when opening settings on pre Lollipop devices
 
 ### v 3.6 - 3.7:
