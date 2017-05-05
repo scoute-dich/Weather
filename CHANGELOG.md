@@ -1,3 +1,6 @@
+### v 4.1
+- improved: sorting of bookmarks
+
 ### v 3.8 - v 4.0
 - fix: crash when opening settings on pre Lollipop devices
 
