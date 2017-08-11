@@ -1,3 +1,6 @@
+### v 4.2
+- fixed: saving bookmarks (suggest title)
+
 ### v 4.1
 - improved: sorting of bookmarks
 

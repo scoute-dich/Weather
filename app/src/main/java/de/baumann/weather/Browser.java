@@ -476,10 +476,13 @@ public class Browser extends AppCompatActivity  {
 
                 final EditText edit_title = (EditText) dialogView.findViewById(R.id.pass_title);
                 edit_title.setHint(R.string.bookmark_edit_title);
-                if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("http://m.wetterdienst.de/Wetter/"))
+                if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("http://m.wetterdienst.de/Wetter/")) {
                     edit_title.setText(mWebView.getUrl().substring(31).replace("/","").replace("_", " "));
-                else
+                } else if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
+                    edit_title.setText(mWebView.getUrl().substring(32).replace("/","").replace("_", " "));
+                } else {
                     edit_title.setText(mWebView.getTitle());
+                }
 
                 builder.setView(dialogView);
                 builder.setTitle(R.string.bookmark_edit_title);
