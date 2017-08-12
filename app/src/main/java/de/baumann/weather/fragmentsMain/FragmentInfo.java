@@ -88,7 +88,7 @@ public class FragmentInfo extends Fragment {
                 forecast,
                 "http://www.dwd.de/DE/leistungen/radarbild_film/radarbild_film.html",
                 "http://www.dwd.de/DE/leistungen/hobbymet_wk_europa/hobbyeuropakarten.html?nn=357606",
-                "http://www.dwd.de/DE/leistungen/satellit_metsat8000stc/satellit_metsat8000stc.html?nn=357606",
+                "http://www.dwd.de/DE/leistungen/satellit_metsat/satellit_metsat.html",
                 "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null",
                 "http://www.dwd.de/DE/service/lexikon/lexikon_node.html",
         };

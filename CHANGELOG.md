@@ -1,3 +1,6 @@
+### v 4.3
+- fix: opening satallit picture
+
 ### v 4.2
 - fixed: saving bookmarks (suggest title)
 
