@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_share"
+        android:id="@+id/action_saveBookmark"
+        android:orderInCategory="100"
+        android:title="@string/menu_bookmark"
+        app:showAsAction="never" />
+
+    <item
         android:orderInCategory="100"
         android:title="@string/menu_share"
-        android:icon="@drawable/share_variant"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="never" >
         <!-- "file" submenu -->
         <menu>
             <item android:id="@+id/menu_share_link"
@@ -20,17 +25,31 @@
     </item>
 
     <item
-        android:id="@+id/action_bookmark"
+        android:id="@+id/action_exit"
         android:orderInCategory="100"
-        android:title="@string/title_bookmarks"
-        android:icon="@drawable/google_maps2"
-        app:showAsAction="ifRoom" />
+        android:title="@string/menu_exit"
+        app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_saveBookmark"
+        android:id="@+id/action_overView"
         android:orderInCategory="100"
-        android:title="@string/menu_bookmark"
-        android:icon="@drawable/bookmark_plus"
-        app:showAsAction="ifRoom" />
+        android:title="@string/title_overview"
+        android:icon="@drawable/white_balance_sunny_light"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_hourly"
+        android:orderInCategory="100"
+        android:title="@string/title_hourly"
+        android:icon="@drawable/clock_outline"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_forecast"
+        android:orderInCategory="100"
+        android:title="@string/title_trend"
+        android:icon="@drawable/chart_areaspline"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
 </menu>

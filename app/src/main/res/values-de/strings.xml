@@ -3,7 +3,7 @@
 
     // Application
 
-    <string name="app_name">Wetter</string>
+    <string name="app_name">FOSS Wetter</string>
     <string name="app_permissions_title">Verlangte Berechtigungen</string>
     <string name="app_permissions">
 
@@ -17,7 +17,6 @@
     <string name="app_share_screenshot">Bildschirmfoto Teilen mit:</string>
     <string name="app_share_image">Bild Teilen mit:</string>
     <string name="app_share_link">Link Teilen mit:</string>
-    <string name="app_contDesc_3">Splashscreen</string>
     <string name="app_hint_bookmark">Gewünschten Titel eingeben</string>
     <string name="app_hint_url">Gewünschte URL eingeben</string>
 
@@ -37,18 +36,13 @@
     <string name="menu_share_screenshot">Bildschirmfoto teilen</string>
     <string name="menu_share_link">Link als Text teilen</string>
     <string name="menu_save_screenshot">Bildschirmfoto speichern</string>
-    <string name="menu_search">Suche …</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_bookmark">Lesezeichen hinzufügen</string>
+    <string name="menu_exit">App verlassen</string>
 
 
     // Context Menu
 
-    <string name="context_saveImage">Bild speichern</string>
-    <string name="context_shareImage">Bild teilen</string>
-    <string name="context_externalBrowser">Im Browser öffnen</string>
-    <string name="context_linkCopy">Link kopieren</string>
-    <string name="context_linkCopy_toast">Link erfolgreich kopiert</string>
     <string name="context_saveImage_toast">Bild gespeichert unter:</string>
 
 
@@ -57,29 +51,11 @@
     <string name="pref_1">Über die Appp</string>
     <string name="pref_2">App Einstellungen</string>
 
-    <string name="action_help">Hilfe</string>
-    <string name="action_help_summary">Entscheide welche Hilfedialoge engezeigt werden sollen.</string>
-
-    <string name="action_changelog">Änderungen</string>
-    <string name="action_changelog_summary">Was gibt es Neues … (wird eine Internetseite öffnen)</string>
-
-    <string name="action_longPress">App verlassen</string>
-    <string name="action_longPress_summary">Soll ein Bestätigungsdialog angezeigt werden, bevor die App geschlossen wird?</string>
-
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
 
     <string name="action_forecastStart">Bundesland</string>
     <string name="action_forecastStart_summary">Von welchem Bundesland soll der Wetterbericht geladen werden?</string>
-
-    <string name="action_start">App Start und Titelleiste-Klick</string>
-    <string name="action_start_summary">Was möchtest du sehen: Entweder den Startschirm oder den Lesezeichenfavorit?</string>
-
-    <string name="action_tabMain">Tabs: Startschirm</string>
-    <string name="action_tabMain_summary">Welcher Tab soll standardmäßig auf dem Startschirm geöffnet werden?</string>
-
-    <string name="action_tabWeather">Tabs: Wetter</string>
-    <string name="action_tabWeather_summary">Welcher Tab soll standardmäßig bei der Wettervorhersage geöffnet werden?</string>
 
     <string name="action_donate">Spenden</string>
     <string name="action_donate_summary">Wenn dir die App gefällt, würde ich mich über eine Spende (Paypal) freuen.</string>
@@ -88,30 +64,15 @@
     <string name="action_openSettings_summary">Öffne über die Systemeinstellungen die App Info der App. Je nach Androidversion
         kannst du dort verschiedene Einstellungen vornehmen (Speicherplatz, Netzwerkverkehr, Berechtigungen, …).</string>
 
-    <string name="action_shortcut">Verknüpfungen</string>
-    <string name="action_shortcut_summary">Erstelle auf deinen Desktop Verknüpfungen, um einen schnellen Zugriff auf deine
-        Lesezeichen oder die Wetterinfos zu erhalten.</string>
-
-
 
     // DWD = German Weather Service
 
-    <string name="dwd">Deutscher Wetterdienst</string>
     <string name="dwd_thema">DWD - Thema des Tages</string>
     <string name="dwd_karten">Wetterkarten</string>
     <string name="dwd_lexikon">DWD - Wetterlexikon</string>
     <string name="dwd_forecast">Vorhersage</string>
     <string name="dwd_satellit">Satellitenbild</string>
-    <string name="dwd_webSearch">Web Suche</string>
     <string name="dwd_radar">Regenradar</string>
-
-    <string name="text_des_1">Der Wetterbericht für dein bevorzugtes Bundesland.</string>
-    <string name="text_des_2">Zeigt den Regenradar (-film) von Deutschland.</string>
-    <string name="text_des_5">Jeden Tag eine neue, interressante Geschichte zum Thema Wetter.</string>
-    <string name="text_des_6">Das Wetterlexikon des Deutschen Wetterdienstes.</string>
-    <string name="text_des_3">Zeigt mehrere (Vorhersage-) Wetterkarten von Europa und der Welt.</string>
-    <string name="text_des_4">Aktuelle und vergangene Satellitenbilder der ganzen Welt.</string>
-    <string name="text_des_7">Startpage: eine sichere und auf Privatshäre bedachte Suchmaschiene.</string>
 
 
     // Snackbar
@@ -126,7 +87,6 @@
     <string name="toast_download_2">Download vollständig. Downloadmanager öffnen?</string>
     <string name="toast_screenshot_failed">Konnte Screenshot nicht erstellen.</string>
     <string name="toast_exit">Möchtest du die App verlassen?</string>
-    <string name="toast_shortcut">Verknüpfung zum Homescreen hinzugefügt.</string>
     <string name="toast_newTitle">Eintrag bereits vorhanden.</string>
 
 
@@ -135,11 +95,10 @@
     <string name="bookmark_remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
     <string name="bookmark_remove_bookmark">Lesezeichen löschen</string>
     <string name="bookmark_added">Lesezeichen wird hinzugefügt.</string>
-    <string name="bookmark_setFav">Erfolgreich als Favorit gespeichert.</string>
     <string name="bookmark_edit_url">URL bearbeiten</string>
     <string name="bookmark_edit_title">Titel bearbeiten</string>
-    <string name="bookmark_edit_fav">Als Favorit speichern</string>
     <string name="bookmark_setFav_not">Du kannst nur einen Favoriten auswählen.</string>
+    <string name="bookmark_toddleFav">Setze | entferne als Startseite</string>
 
 
     //States

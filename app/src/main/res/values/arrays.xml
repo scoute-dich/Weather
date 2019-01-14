@@ -14,16 +14,6 @@
         <item>@drawable/splash8</item>
     </array>
 
-    <string-array name="listArrayStart">
-        <item>Main screen</item>
-        <item>Favorite bookmark</item>
-    </string-array>
-
-    <string-array name="listValuesStart">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="listArrayForecast">
         <item>Germany</item>
         <item>Baden-Württemberg</item>
@@ -54,28 +44,6 @@
         <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html</item>
         <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html</item>
         <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html</item>
-    </string-array>
-
-    <string-array name="listArrayTabMain">
-        <item>Weather infos</item>
-        <item>Bookmarks</item>
-    </string-array>
-
-    <string-array name="listValuesTabMain">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-
-    <string-array name="listArrayTabWeather">
-        <item>Overview</item>
-        <item>Hourly</item>
-        <item>Trend</item>
-    </string-array>
-
-    <string-array name="listValuesTabWeather">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
     </string-array>
 
 </resources>

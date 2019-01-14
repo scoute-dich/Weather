@@ -21,21 +21,17 @@ package de.baumann.weather.helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.preference.PreferenceManager;
-
-import de.baumann.weather.R;
 
 
 public class DbAdapter_Bookmarks {
 
     //define static variable
     private static final int dbVersion =6;
-    private static final String dbName = "bookmarks_DB_v01.db";
+    private static final String dbName = "bookmarks_DB_v03.db";
     private static final String dbTable = "bookmarks";
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -99,21 +95,12 @@ public class DbAdapter_Bookmarks {
 
 
     //fetch data
-    public Cursor fetchAllData(Context context) {
-
-        PreferenceManager.setDefaultValues(context, R.xml.user_settings, false);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    public Cursor fetchAllData() {
 
         String[] columns = new String[]{"_id", "bookmarks_title", "bookmarks_content", "bookmarks_icon","bookmarks_attachment","bookmarks_creation"};
 
-        if (sp.getString("sortDBB", "title").equals("title")) {
-            return sqlDb.query(dbTable, columns, null, null, null, null, "bookmarks_title" + " COLLATE NOCASE ASC;");
-        } else if (sp.getString("sortDBB", "title").equals("create")) {
-            String orderBy = "bookmarks_creation" + "," +
-                    "bookmarks_title" + " COLLATE NOCASE ASC;";
-            return sqlDb.query(dbTable, columns, null, null, null, null, orderBy);
-        }
-
-        return null;
+        String orderBy = "bookmarks_icon" + "," +
+                "bookmarks_title" + " COLLATE NOCASE ASC;";
+        return sqlDb.query(dbTable, columns, null, null, null, null, orderBy);
     }
 }

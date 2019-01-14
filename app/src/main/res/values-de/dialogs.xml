@@ -30,66 +30,12 @@
 
     //Help Dialogs
 
-    <string name="firstSearch_title">Lesezeichen speichern</string>
-    <string name="firstSearch_title_summary">Noch einmal anzeigen: Lesezeichen speichen?</string>
-    <string name="firstSearch_text">
-        Wenn du eine Stadt speicherst, ist es wichtig,
-        dass der \"Überblick\" Knopf auf der Internetseite blau und markiert ist. Sonst ist es später nicht möglich
-        die stündliche Vorhersage und den 10 Tage-Trend der Stadt zu laden.&lt;br>&lt;br>
-
-        Wenn du das Icon gedrückt hast, erscheint ein Popup-Menü. Hier kannst du den Titel des Lesezeichens
-        eingeben (im Normalfall den Namen der Stadt).&lt;br>&lt;br>
-
-        Du kannst zur Startschirm oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
-        indem du auf die Titelleiste klickst. Um zum Startschirm zurückzukehren kannst du auch den Pfeil in der Titelleiste
-        klicken. Nach unten wischen um die Seite neu zu laden.</string>
-
-
-    <string name="firstBrowser_title">Browser</string>
-    <string name="firstBrowser_title_summary">Noch einmal anzeigen: Funktionen des Browsers?</string>
-    <string name="firstBrowser_text">
-        Deine Lesezeichen werden in dieser Webview angezeigt. Eine Webview zeigt Internetseiten in Apps an.
-        Wenn du keine Internetverbindung hast, werden sie offline (aus dem Cache) geladen.&lt;br>&lt;br>
-
-        In der Webview gibt es ein Kontextmenü, dass sich bei einem langen Klick auf Bilder oder Links öffnet.&lt;br>&lt;br>
-
-        Du kannst zum Startschirm oder zu deinem Favorit (siehe Einstellungen) zurückkehren,
-        indem du auf die Titelleiste klickst. Um zum Startschirm zurückzukehren kannst du auch den Pfeil in der Titelleiste
-        klicken. Nach unten wischen um die Seite neu zu laden.</string>
-
-    <string name="firstBookmark_title">Startschirm</string>
-    <string name="firstBookmark_title_summary">Noch einmal anzeigen: Funktion des Startschirms?</string>
-    <string name="firstBookmark_text">
-        &lt;i>Die Tabs:&lt;/i>&lt;br>
-
-        Im linken Tab kannst du Wetterinformationen des DWDs abrufen. In den
-        Einstellungen kannst du dein Bundesland auswählen. Im rechten Tab werden deine Lesezeichen angezeigt.&lt;br>&lt;br>
-
-        &lt;i>Lesezeichen bearbeiten:&lt;/i>&lt;br>
-
-        Ein langer Klick auf ein Lesezeichen öffnet ein Popup-Menü. Du kannst ein Lesezeichen als Favorit setzen
-        (es kann beim Start der App oder beim Klick auf die Titelbar geladen werden - siehe Einstellungen), den Titel oder die URL des
-        Lesezeichens bearbeiten, oder es komplett löschen (ein Lesezeichen muss mindestens vorhanden sein). Wenn du
-        Probleme hast die stündliche Vorhersage oder den 10 Tage-Trend einer gespeicherten Stadt zu öffnen, musst du die
-        URL kontrollieren. Sie sollte so aussehen: http://www.wetterdienst.de/[…]wetter/name_deiner_stadt.
-        Wenn das nicht so ist, verbessere es.&lt;br>&lt;br>
-
-        &lt;i>Nach neuen Städten suchen:&lt;/i>&lt;br>
-
-        Wenn du die Lupe in der Toolbar klickst, öffnet sich die Internetseite von wetterdienst.de. Du kannst dort weltweit
-        nach Städten suchen. Einfach den Namen in das Suchfeld eingeben und deine Auswahl treffen. Diese kannst du dann als
-        Lesezeichen speichern.</string>
-
 
     <string name="firstScreenshot_title">Bildschirmfoto aufnehmen</string>
-    <string name="firstScreenshot_title_summary">Noch einmal anzeigen: Bildschirmfotos richtig aufnehmen?</string>
     <string name="firstScreenshot_text">
         Du kannst Bildschirmfotos der gesamten Internetseite machen (auch von dem Teil, der gerade nicht auf dem
         Bildschirm zu sehen ist). Damit dies richtig funktioniert, solltest du warten, bis die Internetseite komplett geladen
         ist, um sicherzustellen, dass die gesamte Internetseite aufgenommen wird.</string>
 
-
-    <string name="perm_notShow_title">Berechtigungsdialog</string>
-    <string name="perm_notShow_title_summary">Noch einmal anzeigen: Berechtigungsdialog?</string>
 
 </resources>

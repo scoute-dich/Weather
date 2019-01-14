@@ -11,22 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import de.baumann.weather.R;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] itemTITLE;
-    private final String[] itemDES;
     private final Integer[] imgid;
 
     @SuppressWarnings("UnusedParameters")
-    public CustomListAdapter(Activity context, String[] itemTITLE, String[] itemURL, String[] itemDES, Integer[] imgid) {
+    public CustomListAdapter(Activity context, String[] itemTITLE, String[] itemURL, Integer[] imgid) {
         super(context, R.layout.list_item, itemTITLE);
 
         this.context=context;
         this.itemTITLE=itemTITLE;
-        this.itemDES=itemDES;
         this.imgid=imgid;
     }
 
@@ -36,16 +36,14 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         if (rowView == null) {
             LayoutInflater infInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = infInflater.inflate(R.layout.list_item, parent, false);
+            rowView = Objects.requireNonNull(infInflater).inflate(R.layout.list_item, parent, false);
         }
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        TextView textTITLE = (TextView) rowView.findViewById(R.id.textView_title);
-        TextView textDES = (TextView) rowView.findViewById(R.id.textView_des);
+        ImageView imageView = rowView.findViewById(R.id.icon);
+        TextView textTITLE = rowView.findViewById(R.id.textView_title);
 
         imageView.setImageResource(imgid[position]);
         textTITLE.setText(itemTITLE[position]);
-        textDES.setText(itemDES[position]);
         return rowView;
     }
 }

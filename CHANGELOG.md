@@ -1,5 +1,12 @@
+### v 4.4 (WIP)
+- new: min API: Lollipop
+- fix: force close when sharing screenshot
+- fix: DWD links
+- improved: layout of lists
+- updated build tools
+
 ### v 4.3
-- fix: opening satallit picture
+- fix: opening satellite picture
 
 ### v 4.2
 - fixed: saving bookmarks (suggest title)
@@ -80,7 +87,7 @@
 - editable bookmarks
 - help dialogs
 - ui improvements
-- splashscreen
+- splash screen
 
 ### v 1.2
 - added english

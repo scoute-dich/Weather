@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import de.baumann.weather.R;
-import de.baumann.weather.Screen_Main;
 
 public class Settings extends AppCompatActivity {
 
@@ -28,15 +27,11 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         setTitle(R.string.menu_settings);
         PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.user_settings_help, false);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(toolbar != null) {
-            helpers.setupToolbar(toolbar, Settings.this);
-        }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -60,27 +55,11 @@ public class Settings extends AppCompatActivity {
             {
                 public boolean onPreferenceClick(Preference pref)
                 {
-
                     Intent intent = new Intent();
                     intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                     intent.setData(uri);
                     getActivity().startActivity(intent);
-
-                    return true;
-                }
-            });
-        }
-
-        private void addChangelogListener() {
-            Preference reset = findPreference("changelog");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference pref) {
-
-                    Uri uri = Uri.parse("https://github.com/scoute-dich/Weather/blob/master/CHANGELOG.md"); // missing 'http://' will cause crashed
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
                     return true;
                 }
             });
@@ -122,78 +101,6 @@ public class Settings extends AppCompatActivity {
             });
         }
 
-        private void add_helpChooseListener() {
-
-            Preference reset = findPreference("help");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference pref) {
-
-                    Intent intent_in = new Intent(getActivity(), Settings_help.class);
-                    startActivity(intent_in);
-                    getActivity().overridePendingTransition(0, 0);
-                    getActivity().finish();
-                    return true;
-                }
-            });
-        }
-
-        private void addShortcutListener() {
-
-            final Activity activity = getActivity();
-            Preference reset = findPreference("shortcuts");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference pref) {
-
-                    final CharSequence[] options = {
-                            getString(R.string.title_bookmarks),
-                            getString(R.string.title_weatherInfo)};
-                    new AlertDialog.Builder(getActivity())
-                            .setPositiveButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                }
-                            })
-                            .setItems(options, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int item) {
-                                    if (options[item].equals(getString(R.string.title_bookmarks))) {
-                                        Intent i = new Intent(getActivity().getApplicationContext(), Popup_bookmarks.class);
-                                        i.setAction(Intent.ACTION_MAIN);
-
-                                        Intent shortcut = new Intent();
-                                        shortcut.setAction(Intent.ACTION_MAIN);
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, (getString(R.string.app_name)) + " | " + getString(R.string.title_bookmarks));
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                                                Intent.ShortcutIconResource.fromContext(getActivity().getApplicationContext(), R.mipmap.ic_launcher));
-                                        shortcut.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-                                        getActivity().sendBroadcast(shortcut);
-                                        helpers.makeToast(activity, getString(R.string.toast_shortcut));
-                                    }
-                                    if (options[item].equals(getString(R.string.title_weatherInfo))) {
-                                        Intent i = new Intent(getActivity().getApplicationContext(), Popup_info.class);
-                                        i.setAction(Intent.ACTION_MAIN);
-
-                                        Intent shortcut = new Intent();
-                                        shortcut.setAction(Intent.ACTION_MAIN);
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, (getString(R.string.app_name)) + " | " + getString(R.string.title_weatherInfo));
-                                        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                                                Intent.ShortcutIconResource.fromContext(getActivity().getApplicationContext(), R.mipmap.ic_launcher));
-                                        shortcut.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-                                        getActivity().sendBroadcast(shortcut);
-                                        helpers.makeToast(activity, getString(R.string.toast_shortcut));
-                                    }
-                                }
-                            }).show();
-
-                    return true;
-                }
-            });
-        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -201,20 +108,9 @@ public class Settings extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.user_settings);
             addLicenseListener();
-            addChangelogListener();
             addClearCacheListener();
             addDonateListListener();
-            add_helpChooseListener();
-            addShortcutListener();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent_in = new Intent(Settings.this, Screen_Main.class);
-        startActivity(intent_in);
-        overridePendingTransition(0, 0);
-        finish();
     }
 
     @Override
@@ -226,9 +122,6 @@ public class Settings extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            Intent intent_in = new Intent(Settings.this, Screen_Main.class);
-            startActivity(intent_in);
-            overridePendingTransition(0, 0);
             finish();
         }
 

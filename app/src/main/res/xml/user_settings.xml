@@ -4,23 +4,6 @@
     <PreferenceCategory
         android:title="@string/pref_2">
 
-        <ListPreference
-            android:title="@string/action_tabMain"
-            android:icon="@drawable/cellphone_iphone"
-            android:summary="@string/action_tabMain_summary"
-            android:key="tabMain"
-            android:defaultValue="1"
-            android:entries="@array/listArrayTabMain"
-            android:entryValues="@array/listValuesTabMain" />
-
-        <ListPreference
-            android:title="@string/action_tabWeather"
-            android:icon="@drawable/weather_partlycloudy"
-            android:summary="@string/action_tabWeather_summary"
-            android:key="tabWeather"
-            android:defaultValue="0"
-            android:entries="@array/listArrayTabWeather"
-            android:entryValues="@array/listValuesTabWeather" />
 
         <ListPreference
             android:title="@string/action_forecastStart"
@@ -31,50 +14,16 @@
             android:entries="@array/listArrayForecast"
             android:entryValues="@array/listValuesForecast" />
 
-        <ListPreference
-            android:title="@string/action_start"
-            android:icon="@drawable/gesture_tap"
-            android:summary="@string/action_start_summary"
-            android:key="startType"
-            android:defaultValue="1"
-            android:entries="@array/listArrayStart"
-            android:entryValues="@array/listValuesStart" />
-
-        <Preference
-            android:title="@string/action_shortcut"
-            android:icon="@drawable/arrow_top_right"
-            android:summary="@string/action_shortcut_summary"
-            android:key="shortcuts" />
-
         <Preference
             android:title="@string/action_openSettings"
             android:icon="@drawable/settings"
             android:summary="@string/action_openSettings_summary"
             android:key="clearCache" />
 
-        <CheckBoxPreference
-            android:title="@string/action_longPress"
-            android:icon="@drawable/exit_to_app"
-            android:summary="@string/action_longPress_summary"
-            android:key="longPress"
-            android:defaultValue="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/pref_1">
-
-        <Preference
-            android:title="@string/action_help"
-            android:icon="@drawable/information_outline"
-            android:summary="@string/action_help_summary"
-            android:key="help" />
-
-        <Preference
-            android:title="@string/action_changelog"
-            android:icon="@drawable/format_list_bulleted2"
-            android:summary="@string/action_changelog_summary"
-            android:key="changelog" />
 
         <Preference
             android:title="@string/action_license"

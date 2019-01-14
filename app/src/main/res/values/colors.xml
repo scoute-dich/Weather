@@ -3,5 +3,9 @@
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#1976d2</color>
     <color name="colorAccent">#ff9800</color>
+    <color name="colorLight">#fafafa</color>
+
+    <color name="shadow_light">#59323232</color>
+    <color name="transparent">@android:color/transparent</color>
 
 </resources>
