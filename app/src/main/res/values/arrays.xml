@@ -31,19 +31,19 @@
     </string-array>
 
     <string-array name="listValuesForecast">
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/bayern/vhs_bay_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/berlin_brandenburg/vhs_bbb_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/hessen/vhs_hes_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/mecklenburg_vorpommern/vhs_mvp_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/niedersachsen_bremen/vhs_nib_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/nordrhein_westfalen/vhs_nrw_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/rheinland-pfalz_saarland/vhs_rps_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachsen/vhs_sac_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html</item>
-        <item>http://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/bayern/vhs_bay_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/berlin_brandenburg/vhs_bbb_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/hessen/vhs_hes_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/mecklenburg_vorpommern/vhs_mvp_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/niedersachsen_bremen/vhs_nib_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/nordrhein_westfalen/vhs_nrw_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/rheinland-pfalz_saarland/vhs_rps_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/sachsen/vhs_sac_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html</item>
+        <item>https://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html</item>
     </string-array>
 
 </resources>
