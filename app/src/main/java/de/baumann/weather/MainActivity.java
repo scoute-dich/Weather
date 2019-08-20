@@ -435,6 +435,8 @@ public class MainActivity extends AppCompatActivity {
                     action_hourly = bookmarks_content + "stuendlich";
                     action_forecast = bookmarks_content + "10-Tage";
                 }
+            }
+        });
                 
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
