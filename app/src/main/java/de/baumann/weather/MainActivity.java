@@ -55,6 +55,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.baumann.weather.helper.CustomListAdapter;
 import de.baumann.weather.helper.DbAdapter_Bookmarks;
@@ -167,9 +169,26 @@ public class MainActivity extends AppCompatActivity {
 
         final String startURL = sharedPref.getString("favoriteURL", "http://m.wetterdienst.de/");
         startTitle = sharedPref.getString("favoriteTitle", "wetterdienst.de");
-        action_overView = startURL;
-        action_hourly = startURL + "stuendlich";
-        action_forecast = startURL + "10-Tage";
+
+        if( startURL.startsWith("http://m.wetterdienst.de/Wetter/") || startURL.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+
+            Pattern townPattern = Pattern.compile("Wetter/(.*?)/");
+            Matcher matcher = townPattern.matcher( startURL );
+            if(  matcher.find() ){
+                String town = matcher.group().replace("Wetter/","");
+
+                action_overView = "http://m.wetterdienst.de/Wetter/" + town;
+                action_hourly = action_overView + "stuendlich";
+                action_forecast = action_overView + "10-Tage";
+
+            }
+
+        } else {
+            action_overView = startURL;
+            action_hourly = startURL + "stuendlich";
+            action_forecast = startURL + "10-Tage";
+        }
+
 
         mWebView.loadUrl(startURL);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -397,11 +416,26 @@ public class MainActivity extends AppCompatActivity {
                 startTitle = bookmarks_title;
                 mWebView.loadUrl(bookmarks_content);
 
-                action_overView = bookmarks_content;
-                action_hourly = bookmarks_content + "stuendlich";
-                action_forecast = bookmarks_content + "10-Tage";
-            }
-        });
+
+                if( bookmarks_content.startsWith("http://m.wetterdienst.de/Wetter/") || bookmarks_content.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+
+                    Pattern townPattern = Pattern.compile("Wetter/(.*?)/");
+                    Matcher matcher = townPattern.matcher( bookmarks_content );
+                    if(  matcher.find() ){
+                        String town = matcher.group().replace("Wetter/","");
+
+                        action_overView = "http://m.wetterdienst.de/Wetter/" + town;
+                        action_hourly = action_overView + "stuendlich";
+                        action_forecast = action_overView + "10-Tage";
+
+                    }
+
+                } else {
+                    action_overView = bookmarks_content;
+                    action_hourly = bookmarks_content + "stuendlich";
+                    action_forecast = bookmarks_content + "10-Tage";
+                }
+                
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
