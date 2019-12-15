@@ -358,9 +358,7 @@ public class MainActivity extends AppCompatActivity {
                                     final EditText edit_title = dialogView.findViewById(R.id.pass_title);
                                     edit_title.setHint(R.string.bookmark_edit_title);
                                     if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
-                                        edit_title.setText(mWebView.getUrl().substring(31).replace("/","").replace("_", " "));
-                                    } else if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
-                                        edit_title.setText(mWebView.getUrl().substring(32).replace("/","").replace("_", " "));
+                                        edit_title.setText(mWebView.getUrl().substring(33).replace("/","").replace("_", " "));
                                     } else {
                                         edit_title.setText(mWebView.getTitle());
                                     }
@@ -695,7 +693,6 @@ public class MainActivity extends AppCompatActivity {
                 state = getString(R.string.state_13);
                 break;
         }
-
 
         final String[] itemTITLE ={
                 getString(R.string.dwd_forecast) + " " + state,
