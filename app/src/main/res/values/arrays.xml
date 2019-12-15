@@ -5,28 +5,27 @@
 
     <array name="splash_images">
         <item>@drawable/splash1</item>
-        <item>@drawable/splash2</item>
-        <item>@drawable/splash3</item>
-        <item>@drawable/splash4</item>
-        <item>@drawable/splash5</item>
         <item>@drawable/splash6</item>
         <item>@drawable/splash7</item>
         <item>@drawable/splash8</item>
+        <item>@drawable/splash2</item>
+        <item>@drawable/splash3</item>
+        <item>@drawable/splash4</item>
     </array>
 
     <string-array name="listArrayForecast">
-        <item>Germany</item>
+        <item>Deutschland</item>
         <item>Baden-Württemberg</item>
         <item>Bayern</item>
         <item>Berlin and Brandenburg</item>
         <item>Hessen</item>
         <item>Mecklenburg-Vorpommern</item>
-        <item>Niedersachsen and Bremen</item>
+        <item>Niedersachsen und Bremen</item>
         <item>Nordrhein-Westfalen</item>
-        <item>Rheinland-Pfalz and Saarland</item>
+        <item>Rheinland-Pfalz und Saarland</item>
         <item>Sachsen</item>
         <item>Sachsen-Anhalt</item>
-        <item>Schleswig-Holstein and Hamburg</item>
+        <item>Schleswig-Holstein und Hamburg</item>
         <item>Thüringen</item>
     </string-array>
 

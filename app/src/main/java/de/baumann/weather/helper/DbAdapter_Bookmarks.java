@@ -76,13 +76,6 @@ public class DbAdapter_Bookmarks {
         @SuppressLint("Recycle") Cursor row = sqlDb.rawQuery(query, null);
         return row.moveToFirst();
     }
-    //check entry already in database or not
-    @SuppressWarnings("SameParameterValue")
-    public boolean isExistFav(String bookmarks_attachment){
-        String query = "SELECT bookmarks_attachment FROM bookmarks WHERE bookmarks_attachment='"+bookmarks_attachment+"' LIMIT 1";
-        @SuppressLint("Recycle") Cursor row = sqlDb.rawQuery(query, null);
-        return row.moveToFirst();
-    }
     //edit data
     public void update(int id,String bookmarks_title,String bookmarks_content,String bookmarks_icon,String bookmarks_attachment, String bookmarks_creation) {
         sqlDb.execSQL("UPDATE "+dbTable+" SET bookmarks_title='"+bookmarks_title+"', bookmarks_content='"+bookmarks_content+"', bookmarks_icon='"+bookmarks_icon+"', bookmarks_attachment='"+bookmarks_attachment+"', bookmarks_creation='"+bookmarks_creation+"'   WHERE _id=" + id);
@@ -96,11 +89,8 @@ public class DbAdapter_Bookmarks {
 
     //fetch data
     public Cursor fetchAllData() {
-
         String[] columns = new String[]{"_id", "bookmarks_title", "bookmarks_content", "bookmarks_icon","bookmarks_attachment","bookmarks_creation"};
-
-        String orderBy = "bookmarks_icon" + "," +
-                "bookmarks_title" + " COLLATE NOCASE ASC;";
+        String orderBy = "bookmarks_title" + " COLLATE NOCASE ASC;";
         return sqlDb.query(dbTable, columns, null, null, null, null, orderBy);
     }
 }

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="12dp"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/google_maps"
+        app:srcCompat="@drawable/icon_location"
         tools:ignore="ContentDescription" />
 
     <RelativeLayout

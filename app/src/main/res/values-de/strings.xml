@@ -4,52 +4,28 @@
     // Application
 
     <string name="app_name">FOSS Wetter</string>
-    <string name="app_permissions_title">Verlangte Berechtigungen</string>
-    <string name="app_permissions">
-
-        &lt;i>Zugriff auf SD Karte:&lt;/i>&lt;br>
-        &#8226; Dateien herunterladen: um heruntergeladene Datein auf der SD-Karte speichern zu können.&lt;br>
-        &#8226; Bildschirmfoto: um Bildschirmfotos von Internetseiten auf der SD-Karte zu speichern.&lt;br>&lt;br>
-
-        &lt;i>Berechtigung nachträglich erteilen:&lt;/i>&lt;br>
-        Wenn du die Berechtigung verweigerst, kannst du sie nachträglich erteilen, indem du \"Einstellungen -> App Info\" öffnest und
-        dort den Bereich \"Berechtigungen\" auswählst.</string>
-    <string name="app_share_screenshot">Bildschirmfoto Teilen mit:</string>
-    <string name="app_share_image">Bild Teilen mit:</string>
-    <string name="app_share_link">Link Teilen mit:</string>
     <string name="app_hint_bookmark">Gewünschten Titel eingeben</string>
     <string name="app_hint_url">Gewünschte URL eingeben</string>
 
 
     // Tab - Titles
 
-    <string name="title_overview">Übersicht</string>
-    <string name="title_hourly">Stündlich</string>
-    <string name="title_trend">Trend</string>
     <string name="title_weatherInfo">Wetterinfos</string>
     <string name="title_bookmarks">Lesezeichen</string>
 
 
     // Menu Items
 
-    <string name="menu_share">Wetterbericht teilen</string>
-    <string name="menu_share_screenshot">Bildschirmfoto teilen</string>
-    <string name="menu_share_link">Link als Text teilen</string>
-    <string name="menu_save_screenshot">Bildschirmfoto speichern</string>
+    <string name="menu_share">Teilen</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_bookmark">Lesezeichen hinzufügen</string>
-    <string name="menu_exit">App verlassen</string>
+    <string name="menu_bookmark">Lesezeichen speichern</string>
+    <string name="menu_exit">Verlassen</string>
 
 
     // Context Menu
 
-    <string name="context_saveImage_toast">Bild gespeichert unter:</string>
-
 
     // Settings
-
-    <string name="pref_1">Über die Appp</string>
-    <string name="pref_2">App Einstellungen</string>
 
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
@@ -59,10 +35,6 @@
 
     <string name="action_donate">Spenden</string>
     <string name="action_donate_summary">Wenn dir die App gefällt, würde ich mich über eine Spende (Paypal) freuen.</string>
-
-    <string name="action_openSettings">App Info</string>
-    <string name="action_openSettings_summary">Öffne über die Systemeinstellungen die App Info der App. Je nach Androidversion
-        kannst du dort verschiedene Einstellungen vornehmen (Speicherplatz, Netzwerkverkehr, Berechtigungen, …).</string>
 
 
     // DWD = German Weather Service
@@ -79,13 +51,7 @@
 
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Abbrechen</string>
-    <string name="toast_notAgain">Nicht anzeigen</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
-    <string name="toast_download">Lade herunter:</string>
-    <string name="toast_download_1">Möchtest du herunterladen:</string>
-    <string name="toast_perm">Berechtigungen gewährt?</string>
-    <string name="toast_download_2">Download vollständig. Downloadmanager öffnen?</string>
-    <string name="toast_screenshot_failed">Konnte Screenshot nicht erstellen.</string>
     <string name="toast_exit">Möchtest du die App verlassen?</string>
     <string name="toast_newTitle">Eintrag bereits vorhanden.</string>
 
@@ -93,12 +59,11 @@
     // Bookmarks
 
     <string name="bookmark_remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
-    <string name="bookmark_remove_bookmark">Lesezeichen löschen</string>
+    <string name="bookmark_remove_bookmark">Löschen</string>
     <string name="bookmark_added">Lesezeichen wird hinzugefügt.</string>
     <string name="bookmark_edit_url">URL bearbeiten</string>
     <string name="bookmark_edit_title">Titel bearbeiten</string>
-    <string name="bookmark_setFav_not">Du kannst nur einen Favoriten auswählen.</string>
-    <string name="bookmark_toddleFav">Setze | entferne als Startseite</string>
+    <string name="bookmark_toddleFav">Favorit</string>
 
 
     //States
@@ -116,5 +81,29 @@
     <string name="state_11">für Sachsen-Anhalt</string>
     <string name="state_12">für Schleswig-Holstein und Hamburg</string>
     <string name="state_13">für Thüringen</string>
+
+    <string name="about_title">Copyright © 2019  by AOSD</string>
+    <string name="about_text">
+
+        Besuche für mehr Informationen die Projektseite auf Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see http://www.gnu.org/licenses.&lt;br>&lt;br>&lt;br>
+
+        &lt;b>Benutzte open source Projekte:&lt;/b>&lt;br>&lt;br>
+
+        MaterialDesignIcons&lt;br>
+        https://github.com/Templarian/MaterialDesign&lt;/i>
+    </string>
 
 </resources>

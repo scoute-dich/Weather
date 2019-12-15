@@ -1,22 +1,23 @@
 package de.baumann.weather.helper;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceFragmentCompat;
+
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import de.baumann.weather.R;
+import de.baumann.weather.helpers;
 
 public class Settings extends AppCompatActivity {
 
@@ -26,51 +27,34 @@ public class Settings extends AppCompatActivity {
 
         setContentView(R.layout.activity_settings);
         setTitle(R.string.menu_settings);
-        PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
+
+        androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.user_settings, false);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        // Display the fragment as the activity_screen_main content
-        getFragmentManager().beginTransaction()
+
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.content_frame, new SettingsFragment())
                 .commit();
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
 
-        private void addClearCacheListener() {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.user_settings, rootKey);
 
-            final Activity activity = getActivity();
-
-            Preference reset = findPreference("clearCache");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
-            {
-                public boolean onPreferenceClick(Preference pref)
-                {
-                    Intent intent = new Intent();
-                    intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-                    intent.setData(uri);
-                    getActivity().startActivity(intent);
-                    return true;
-                }
-            });
-        }
-
-        private void addLicenseListener() {
-            Preference reset = findPreference("license");
-
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference pref) {
-
+            Objects.requireNonNull(findPreference("license")).setOnPreferenceClickListener(new androidx.preference.Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(androidx.preference.Preference preference) {
                     final AlertDialog d = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.about_title)
                             .setMessage(helpers.textSpannable(getString(R.string.about_text)))
@@ -82,34 +66,19 @@ public class Settings extends AppCompatActivity {
                                     }).show();
                     d.show();
                     ((TextView) d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-
-                    return true;
+                    return false;
                 }
             });
-        }
 
-        private void addDonateListListener() {
-
-            Preference reset = findPreference("donate");
-            reset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference pref) {
+            Objects.requireNonNull(findPreference("donate")).setOnPreferenceClickListener(new androidx.preference.Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(androidx.preference.Preference preference) {
                     Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NP6TGYDYP9SHY"); // missing 'http://' will cause crashed
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                    return true;
+                    return false;
                 }
             });
-        }
-
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            addPreferencesFromResource(R.xml.user_settings);
-            addLicenseListener();
-            addClearCacheListener();
-            addDonateListListener();
         }
     }
 
@@ -120,7 +89,6 @@ public class Settings extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
             finish();
         }

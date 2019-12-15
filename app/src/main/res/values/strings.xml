@@ -1,57 +1,31 @@
 <resources>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     // Application
 
     <string name="app_name">FOSS Weather</string>
-    <string name="app_permissions_title">Used permissions</string>
-    <string name="app_permissions">
 
-        &lt;i>Access Storage Permission:&lt;/i>&lt;br>
-        &#8226; Downloads: save downloads on the sd-card.&lt;br>
-        &#8226; Screenshots: save screenshots of a website on the sd-card.&lt;br>&lt;br>
-
-        &lt;i>Grant permissions later:&lt;/i>&lt;br>
-        If you don\'t permit this now, you can do it later. Please open then \"Settings -> App info\" and choose \"Permissions\".</string>
-
-    <string name="app_share_screenshot">Share screenshot using:</string>
-    <string name="app_share_image">Share image using:</string>
-    <string name="app_share_link">Share link using:</string>
     <string name="app_hint_bookmark">Enter desired title</string>
     <string name="app_hint_url">Enter desired url</string>
 
 
     // Tab - Titles
 
-    <string name="title_overview">Overview</string>
-    <string name="title_hourly">Hourly</string>
-    <string name="title_trend">Trend</string>
     <string name="title_weatherInfo">Weather infos</string>
     <string name="title_bookmarks">Bookmarks</string>
 
 
     // Menu Items
 
-    <string name="menu_share">Share weather report</string>
-    <string name="menu_share_screenshot">Share screenshot</string>
-    <string name="menu_share_link">Share link as text</string>
-    <string name="menu_save_screenshot">Save screenshot</string>
+    <string name="menu_share">Share</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_bookmark">Add bookmark</string>
-    <string name="menu_exit">Exit app</string>
+    <string name="menu_bookmark">Save bookmark</string>
+    <string name="menu_exit">Exit</string>
 
 
     // Context Menu
 
-    <string name="context_saveImage_toast">Saved image to location:</string>
-
 
     // Settings
-
-    <string name="pref_1">About the app</string>
-    <string name="pref_2">App settings</string>
 
     <string name="action_license">License</string>
     <string name="action_license_summary">The app is completely open source and licensed under GPL3.</string>
@@ -61,10 +35,6 @@
 
     <string name="action_donate">Donate</string>
     <string name="action_donate_summary">If you like the app, you can donate to me via Paypal.</string>
-
-    <string name="action_openSettings">App info</string>
-    <string name="action_openSettings_summary">Open via the system settings the app info of the app. There you can,
-        depending on your Android version, manage several things (Storage, network traffic, permissions, …).</string>
 
 
     // DWD = German Weather Service
@@ -81,13 +51,7 @@
 
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Cancel</string>
-    <string name="toast_notAgain">Never show</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
-    <string name="toast_download">Downloading file:</string>
-    <string name="toast_download_1">Do you want to download:</string>
-    <string name="toast_perm">Permissions granted?</string>
-    <string name="toast_download_2">Download completed. Open download manager?</string>
-    <string name="toast_screenshot_failed">Failed to create screenshot.</string>
     <string name="toast_exit">Do you want to exit?</string>
     <string name="toast_newTitle">Entry already exists.</string>
 
@@ -95,12 +59,11 @@
     // Bookmarks
 
     <string name="bookmark_remove_confirmation">Bookmark will be removed. OK?</string>
-    <string name="bookmark_remove_bookmark">Delete bookmark</string>
+    <string name="bookmark_remove_bookmark">Delete</string>
     <string name="bookmark_added">Adding bookmark.</string>
     <string name="bookmark_edit_url">Edit URL</string>
     <string name="bookmark_edit_title">Edit title</string>
-    <string name="bookmark_setFav_not">You can only choose one favorite.</string>
-    <string name="bookmark_toddleFav">Set | remove as start page</string>
+    <string name="bookmark_toddleFav">Favorite</string>
 
 
     //States
@@ -118,5 +81,28 @@
     <string name="state_11">for Sachsen-Anhalt</string>
     <string name="state_12">for Schleswig-Holstein and Hamburg</string>
     <string name="state_13">for Thüringen</string>
+
+    <string name="about_title">Copyright © 2019  by AOSD</string>
+    <string name="about_text">
+        For more information visit the project site on Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see http://www.gnu.org/licenses.&lt;br>&lt;br>&lt;br>
+
+        &lt;b>Used open source projects:&lt;/b>&lt;br>&lt;br>
+
+        MaterialDesignIcons&lt;br>
+        https://github.com/Templarian/MaterialDesign&lt;/i>
+    </string>
 
 </resources>

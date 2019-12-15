@@ -5,7 +5,7 @@
     <color name="colorAccent">#ff9800</color>
     <color name="colorLight">#fafafa</color>
 
-    <color name="shadow_light">#59323232</color>
+    <color name="shadow_light">@color/cardview_shadow_start_color</color>
     <color name="transparent">@android:color/transparent</color>
 
 </resources>
