@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             Snackbar.make(mWebView, R.string.toast_cache, Snackbar.LENGTH_SHORT).show();
         }
 
-        final String startURL = sharedPref.getString("favoriteURL", "http://m.wetterdienst.de/");
+        final String startURL = sharedPref.getString("favoriteURL", "https://m.wetterdienst.de/");
         startTitle = sharedPref.getString("favoriteTitle", "wetterdienst.de");
 
         if( startURL.startsWith("http://m.wetterdienst.de/Wetter/") || startURL.startsWith("https://m.wetterdienst.de/Wetter/") ) {
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     final EditText edit_title = dialogView.findViewById(R.id.pass_title);
                                     edit_title.setHint(R.string.bookmark_edit_title);
-                                    if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("http://m.wetterdienst.de/Wetter/")) {
+                                    if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
                                         edit_title.setText(mWebView.getUrl().substring(31).replace("/","").replace("_", " "));
                                     } else if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
                                         edit_title.setText(mWebView.getUrl().substring(32).replace("/","").replace("_", " "));
@@ -652,46 +652,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String forecast = sharedPref.getString("forecast", "http://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html");
+        String forecast = sharedPref.getString("forecast", "https://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html");
 
         switch (Objects.requireNonNull(forecast)) {
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/10-tage/10tage_node.html":
                 state = getString(R.string.state_1);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/baden-wuerttemberg/vhs_bawue_node.html":
                 state = getString(R.string.state_2);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/bayern/vhs_bay_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/bayern/vhs_bay_node.html":
                 state = getString(R.string.state_3);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/berlin_brandenburg/vhs_bbb_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/berlin_brandenburg/vhs_bbb_node.html":
                 state = getString(R.string.state_4);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/hessen/vhs_hes_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/hessen/vhs_hes_node.html":
                 state = getString(R.string.state_5);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/mecklenburg_vorpommern/vhs_mvp_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/mecklenburg_vorpommern/vhs_mvp_node.html":
                 state = getString(R.string.state_6);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/niedersachsen_bremen/vhs_nib_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/niedersachsen_bremen/vhs_nib_node.html":
                 state = getString(R.string.state_7);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/nordrhein_westfalen/vhs_nrw_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/nordrhein_westfalen/vhs_nrw_node.html":
                 state = getString(R.string.state_8);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/rheinland-pfalz_saarland/vhs_rps_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/rheinland-pfalz_saarland/vhs_rps_node.html":
                 state = getString(R.string.state_9);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachsen/vhs_sac_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/sachsen/vhs_sac_node.html":
                 state = getString(R.string.state_10);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/sachen_anhalt/vhs_saa_node.html":
                 state = getString(R.string.state_11);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/schleswig_holstein_hamburg/vhs_shh_node.html":
                 state = getString(R.string.state_12);
                 break;
-            case "http://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html":
+            case "https://www.dwd.de/DE/wetter/vorhersage_aktuell/thueringen/vhs_thu_node.html":
                 state = getString(R.string.state_13);
                 break;
         }
@@ -708,11 +708,11 @@ public class MainActivity extends AppCompatActivity {
 
         final String[] itemURL ={
                 forecast,
-                "http://www.dwd.de/DE/leistungen/radarbild_film/radarbild_film.html",
-                "http://www.dwd.de/DE/leistungen/hobbymet_wk_europa/hobbyeuropakarten.html?nn=357606",
-                "http://www.dwd.de/DE/leistungen/satellit_metsat/satellit_metsat.html",
-                "http://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null",
-                "http://www.dwd.de/DE/service/lexikon/lexikon_node.html",
+                "https://www.dwd.de/DE/leistungen/radarbild_film/radarbild_film.html",
+                "https://www.dwd.de/DE/leistungen/hobbymet_wk_europa/hobbyeuropakarten.html?nn=357606",
+                "https://www.dwd.de/DE/leistungen/satellit_metsat/satellit_metsat.html",
+                "https://www.dwd.de/SiteGlobals/Forms/ThemaDesTages/ThemaDesTages_Formular.html?pageNo=0&queryResultId=null",
+                "https://www.dwd.de/DE/service/lexikon/lexikon_node.html",
         };
 
         Integer[] imgid={

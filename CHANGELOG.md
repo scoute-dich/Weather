@@ -1,4 +1,10 @@
-### v 4.4 (WIP)
+### v 4.5
+- migrated to AndroidX libraries
+- Android 10 support
+- new layout
+- a lot of other changes
+
+### v 4.4
 - new: min API: Lollipop
 - fix: force close when sharing screenshot
 - fix: DWD links
