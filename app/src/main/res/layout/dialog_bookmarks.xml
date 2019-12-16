@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="ContentDescription"
+    tools:ignore="ContentDescription,Overdraw"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/colorBackground">
 
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/splash1" />
+            android:src="@drawable/splash2" />
 
         <TextView
             android:layout_above="@+id/header_start"
@@ -95,13 +95,11 @@
         android:layout_height="4dp"
         android:background="@drawable/toolbar_drop_shadow_invert"/>
 
-
     <ListView
         android:id="@+id/bookmarksList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="0dp" />
-
 
     <ListView
         android:visibility="gone"

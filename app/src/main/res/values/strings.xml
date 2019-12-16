@@ -6,6 +6,7 @@
 
     <string name="app_hint_bookmark">Enter desired title</string>
     <string name="app_hint_url">Enter desired url</string>
+    <string name="app_info_url">Take care that the URL for saved locations ends with \"…/Wetter/name_of_your_city/\".</string>
 
 
     // Tab - Titles
@@ -53,7 +54,6 @@
     <string name="toast_cancel">Cancel</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
     <string name="toast_exit">Do you want to exit?</string>
-    <string name="toast_newTitle">Entry already exists.</string>
 
 
     // Bookmarks
@@ -61,8 +61,7 @@
     <string name="bookmark_remove_confirmation">Bookmark will be removed. OK?</string>
     <string name="bookmark_remove_bookmark">Delete</string>
     <string name="bookmark_added">Adding bookmark.</string>
-    <string name="bookmark_edit_url">Edit URL</string>
-    <string name="bookmark_edit_title">Edit title</string>
+    <string name="bookmark_edit_title">Edit</string>
     <string name="bookmark_toddleFav">Favorite</string>
 
 

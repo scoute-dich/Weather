@@ -46,6 +46,7 @@ public class Settings extends AppCompatActivity {
                 .commit();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override

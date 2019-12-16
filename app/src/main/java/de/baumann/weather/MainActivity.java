@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private int showSearchField;
     private String startTitle;
 
-
     private String action_forecast;
     private String action_hourly;
     private String action_overView;
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         if(imgHeader != null) {
             TypedArray images = getResources().obtainTypedArray(R.array.splash_images);
             int choice = (int) (Math.random() * images.length());
-            imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash1));
+            imgHeader.setImageResource(images.getResourceId(choice, R.drawable.splash2));
             images.recycle();
         }
     }
@@ -184,12 +183,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mWebView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
-        mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setAppCacheEnabled(true);
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setSupportMultipleWindows(true);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+
+        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
         if (helpers.isNetworkConnected(activity)) {
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -201,25 +206,20 @@ public class MainActivity extends AppCompatActivity {
         final String startURL = sharedPref.getString("favoriteURL", "https://m.wetterdienst.de/");
         startTitle = sharedPref.getString("favoriteTitle", "wetterdienst.de");
 
-        if( startURL.startsWith("http://m.wetterdienst.de/Wetter/") || startURL.startsWith("https://m.wetterdienst.de/Wetter/") ) {
-
+        if (startURL.startsWith("https://m.wetterdienst.de/Wetter/") ) {
             Pattern townPattern = Pattern.compile("Wetter/(.*?)/");
             Matcher matcher = townPattern.matcher( startURL );
             if(  matcher.find() ){
                 String town = matcher.group().replace("Wetter/","");
-
                 action_overView = "http://m.wetterdienst.de/Wetter/" + town;
                 action_hourly = action_overView + "stuendlich";
                 action_forecast = action_overView + "10-Tage";
-
             }
-
         } else {
             action_overView = startURL;
             action_hourly = startURL + "stuendlich";
             action_forecast = startURL + "10-Tage";
         }
-
 
         mWebView.loadUrl(startURL);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -240,8 +240,14 @@ public class MainActivity extends AppCompatActivity {
                         url.contains("dwd") ||
                         url.length() < 27) {
                     menu_forecast.setVisibility(View.GONE);
+                    setTitle(mWebView.getTitle());
                 } else if (showSearchField == 0){
                     menu_forecast.setVisibility(View.VISIBLE);
+                    if (startTitle != null) {
+                        setTitle(startTitle);
+                    } else {
+                        setTitle(mWebView.getTitle());
+                    }
                 }
             }
 
@@ -289,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                             "var head = document.getElementsByTagName('header')[0];"
                             + "head.parentNode.removeChild(head);" +
                             "})()");
-                    setTitle(mWebView.getTitle());
+
                 } else if (url != null && showSearchField == 0 && progress > 0) {
                     mWebView.loadUrl("javascript:(function() { " +
                             "var head = document.getElementsByClassName('logo')[0];" +
@@ -302,9 +308,6 @@ public class MainActivity extends AppCompatActivity {
                             "head4.parentNode.removeChild(head4);" +
                             "document.getElementsByTagName('hr')[0].style.display=\"none\"; " +
                             "})()");
-                    setTitle(startTitle);
-                } else {
-                    setTitle(mWebView.getTitle());
                 }
             }
         });
@@ -330,10 +333,12 @@ public class MainActivity extends AppCompatActivity {
                 gridList.add(gridList.size(), itemAlbum_06);
 
                 GridAdapter_Menu gridAdapter = new GridAdapter_Menu(activity, gridList);
+                grid.setNumColumns(2);
                 grid.setAdapter(gridAdapter);
                 gridAdapter.notifyDataSetChanged();
 
                 final String url = mWebView.getUrl();
+                startTitle = mWebView.getTitle();
 
                 grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -343,66 +348,28 @@ public class MainActivity extends AppCompatActivity {
                             case 0:
                                 bottomSheetDialog.cancel();
                                 Intent intent = new Intent(activity, Settings.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 activity.startActivity(intent);
                                 break;
                             case 1:
                                 if (url != null) {
-                                    bottomSheetDialog.cancel();
-                                    final DbAdapter_Bookmarks db = new DbAdapter_Bookmarks(activity);
-                                    db.open();
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                                    final View dialogView = View.inflate(activity, R.layout.dialog_edit_title, null);
-
-                                    final EditText edit_title = dialogView.findViewById(R.id.pass_title);
-                                    edit_title.setHint(R.string.bookmark_edit_title);
-                                    if (mWebView.getUrl() != null && mWebView.getUrl().startsWith("https://m.wetterdienst.de/Wetter/")) {
-                                        edit_title.setText(mWebView.getUrl().substring(33).replace("/","").replace("_", " "));
+                                    String urlToSave;
+                                    String titleToSave;
+                                    if (url.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+                                        Pattern townPattern = Pattern.compile("Wetter/(.*?)/");
+                                        Matcher matcher = townPattern.matcher (mWebView.getUrl());
+                                        if (matcher.find()){
+                                            titleToSave = matcher.group().replace("Wetter/","");
+                                            urlToSave = "http://m.wetterdienst.de/Wetter/" + titleToSave;
+                                        } else {
+                                            titleToSave = mWebView.getTitle();
+                                            urlToSave = url;
+                                        }
                                     } else {
-                                        edit_title.setText(mWebView.getTitle());
+                                        titleToSave = mWebView.getTitle();
+                                        urlToSave = url;
                                     }
-
-                                    builder.setView(dialogView);
-                                    builder.setTitle(R.string.bookmark_edit_title);
-                                    builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
-
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-
-                                        }
-                                    });
-                                    builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
-
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            dialog.cancel();
-                                        }
-                                    });
-
-                                    final AlertDialog dialog2 = builder.create();
-                                    // Display the custom alert dialog on interface
-                                    dialog2.show();
-
-                                    dialog2.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            //Do stuff, possibly set wantToCloseDialog to true then...
-                                            String inputTag = edit_title.getText().toString().trim();
-
-                                            if(db.isExist(mWebView.getUrl())){
-                                                Snackbar.make(edit_title, getString(R.string.toast_newTitle), Snackbar.LENGTH_SHORT).show();
-                                            }else{
-                                                if (mWebView.getUrl().contains("wetterdienst")) {
-                                                    db.insert(inputTag, mWebView.getUrl(), "1", "", "");
-                                                    dialog2.dismiss();
-                                                } else {
-                                                    db.insert(inputTag, mWebView.getUrl(), "2", "", "");
-                                                    dialog2.dismiss();
-                                                }
-
-                                                Snackbar.make(mWebView, R.string.bookmark_added, Snackbar.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                    bottomSheetDialog.cancel();
+                                    editBookmark(activity, titleToSave.replace("/", "").replace("_", " "), urlToSave, mWebView, 0);
                                 }
                                 break;
                             case 2:
@@ -473,10 +440,19 @@ public class MainActivity extends AppCompatActivity {
                 View v = super.getView(position, convertView, parent);
                 ImageView iv_icon = v.findViewById(R.id.icon);
 
-                if (bookmarks_content.contains("wetterdienst.de")) {
-                    iv_icon.setImageResource(R.drawable.icon_location);
-                } else {
+                if ((bookmarks_content.contains("m.wetterdienst.de/Satellitenbild/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Biowetter/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Warnungen/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Niederschlagsradar/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Thema_des_Tages/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Wetterbericht/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Pollenflug/") ||
+                        bookmarks_content.contains("m.wetterdienst.de/Vorhersage/") ||
+                        bookmarks_content.contains("dwd") ||
+                        bookmarks_content.length() < 27)) {
                     iv_icon.setImageResource(R.drawable.icon_sun);
+                } else {
+                    iv_icon.setImageResource(R.drawable.icon_location);
                 }
                 return v;
             }
@@ -494,10 +470,8 @@ public class MainActivity extends AppCompatActivity {
 
                 bottomSheetDialog.cancel();
                 startTitle = bookmarks_title;
-                mWebView.loadUrl(bookmarks_content);
 
-
-                if( bookmarks_content.startsWith("http://m.wetterdienst.de/Wetter/") || bookmarks_content.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+                if( bookmarks_content.startsWith ("https://m.wetterdienst.de/Wetter/") ) {
 
                     Pattern townPattern = Pattern.compile("Wetter/(.*?)/");
                     Matcher matcher = townPattern.matcher( bookmarks_content );
@@ -515,9 +489,10 @@ public class MainActivity extends AppCompatActivity {
                     action_hourly = bookmarks_content + "stuendlich";
                     action_forecast = bookmarks_content + "10-Tage";
                 }
+
+                mWebView.loadUrl(bookmarks_content);
             }
         });
-                
 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -526,25 +501,21 @@ public class MainActivity extends AppCompatActivity {
                 final String _id = row2.getString(row2.getColumnIndexOrThrow("_id"));
                 final String bookmarks_title = row2.getString(row2.getColumnIndexOrThrow("bookmarks_title"));
                 final String bookmarks_content = row2.getString(row2.getColumnIndexOrThrow("bookmarks_content"));
-                final String bookmarks_icon = row2.getString(row2.getColumnIndexOrThrow("bookmarks_icon"));
-                final String bookmarks_attachment = row2.getString(row2.getColumnIndexOrThrow("bookmarks_attachment"));
-                final String bookmarks_creation = row2.getString(row2.getColumnIndexOrThrow("bookmarks_creation"));
 
                 final BottomSheetDialog bottomSheetDialog_context = new BottomSheetDialog(Objects.requireNonNull(activity));
                 View dialogView = View.inflate(activity, R.layout.grid_menu, null);
                 GridView grid = dialogView.findViewById(R.id.grid_filter);
                 GridItem_Menu itemAlbum_01 = new GridItem_Menu(getResources().getString(R.string.bookmark_edit_title), R.drawable.icon_edit);
-                GridItem_Menu itemAlbum_02 = new GridItem_Menu(getResources().getString(R.string.bookmark_edit_url), R.drawable.icon_link);
                 GridItem_Menu itemAlbum_03 = new GridItem_Menu(getResources().getString(R.string.bookmark_toddleFav), R.drawable.icon_fav);
                 GridItem_Menu itemAlbum_04 = new GridItem_Menu(getResources().getString(R.string.bookmark_remove_bookmark), R.drawable.icon_delete);
 
                 final List<GridItem_Menu> gridList = new LinkedList<>();
                 gridList.add(gridList.size(), itemAlbum_01);
-                gridList.add(gridList.size(), itemAlbum_02);
                 gridList.add(gridList.size(), itemAlbum_03);
                 gridList.add(gridList.size(), itemAlbum_04);
 
                 GridAdapter_Menu gridAdapter = new GridAdapter_Menu(activity, gridList);
+                grid.setNumColumns(3);
                 grid.setAdapter(gridAdapter);
                 gridAdapter.notifyDataSetChanged();
 
@@ -552,80 +523,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        AlertDialog.Builder builder;
-                        View dialogView;
-                        final EditText edit_title;
-                        AlertDialog dialog;
-
                         switch (position) {
                             case 0:
                                 bottomSheetDialog_context.cancel();
-                                builder = new AlertDialog.Builder(MainActivity.this);
-                                dialogView = View.inflate(MainActivity.this, R.layout.dialog_edit_url, null);
-
-                                edit_title = dialogView.findViewById(R.id.pass_title);
-                                edit_title.setHint(R.string.bookmark_edit_title);
-                                edit_title.setText(bookmarks_title);
-
-                                builder.setView(dialogView);
-                                builder.setTitle(R.string.bookmark_edit_title);
-                                builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                                        String inputTag = edit_title.getText().toString().trim();
-                                        db.update(Integer.parseInt(_id), inputTag, bookmarks_content, bookmarks_icon, bookmarks_attachment, bookmarks_creation);
-                                        setBookmarkList();
-                                        Snackbar.make(lv, R.string.bookmark_added, Snackbar.LENGTH_SHORT).show();
-                                    }
-                                });
-                                builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                                dialog = builder.create();
-                                dialog.show();
+                                editBookmark(activity, bookmarks_title, bookmarks_content, mWebView, Integer.parseInt(_id));
                                 break;
                             case 1:
-                                bottomSheetDialog_context.cancel();
-                                builder = new AlertDialog.Builder(MainActivity.this);
-                                dialogView = View.inflate(MainActivity.this, R.layout.dialog_edit_url, null);
-
-                                edit_title = dialogView.findViewById(R.id.pass_title);
-                                edit_title.setHint(R.string.bookmark_edit_url);
-                                edit_title.setText(bookmarks_content);
-
-                                builder.setView(dialogView);
-                                builder.setTitle(R.string.bookmark_edit_url);
-                                builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                                        String inputTag = edit_title.getText().toString().trim();
-                                        db.update(Integer.parseInt(_id), bookmarks_title, inputTag, bookmarks_icon, bookmarks_attachment, bookmarks_creation);
-                                        setBookmarkList();
-                                        Snackbar.make(lv, R.string.bookmark_added, Snackbar.LENGTH_SHORT).show();
-                                    }
-                                });
-                                builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                                dialog = builder.create();
-                                dialog.show();
-                                break;
-                            case 2:
                                 bottomSheetDialog_context.cancel();
                                 sharedPref.edit().putString("favoriteURL", bookmarks_content).putString("favoriteTitle", bookmarks_title).apply();
                                 header_start.setText(sharedPref.getString("favoriteTitle", "wetterdienst.de"));
                                 break;
-                            case 3:
+                            case 2:
                                 bottomSheetDialog_context.cancel();
                                 bottomSheetDialog.cancel();
                                 Snackbar snackbar = Snackbar
@@ -739,6 +647,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (mWebView.canGoBack()) {
+            startTitle = null;
             mWebView.goBack();
         } else {
             Snackbar snackbar = Snackbar
@@ -751,5 +660,66 @@ public class MainActivity extends AppCompatActivity {
                     });
             snackbar.show();
         }
+    }
+
+    private void editBookmark(final Activity activity, String title, final String url, final View view, final int id) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final View dialogView = View.inflate(activity, R.layout.dialog_edit_bookmark, null);
+
+        final EditText edit_title = dialogView.findViewById(R.id.pass_title);
+        edit_title.setText(title.replace("/", "").replace("_", " "));
+
+        final EditText edit_url = dialogView.findViewById(R.id.pass_url);
+        edit_url.setText(url);
+
+        builder.setView(dialogView);
+        builder.setTitle(R.string.bookmark_edit_title);
+        builder.setPositiveButton(R.string.toast_yes, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        builder.setNegativeButton(R.string.toast_cancel, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Do stuff, possibly set wantToCloseDialog to true then...
+                String inputTitle = edit_title.getText().toString().trim();
+                String inputURL = edit_url.getText().toString().trim();
+
+                DbAdapter_Bookmarks db = new DbAdapter_Bookmarks(activity);
+                db.open();
+
+                if(db.isExist(inputURL)){
+                    if (url.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+                        db.update(id, inputTitle, inputURL, "1", "", "");
+                        dialog.dismiss();
+                    } else {
+                        db.update(id, inputTitle, inputURL, "2", "", "");
+                        dialog.dismiss();
+                    }
+                }else{
+                    if (url.startsWith("https://m.wetterdienst.de/Wetter/") ) {
+                        db.insert(inputTitle, inputURL, "1", "", "");
+                        dialog.dismiss();
+                    } else {
+                        db.insert(inputTitle, inputURL, "2", "", "");
+                        dialog.dismiss();
+                    }
+                }
+                setBookmarkList();
+                Snackbar.make(view, R.string.bookmark_added, Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 }

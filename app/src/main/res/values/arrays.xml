@@ -4,12 +4,8 @@
     //String arrays
 
     <array name="splash_images">
-        <item>@drawable/splash1</item>
         <item>@drawable/splash6</item>
-        <item>@drawable/splash7</item>
-        <item>@drawable/splash8</item>
         <item>@drawable/splash2</item>
-        <item>@drawable/splash3</item>
         <item>@drawable/splash4</item>
     </array>
 

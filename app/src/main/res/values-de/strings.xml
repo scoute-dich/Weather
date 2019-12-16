@@ -6,6 +6,7 @@
     <string name="app_name">FOSS Wetter</string>
     <string name="app_hint_bookmark">Gewünschten Titel eingeben</string>
     <string name="app_hint_url">Gewünschte URL eingeben</string>
+    <string name="app_info_url">Achte darauf, dass die URL für gespeicherte Orte mit \"…/Wetter/name_deiner_stadt/\" endet.</string>
 
 
     // Tab - Titles
@@ -53,7 +54,6 @@
     <string name="toast_cancel">Abbrechen</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
     <string name="toast_exit">Möchtest du die App verlassen?</string>
-    <string name="toast_newTitle">Eintrag bereits vorhanden.</string>
 
 
     // Bookmarks
@@ -61,8 +61,7 @@
     <string name="bookmark_remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
     <string name="bookmark_remove_bookmark">Löschen</string>
     <string name="bookmark_added">Lesezeichen wird hinzugefügt.</string>
-    <string name="bookmark_edit_url">URL bearbeiten</string>
-    <string name="bookmark_edit_title">Titel bearbeiten</string>
+    <string name="bookmark_edit_title">Bearbeiten</string>
     <string name="bookmark_toddleFav">Favorit</string>
 
 
