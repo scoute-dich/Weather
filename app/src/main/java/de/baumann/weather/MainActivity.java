@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -96,11 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         activity = MainActivity.this;
 
-        WebView.enableSlowWholeDocumentDraw();
         setContentView(R.layout.activity_main);
-
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
 
         PreferenceManager.setDefaultValues(activity, R.xml.user_settings, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -188,15 +182,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mWebView.getSettings().setBuiltInZoomControls(true);
-        mWebView.getSettings().setDisplayZoomControls(false);
-        mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setSupportMultipleWindows(true);
-        mWebView.getSettings().setLoadWithOverviewMode(true);
-        mWebView.getSettings().setUseWideViewPort(true);
-
-        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
-        mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -226,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
             action_forecast = startURL + "10-Tage";
         }
 
-        mWebView.loadUrl(startURL);
         mWebView.setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {
@@ -272,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             @SuppressWarnings("deprecation")
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                if (url.contains("google")) {
+                if (url.contains("google-analytics.com")) {
                     return new WebResourceResponse(
                             null,
                             null,
@@ -284,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                if (request.getUrl().toString().contains("google")) {
+                if (request.getUrl().toString().contains("google-analytics.com")) {
                     return new WebResourceResponse(
                             null,
                             null,
@@ -341,6 +325,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mWebView.loadUrl(startURL);
 
         ImageButton ib_menu = findViewById(R.id.ib_menu);
         ib_menu.setOnClickListener(new View.OnClickListener() {

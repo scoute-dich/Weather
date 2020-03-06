@@ -1,3 +1,6 @@
+### v 4.6
+- block connection to google-analytics.com
+
 ### v 4.5
 - migrated to AndroidX libraries
 - Android 10 support
