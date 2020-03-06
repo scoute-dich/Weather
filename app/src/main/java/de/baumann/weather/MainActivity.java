@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +26,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -40,6 +44,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -262,6 +267,31 @@ public class MainActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 final Uri uri = request.getUrl();
                 return handleUri(uri);
+            }
+
+            @Override
+            @SuppressWarnings("deprecation")
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                if (url.contains("google")) {
+                    return new WebResourceResponse(
+                            null,
+                            null,
+                            new ByteArrayInputStream("".getBytes())
+                    );
+                }
+                return super.shouldInterceptRequest(view, url);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                if (request.getUrl().toString().contains("google")) {
+                    return new WebResourceResponse(
+                            null,
+                            null,
+                            new ByteArrayInputStream("".getBytes())
+                    );
+                }
+                return super.shouldInterceptRequest(view, request);
             }
 
 

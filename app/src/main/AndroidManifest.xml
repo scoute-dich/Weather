@@ -23,6 +23,7 @@
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
