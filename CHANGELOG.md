@@ -1,3 +1,8 @@
+### v 4.7
+- improved: reduced apk size
+- new: layout
+- new: F-Droid description
+
 ### v 4.6
 - block connection to google-analytics
 

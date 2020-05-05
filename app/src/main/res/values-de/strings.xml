@@ -11,16 +11,16 @@
 
     // Tab - Titles
 
-    <string name="title_weatherInfo">Wetterinfos</string>
-    <string name="title_bookmarks">Lesezeichen</string>
-
 
     // Menu Items
 
     <string name="menu_share">Teilen</string>
-    <string name="menu_settings">Einstellungen</string>
-    <string name="menu_bookmark">Lesezeichen speichern</string>
+    <string name="menu_settings">Mehr …</string>
+    <string name="menu_bookmark">Speichern</string>
     <string name="menu_exit">Verlassen</string>
+    <string name="menu_reload">Neu laden</string>
+    <string name="menu_print">Drucken</string>
+    <string name="menu_insertDefaultBookmarks">Standardlesezeichen einfügen</string>
 
 
     // Context Menu
@@ -30,9 +30,6 @@
 
     <string name="action_license">Lizenz</string>
     <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
-
-    <string name="action_forecastStart">Bundesland</string>
-    <string name="action_forecastStart_summary">Von welchem Bundesland soll der Wetterbericht geladen werden?</string>
 
     <string name="action_donate">Spenden</string>
     <string name="action_donate_summary">Wenn dir die App gefällt, würde ich mich über eine Spende (Paypal) freuen.</string>
@@ -53,56 +50,42 @@
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Abbrechen</string>
     <string name="toast_cache">Keine Internetverbindung. Seite wird aus dem Cache geladen.</string>
-    <string name="toast_exit">Möchtest du die App verlassen?</string>
+    <string name="toast_exit">App verlassen?</string>
+    <string name="toast_notPrint">Kann Seite nicht drucken.</string>
 
 
     // Bookmarks
 
     <string name="bookmark_remove_confirmation">Lesezeichen wird gelöscht. OK?</string>
     <string name="bookmark_remove_bookmark">Löschen</string>
-    <string name="bookmark_added">Lesezeichen wird hinzugefügt.</string>
+    <string name="bookmark_added">Lesezeichen gespeichert.</string>
     <string name="bookmark_edit_title">Bearbeiten</string>
-    <string name="bookmark_toddleFav">Favorit</string>
+    <string name="bookmark_fav">Favorit</string>
 
 
     //States
 
     <string name="state_1">für Deutschland</string>
-    <string name="state_2">für Baden-Württemberg</string>
-    <string name="state_3">für Bayern</string>
-    <string name="state_4">für Berlin und Brandenburg</string>
-    <string name="state_5">für Hessen</string>
-    <string name="state_6">für Mecklenburg-Vorpommern</string>
-    <string name="state_7">für Niedersachsen und Bremen</string>
-    <string name="state_8">für Nordrhein-Westfalen</string>
-    <string name="state_9">für Rheinland-Pfalz und Saarland</string>
-    <string name="state_10">für Sachsen</string>
-    <string name="state_11">für Sachsen-Anhalt</string>
-    <string name="state_12">für Schleswig-Holstein und Hamburg</string>
-    <string name="state_13">für Thüringen</string>
 
-    <string name="about_title">Copyright © 2019  by AOSD</string>
+    <string name="about_title">Copyright © 2020  by AOSD</string>
     <string name="about_text">
 
-        Besuche für mehr Informationen die Projektseite auf Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+        Besuche für mehr Informationen: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
 
-        This program is free software: you can redistribute it and/or modify
-        it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
-        (at your option) any later version.
+        Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von
+        der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder
+        (nach Ihrer Option) jeder späteren Version. Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen
+        von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der
+        VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License. Sie sollten ein
+        Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht,
+        siehe http://www.gnu.org/licenses.&lt;br>&lt;br>&lt;br>
 
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU General Public License for more details.
+        &lt;i>Die folgenden Open Source Bibliotheken oder Projekte werden in dieser Software verwendet:&lt;/i>&lt;br>&lt;br>
 
-        You should have received a copy of the GNU General Public License
-        along with this program.  If not, see http://www.gnu.org/licenses.&lt;br>&lt;br>&lt;br>
-
-        &lt;b>Benutzte open source Projekte:&lt;/b>&lt;br>&lt;br>
-
-        MaterialDesignIcons&lt;br>
-        https://github.com/Templarian/MaterialDesign&lt;/i>
+        &lt;b>Material Design Icons&lt;/b>&lt;br>
+        SIL Open Font License, Version 1.1.&lt;br>
+        Templarian&lt;br>
+        &lt;i>https://github.com/Templarian/MaterialDesign&lt;/i>
     </string>
 
 </resources>

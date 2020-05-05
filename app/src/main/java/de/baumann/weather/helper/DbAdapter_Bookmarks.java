@@ -25,6 +25,14 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
+import android.widget.Toast;
+
+import java.util.Objects;
+
+import de.baumann.weather.R;
 
 
 public class DbAdapter_Bookmarks {
@@ -41,7 +49,7 @@ public class DbAdapter_Bookmarks {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS "+dbTable+" (_id INTEGER PRIMARY KEY autoincrement, bookmarks_title, bookmarks_content, bookmarks_icon, bookmarks_attachment, bookmarks_creation, UNIQUE(bookmarks_content))");
+            db.execSQL("CREATE TABLE IF NOT EXISTS "+dbTable+" (_id INTEGER PRIMARY KEY autoincrement, bookmarks_title, bookmarks_content, UNIQUE(bookmarks_content))");
         }
 
         @Override
@@ -65,20 +73,25 @@ public class DbAdapter_Bookmarks {
 
     //insert data
     @SuppressWarnings("SameParameterValue")
-    public void insert(String bookmarks_title, String bookmarks_content, String bookmarks_icon, String bookmarks_attachment, String bookmarks_creation) {
+    public void insert(String bookmarks_title, String bookmarks_content) {
         if(!isExist(bookmarks_title)) {
-            sqlDb.execSQL("INSERT INTO bookmarks (bookmarks_title, bookmarks_content, bookmarks_icon, bookmarks_attachment, bookmarks_creation) VALUES('" + bookmarks_title + "','" + bookmarks_content + "','" + bookmarks_icon + "','" + bookmarks_attachment + "','" + bookmarks_creation + "')");
+            sqlDb.execSQL("INSERT INTO bookmarks (bookmarks_title, bookmarks_content) VALUES('" + bookmarks_title + "','" + bookmarks_content + "')");
         }
     }
     //check entry already in database or not
     public boolean isExist(String bookmarks_content){
-        String query = "SELECT bookmarks_content FROM bookmarks WHERE bookmarks_content='"+bookmarks_content+"' LIMIT 1";
-        @SuppressLint("Recycle") Cursor row = sqlDb.rawQuery(query, null);
-        return row.moveToFirst();
+        try {
+            String query = "SELECT bookmarks_content FROM bookmarks WHERE bookmarks_content='"+bookmarks_content+"' LIMIT 1";
+            @SuppressLint("Recycle") Cursor row = sqlDb.rawQuery(query, null);
+            return row.moveToFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     //edit data
-    public void update(int id,String bookmarks_title,String bookmarks_content,String bookmarks_icon,String bookmarks_attachment, String bookmarks_creation) {
-        sqlDb.execSQL("UPDATE "+dbTable+" SET bookmarks_title='"+bookmarks_title+"', bookmarks_content='"+bookmarks_content+"', bookmarks_icon='"+bookmarks_icon+"', bookmarks_attachment='"+bookmarks_attachment+"', bookmarks_creation='"+bookmarks_creation+"'   WHERE _id=" + id);
+    public void update(int id,String bookmarks_title,String bookmarks_content) {
+        sqlDb.execSQL("UPDATE "+dbTable+" SET bookmarks_title='"+bookmarks_title+"', bookmarks_content='"+bookmarks_content+"'   WHERE _id=" + id);
     }
 
     //delete data
@@ -89,7 +102,7 @@ public class DbAdapter_Bookmarks {
 
     //fetch data
     public Cursor fetchAllData() {
-        String[] columns = new String[]{"_id", "bookmarks_title", "bookmarks_content", "bookmarks_icon","bookmarks_attachment","bookmarks_creation"};
+        String[] columns = new String[]{"_id", "bookmarks_title", "bookmarks_content"};
         String orderBy = "bookmarks_title" + " COLLATE NOCASE ASC;";
         return sqlDb.query(dbTable, columns, null, null, null, null, orderBy);
     }

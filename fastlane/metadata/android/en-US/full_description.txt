@@ -1,0 +1,13 @@
+FOSS Weather shows you information from wetterdienst.de and the German Weather Service (DWD).
+
+-------------------------------------------------
+<b>FOSS Weather – FEATURES</b>
+-------------------------------------------------
+
+• all features of the mobile websites
+• offline use
+• own bookmark management
+• no ads
+• no unnecessary permissions
+• small app size (<3mb)
+• Open source: https://github.com/scoute-dich/Weather

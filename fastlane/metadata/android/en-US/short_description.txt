@@ -1,0 +1,1 @@
+Displays weather Information from Wetterdienst.de and the DWD.

@@ -31,10 +31,10 @@ class GridAdapter_Menu extends BaseAdapter {
         View view = convertView;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.list_item_menu, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
             holder = new Holder();
-            holder.title = view.findViewById(R.id.record_item_title);
-            holder.icon = view.findViewById(R.id.ib_icon);
+            holder.title = view.findViewById(R.id.item_title);
+            holder.icon = view.findViewById(R.id.item_icon);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();

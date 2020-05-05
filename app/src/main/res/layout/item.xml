@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="12dp"
+    android:layout_height="?android:listPreferredItemHeightSmall"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/ib_icon"
+        android:id="@+id/item_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:layout_marginStart="8dp"
         android:contentDescription="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/icon_help" />
+        android:src="@drawable/icon_bookmark" />
 
-    <TextView android:id="@+id/record_item_title"
+    <TextView android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"

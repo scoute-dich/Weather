@@ -1,40 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ContentDescription">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <include layout="@layout/content_main" />
+
+    <!-- Bottom bar -->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/appBar">
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:hideOnScroll="true"
+        android:elevation="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            <TextView
+                android:id="@+id/titleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/menu_forecast"
                 android:layout_toEndOf="@id/ib_bookmarks"
-                android:layout_toStartOf="@id/menu_forecast">
-
-            </androidx.appcompat.widget.Toolbar>
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/app_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorLight"/>
 
             <ImageButton android:id="@+id/ib_bookmarks"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:src="@drawable/icon_bookmark_light"
                 android:background="?attr/actionBarItemBackground" />
 
@@ -79,12 +90,23 @@
 
         </RelativeLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <include
-        layout="@layout/content_main"
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_gravity="top|center"
+        app:layout_anchor="@+id/bar"
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/appBar"/>
+        android:layout_height="4dp"
+        android:maxHeight="4dp"
+        android:progressTint="?android:attr/colorAccent"/>
 
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/toolbar_drop_shadow"
+        android:layout_gravity="top|center"
+        app:layout_anchor="@+id/bar"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

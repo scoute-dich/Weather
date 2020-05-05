@@ -19,6 +19,7 @@
 
 package de.baumann.weather;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
@@ -33,6 +34,8 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import de.baumann.weather.helper.DbAdapter_Bookmarks;
 
 public class helpers {
 

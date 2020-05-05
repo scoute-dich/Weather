@@ -1,0 +1,13 @@
+FOSS Wetter zeigt dir Inhalte von wetterdienst.de und dem Deutschen Wetterdienst (DWD) an.
+
+-------------------------------------------------
+<b>FOSS Wetter – EIGENSCHAFTEN</b>
+-------------------------------------------------
+
+• alle Funktionen der mobilen Internetseiten
+• offline Nutzung
+• eigene Lesezeichenverwaltung
+• keine Werbung
+• keine unnötigen Berechtigungen
+• geringer Speicherbedarf (<3mb)
+• Quelloffen: https://github.com/scoute-dich/Weather

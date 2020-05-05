@@ -11,16 +11,16 @@
 
     // Tab - Titles
 
-    <string name="title_weatherInfo">Weather infos</string>
-    <string name="title_bookmarks">Bookmarks</string>
-
 
     // Menu Items
 
     <string name="menu_share">Share</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_bookmark">Save bookmark</string>
+    <string name="menu_settings">More …</string>
+    <string name="menu_bookmark">Save</string>
     <string name="menu_exit">Exit</string>
+    <string name="menu_reload">Reload</string>
+    <string name="menu_print">Print</string>
+    <string name="menu_insertDefaultBookmarks">Insert default bookmarks</string>
 
 
     // Context Menu
@@ -30,9 +30,6 @@
 
     <string name="action_license">License</string>
     <string name="action_license_summary">The app is completely open source and licensed under GPL3.</string>
-
-    <string name="action_forecastStart">State</string>
-    <string name="action_forecastStart_summary">From which German state should the forecast be displayed?</string>
 
     <string name="action_donate">Donate</string>
     <string name="action_donate_summary">If you like the app, you can donate to me via Paypal.</string>
@@ -53,37 +50,26 @@
     <string name="toast_yes">OK</string>
     <string name="toast_cancel">Cancel</string>
     <string name="toast_cache">No internet connection. Loading from cache.</string>
-    <string name="toast_exit">Do you want to exit?</string>
+    <string name="toast_exit">Exit app?</string>
+    <string name="toast_notPrint">Can not print website.</string>
 
 
     // Bookmarks
 
     <string name="bookmark_remove_confirmation">Bookmark will be removed. OK?</string>
     <string name="bookmark_remove_bookmark">Delete</string>
-    <string name="bookmark_added">Adding bookmark.</string>
+    <string name="bookmark_added">Bookmark saved.</string>
     <string name="bookmark_edit_title">Edit</string>
-    <string name="bookmark_toddleFav">Favorite</string>
+    <string name="bookmark_fav">Favorite</string>
 
 
     //States
 
     <string name="state_1">for Germany</string>
-    <string name="state_2">for Baden-Württemberg</string>
-    <string name="state_3">for Bayern</string>
-    <string name="state_4">for Berlin and Brandenburg</string>
-    <string name="state_5">for Hessen</string>
-    <string name="state_6">for Mecklenburg-Vorpommern</string>
-    <string name="state_7">for Niedersachsen and Bremen</string>
-    <string name="state_8">for Nordrhein-Westfalen</string>
-    <string name="state_9">for Rheinland-Pfalz and Saarland</string>
-    <string name="state_10">for Sachsen</string>
-    <string name="state_11">for Sachsen-Anhalt</string>
-    <string name="state_12">for Schleswig-Holstein and Hamburg</string>
-    <string name="state_13">for Thüringen</string>
 
     <string name="about_title">Copyright © 2019  by AOSD</string>
     <string name="about_text">
-        For more information visit the project site on Github: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
+        For more information visit: https://github.com/scoute-dich/Weather&lt;br>&lt;br>
 
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
