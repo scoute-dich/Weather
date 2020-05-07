@@ -1,7 +1,7 @@
-FOSS Weather shows you information from wetterdienst.de and the German Weather Service (DWD).
+FOSS Weather shows you weather information from wetterdienst.de and the German Weather Service (DWD).
 
 -------------------------------------------------
-<b>FOSS Weather – FEATURES</b>
+<b>Features</b>
 -------------------------------------------------
 
 • all features of the mobile websites

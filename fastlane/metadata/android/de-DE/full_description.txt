@@ -1,7 +1,7 @@
-FOSS Wetter zeigt dir Inhalte von wetterdienst.de und dem Deutschen Wetterdienst (DWD) an.
+FOSS Wetter zeigt dir Wetterinformationen von wetterdienst.de und dem Deutschen Wetterdienst (DWD) an.
 
 -------------------------------------------------
-<b>FOSS Wetter – EIGENSCHAFTEN</b>
+<b>FUNKTIONEN</b>
 -------------------------------------------------
 
 • alle Funktionen der mobilen Internetseiten
