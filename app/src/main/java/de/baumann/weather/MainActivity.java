@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ib_overview;
     private ImageButton ib_forecast;
 
+    private LinearLayout menu_forecast;
+
     private Activity activity;
     private BottomSheetDialog bottomSheetDialog;
     private TextView titleView;
@@ -109,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
 
+        menu_forecast = findViewById(R.id.menu_forecast);
+
+
         ib_hour = findViewById(R.id.ib_hour);
         ib_forecast = findViewById(R.id.ib_forecast);
         ib_overview = findViewById(R.id.ib_overview);
-
 
         ib_hour.setImageResource(R.drawable.icon_hour);
         ib_forecast.setImageResource(R.drawable.icon_sun_accent);
@@ -133,31 +137,36 @@ public class MainActivity extends AppCompatActivity {
                 scrollView.smoothScrollTo(0,1000000000);
             }
             public void onSwipeRight() {
-                Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
-                Integer resource_ib_hour = (Integer)ib_hour.getTag();
-                Integer resource_ib_overview = (Integer)ib_overview.getTag();
-                if (resource_ib_forecast == R.drawable.icon_sun_accent) {
-                    ib_hour.performClick();
-                }
-                if (resource_ib_hour == R.drawable.icon_hour_accent) {
-                    ib_overview.performClick();
-                }
-                if (resource_ib_overview == R.drawable.icon_forecast_accent) {
-                    ib_forecast.performClick();
+
+                if (menu_forecast.getVisibility() == View.VISIBLE) {
+                    Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                    Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                    Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                    if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                        ib_hour.performClick();
+                    }
+                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                        ib_overview.performClick();
+                    }
+                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                        ib_forecast.performClick();
+                    }
                 }
             }
             public void onSwipeLeft() {
-                Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
-                Integer resource_ib_hour = (Integer)ib_hour.getTag();
-                Integer resource_ib_overview = (Integer)ib_overview.getTag();
-                if (resource_ib_forecast == R.drawable.icon_sun_accent) {
-                    ib_overview.performClick();
-                }
-                if (resource_ib_hour == R.drawable.icon_hour_accent) {
-                    ib_forecast.performClick();
-                }
-                if (resource_ib_overview == R.drawable.icon_forecast_accent) {
-                    ib_hour.performClick();
+                if (menu_forecast.getVisibility() == View.VISIBLE) {
+                    Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                    Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                    Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                    if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                        ib_overview.performClick();
+                    }
+                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                        ib_forecast.performClick();
+                    }
+                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                        ib_hour.performClick();
+                    }
                 }
             }
         });
@@ -249,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(WebView view, int progress) {
                 String url = mWebView.getUrl();
                 if (url != null) {
-                    LinearLayout menu_forecast = findViewById(R.id.menu_forecast);
-
                     if (url.contains("m.wetterdienst.de/Satellitenbild/") ||
                             url.contains("m.wetterdienst.de/Biowetter/") ||
                             url.contains("m.wetterdienst.de/Warnungen/") ||
@@ -721,13 +728,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertDefaultBookmarks () {
-        if(!db.isExist("https://m.wetterdienst.de/")){
-            db.insert("Wetterdienst.de", "https://m.wetterdienst.de/");
+
+        try {
+            if(!db.isExist("https://m.wetterdienst.de/")){
+                db.insert("Wetterdienst.de", "https://m.wetterdienst.de/");
+            }
+            if(!db.isExist("https://www.dwd.de/DE/Home/home_node.html")){
+                db.insert("DWD | Deutscher Wetterdienst", "https://www.dwd.de/DE/Home/home_node.html");
+            }
+            setBookmarkList();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if(!db.isExist("https://www.dwd.de/DE/Home/home_node.html")){
-            db.insert("DWD | Deutscher Wetterdienst", "https://www.dwd.de/DE/Home/home_node.html");
-        }
-        setBookmarkList();
     }
 
     @Override
