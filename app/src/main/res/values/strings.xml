@@ -29,20 +29,11 @@
     // Settings
 
     <string name="action_license">License</string>
-    <string name="action_license_summary">The app is completely open source and licensed under GPL3.</string>
 
     <string name="action_donate">Donate</string>
-    <string name="action_donate_summary">If you like the app, you can donate to me via Paypal.</string>
 
 
     // DWD = German Weather Service
-
-    <string name="dwd_thema">DWD - Topic of the day</string>
-    <string name="dwd_karten">Weather maps</string>
-    <string name="dwd_lexikon">DWD - weather encyclopedia</string>
-    <string name="dwd_forecast">Forecast</string>
-    <string name="dwd_satellit">Satellite view</string>
-    <string name="dwd_radar">Rain forecast</string>
 
 
     // Snackbar
@@ -64,8 +55,6 @@
 
 
     //States
-
-    <string name="state_1">for Germany</string>
 
     <string name="about_title">Copyright © 2019  by AOSD</string>
     <string name="about_text">

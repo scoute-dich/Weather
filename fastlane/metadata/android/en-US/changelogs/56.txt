@@ -1,4 +1,0 @@
-### v 4.5
-- improved: reduced apk size
-- new: layout
-- new: F-Droid description

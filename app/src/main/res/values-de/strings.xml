@@ -29,20 +29,11 @@
     // Settings
 
     <string name="action_license">Lizenz</string>
-    <string name="action_license_summary">Die App ist komplett frei (Open Source) und unter der GPL3-Lizenz lizenziert.</string>
 
     <string name="action_donate">Spenden</string>
-    <string name="action_donate_summary">Wenn dir die App gefällt, würde ich mich über eine Spende (Paypal) freuen.</string>
 
 
     // DWD = German Weather Service
-
-    <string name="dwd_thema">DWD - Thema des Tages</string>
-    <string name="dwd_karten">Wetterkarten</string>
-    <string name="dwd_lexikon">DWD - Wetterlexikon</string>
-    <string name="dwd_forecast">Vorhersage</string>
-    <string name="dwd_satellit">Satellitenbild</string>
-    <string name="dwd_radar">Regenradar</string>
 
 
     // Snackbar
@@ -64,8 +55,6 @@
 
 
     //States
-
-    <string name="state_1">für Deutschland</string>
 
     <string name="about_title">Copyright © 2020  by AOSD</string>
     <string name="about_text">

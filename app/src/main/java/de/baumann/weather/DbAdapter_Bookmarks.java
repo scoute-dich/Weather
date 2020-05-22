@@ -17,7 +17,7 @@
     If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.baumann.weather.helper;
+package de.baumann.weather;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

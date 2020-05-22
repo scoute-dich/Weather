@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,8 +52,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.baumann.weather.helper.DbAdapter_Bookmarks;
-
 public class MainActivity extends AppCompatActivity {
 
     private WebView mWebView;
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DbAdapter_Bookmarks db;
     private GridView bookmarkList;
-    private TextView bookmarkTitel;
+    private TextView bookmarkTitle;
 
     private int showSearchField;
     private String startTitle;
@@ -70,12 +69,16 @@ public class MainActivity extends AppCompatActivity {
     private String action_hourly;
     private String action_overView;
 
+    private ImageButton ib_hour;
+    private ImageButton ib_overview;
+    private ImageButton ib_forecast;
+
     private Activity activity;
     private BottomSheetDialog bottomSheetDialog;
     private TextView titleView;
     private BottomAppBar bottomAppBar;
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,12 +93,7 @@ public class MainActivity extends AppCompatActivity {
         showSearchField = 0;
 
         bottomAppBar = findViewById(R.id.bar);
-        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openBookmarks(activity);
-            }
-        });
+        bottomAppBar.setNavigationIcon(null);
         setSupportActionBar(bottomAppBar);
 
         mWebView = findViewById(R.id.webView);
@@ -109,6 +107,60 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+
+        ib_hour = findViewById(R.id.ib_hour);
+        ib_forecast = findViewById(R.id.ib_forecast);
+        ib_overview = findViewById(R.id.ib_overview);
+
+
+        ib_hour.setImageResource(R.drawable.icon_hour);
+        ib_forecast.setImageResource(R.drawable.icon_sun_accent);
+        ib_overview.setImageResource(R.drawable.icon_forecast);
+        ib_hour.setTag(R.drawable.icon_hour);
+        ib_forecast.setTag(R.drawable.icon_sun_accent);
+        ib_overview.setTag(R.drawable.icon_forecast);
+
+
+        bottomAppBar.setOnTouchListener(new SwipeTouchListener(activity) {
+
+            final NestedScrollView scrollView = findViewById(R.id.scrollView);
+
+            public void onSwipeTop() {
+                scrollView.smoothScrollTo(0,0);
+            }
+            public void onSwipeBottom() {
+                scrollView.smoothScrollTo(0,1000000000);
+            }
+            public void onSwipeRight() {
+                Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                    ib_hour.performClick();
+                }
+                if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                    ib_overview.performClick();
+                }
+                if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                    ib_forecast.performClick();
+                }
+            }
+            public void onSwipeLeft() {
+                Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                    ib_overview.performClick();
+                }
+                if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                    ib_forecast.performClick();
+                }
+                if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                    ib_hour.performClick();
+                }
+            }
+        });
 
         if (helpers.isNetworkConnected(activity)) {
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -270,25 +322,40 @@ public class MainActivity extends AppCompatActivity {
                 openMenu(activity);
             }
         });
-        ImageButton ib_forecast = findViewById(R.id.ib_forecast);
         ib_forecast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mWebView.loadUrl(action_overView);
+                ib_hour.setImageResource(R.drawable.icon_hour);
+                ib_forecast.setImageResource(R.drawable.icon_sun_accent);
+                ib_overview.setImageResource(R.drawable.icon_forecast);
+                ib_hour.setTag(R.drawable.icon_hour);
+                ib_forecast.setTag(R.drawable.icon_sun_accent);
+                ib_overview.setTag(R.drawable.icon_forecast);
             }
         });
-        ImageButton ib_hour = findViewById(R.id.ib_hour);
         ib_hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mWebView.loadUrl(action_hourly);
+                ib_hour.setImageResource(R.drawable.icon_hour_accent);
+                ib_forecast.setImageResource(R.drawable.icon_sun_light);
+                ib_overview.setImageResource(R.drawable.icon_forecast);
+                ib_hour.setTag(R.drawable.icon_hour_accent);
+                ib_forecast.setTag(R.drawable.icon_sun_light);
+                ib_overview.setTag(R.drawable.icon_forecast);
             }
         });
-        ImageButton ib_overview = findViewById(R.id.ib_overview);
         ib_overview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mWebView.loadUrl(action_forecast);
+                ib_hour.setImageResource(R.drawable.icon_hour);
+                ib_forecast.setImageResource(R.drawable.icon_sun_light);
+                ib_overview.setImageResource(R.drawable.icon_forecast_accent);
+                ib_hour.setTag(R.drawable.icon_hour);
+                ib_forecast.setTag(R.drawable.icon_sun_light);
+                ib_overview.setTag(R.drawable.icon_forecast_accent);
             }
         });
     }
@@ -479,9 +546,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bookmarkTitel = dialogView.findViewById(R.id.grid_title);
+        bookmarkTitle = dialogView.findViewById(R.id.grid_title);
         String text = getString(R.string.bookmark_fav)+ ": " + sharedPref.getString("favoriteTitle", "wetterdienst.de");
-        bookmarkTitel.setText(text);
+        bookmarkTitle.setText(text);
         bookmarkList = dialogView.findViewById(R.id.grid_item);
 
         db = new DbAdapter_Bookmarks(MainActivity.this);
@@ -552,6 +619,13 @@ public class MainActivity extends AppCompatActivity {
                 final String bookmarks_content = row.getString(row.getColumnIndexOrThrow("bookmarks_content"));
                 final String bookmarks_title = row.getString(row.getColumnIndexOrThrow("bookmarks_title"));
 
+                ib_hour.setImageResource(R.drawable.icon_hour);
+                ib_forecast.setImageResource(R.drawable.icon_sun_accent);
+                ib_overview.setImageResource(R.drawable.icon_forecast);
+                ib_hour.setTag(R.drawable.icon_hour);
+                ib_forecast.setTag(R.drawable.icon_sun_accent);
+                ib_overview.setTag(R.drawable.icon_forecast);
+
                 bottomSheetDialog.cancel();
                 startTitle = bookmarks_title;
 
@@ -618,7 +692,7 @@ public class MainActivity extends AppCompatActivity {
                                 bottomSheetDialog_context.cancel();
                                 sharedPref.edit().putString("favoriteURL", bookmarks_content).putString("favoriteTitle", bookmarks_title).apply();
                                 String text = getString(R.string.bookmark_fav)+ ": " + bookmarks_title;
-                                bookmarkTitel.setText(text);
+                                bookmarkTitle.setText(text);
                                 break;
                             case 2:
                                 bottomSheetDialog_context.cancel();
