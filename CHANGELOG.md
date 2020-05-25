@@ -1,4 +1,4 @@
-### v 4.8
+### v 4.9
 - new: app icon
 - new: gestures on bottombar
 

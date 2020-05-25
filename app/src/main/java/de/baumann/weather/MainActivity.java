@@ -143,13 +143,13 @@ public class MainActivity extends AppCompatActivity {
                     Integer resource_ib_hour = (Integer)ib_hour.getTag();
                     Integer resource_ib_overview = (Integer)ib_overview.getTag();
                     if (resource_ib_forecast == R.drawable.icon_sun_accent) {
-                        ib_hour.performClick();
-                    }
-                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
                         ib_overview.performClick();
                     }
-                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
                         ib_forecast.performClick();
+                    }
+                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                        ib_hour.performClick();
                     }
                 }
             }
@@ -159,13 +159,13 @@ public class MainActivity extends AppCompatActivity {
                     Integer resource_ib_hour = (Integer)ib_hour.getTag();
                     Integer resource_ib_overview = (Integer)ib_overview.getTag();
                     if (resource_ib_forecast == R.drawable.icon_sun_accent) {
-                        ib_overview.performClick();
+                        ib_hour.performClick();
                     }
                     if (resource_ib_hour == R.drawable.icon_hour_accent) {
-                        ib_forecast.performClick();
+                        ib_overview.performClick();
                     }
                     if (resource_ib_overview == R.drawable.icon_forecast_accent) {
-                        ib_hour.performClick();
+                        ib_forecast.performClick();
                     }
                 }
             }
@@ -311,6 +311,51 @@ public class MainActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 openBookmarks(activity);
                 return false;
+            }
+        });
+
+        fab.setOnTouchListener(new SwipeTouchListener(activity) {
+
+            final NestedScrollView scrollView = findViewById(R.id.scrollView);
+
+            public void onSwipeTop() {
+                scrollView.smoothScrollTo(0,0);
+            }
+            public void onSwipeBottom() {
+                scrollView.smoothScrollTo(0,1000000000);
+            }
+            public void onSwipeRight() {
+
+                if (menu_forecast.getVisibility() == View.VISIBLE) {
+                    Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                    Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                    Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                    if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                        ib_overview.performClick();
+                    }
+                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                        ib_forecast.performClick();
+                    }
+                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                        ib_hour.performClick();
+                    }
+                }
+            }
+            public void onSwipeLeft() {
+                if (menu_forecast.getVisibility() == View.VISIBLE) {
+                    Integer resource_ib_forecast = (Integer)ib_forecast.getTag();
+                    Integer resource_ib_hour = (Integer)ib_hour.getTag();
+                    Integer resource_ib_overview = (Integer)ib_overview.getTag();
+                    if (resource_ib_forecast == R.drawable.icon_sun_accent) {
+                        ib_hour.performClick();
+                    }
+                    if (resource_ib_hour == R.drawable.icon_hour_accent) {
+                        ib_overview.performClick();
+                    }
+                    if (resource_ib_overview == R.drawable.icon_forecast_accent) {
+                        ib_forecast.performClick();
+                    }
+                }
             }
         });
 
