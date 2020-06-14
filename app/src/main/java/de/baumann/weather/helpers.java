@@ -76,6 +76,8 @@ public class helpers {
                         result = true;
                     } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
                         result = true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                        result = true;
                     }
                 }
             }
