@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/menu_forecast"
+                android:layout_toStartOf="@id/ib_bookmarks"
                 android:layout_marginStart="8dp"
                 android:layout_alignParentStart="true"
                 android:ellipsize="end"
@@ -45,36 +45,6 @@
                 android:layout_toStartOf="@+id/ib_menu"
                 android:src="@drawable/icon_bookmark_light"
                 android:background="?attr/actionBarItemBackground" />
-
-            <LinearLayout
-                android:id="@+id/menu_forecast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/ib_bookmarks"
-                android:layout_centerInParent="true">
-
-                <ImageButton android:id="@+id/ib_forecast"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:src="@drawable/icon_sun_light"
-                    android:background="?attr/actionBarItemBackground"/>
-
-                <ImageButton android:id="@+id/ib_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:src="@drawable/icon_hour"
-                    android:background="?attr/actionBarItemBackground"/>
-
-                <ImageButton android:id="@+id/ib_overview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:src="@drawable/icon_forecast"
-                    android:background="?attr/actionBarItemBackground"/>
-
-            </LinearLayout>
 
             <ImageButton android:id="@+id/ib_menu"
                 android:layout_centerInParent="true"

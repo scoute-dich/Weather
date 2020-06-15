@@ -34,11 +34,10 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-public class helpers {
+class helpers {
 
-    public static SpannableString textSpannable (String text) {
+    static SpannableString textSpannable (String text) {
         SpannableString s;
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             s = new SpannableString(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
         } else {
@@ -64,7 +63,6 @@ public class helpers {
         });
     }
 
-    @SuppressWarnings("deprecation")
     static boolean isNetworkConnected(Context context) {
         boolean result = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -25,17 +25,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintManager;
-import android.widget.Toast;
-
-import java.util.Objects;
-
-import de.baumann.weather.R;
 
 
-public class DbAdapter_Bookmarks {
+class DbAdapter_Bookmarks {
 
     //define static variable
     private static final int dbVersion =6;

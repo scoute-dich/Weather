@@ -5,8 +5,6 @@
 
     <string name="app_name">FOSS Wetter</string>
     <string name="app_hint_bookmark">Gewünschten Titel eingeben</string>
-    <string name="app_hint_url">Gewünschte URL eingeben</string>
-    <string name="app_info_url">Achte darauf, dass die URL für gespeicherte Orte mit \"…/Wetter/name_deiner_stadt/\" endet.</string>
 
 
     // Tab - Titles
