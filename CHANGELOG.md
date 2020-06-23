@@ -1,4 +1,4 @@
-### v 5.0 (WIP)
+### v 5.0
 - new: vpn support
 
 ### v 4.9
