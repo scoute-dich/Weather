@@ -4,13 +4,19 @@ android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "de.baumann.weather"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 60
-        versionName "4.9.1"
+        versionCode 61
+        versionName "5.0"
     }
     buildTypes {
         release {
