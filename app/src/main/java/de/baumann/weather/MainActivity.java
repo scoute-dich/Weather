@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                             Matcher matcher = townPattern.matcher (mWebView.getUrl());
                             if (matcher.find()){
                                 titleToSave = matcher.group().replace("Wetter/","");
-                                urlToSave = "http://m.wetterdienst.de/Wetter/" + titleToSave;
+                                urlToSave = "https://m.wetterdienst.de/Wetter/" + titleToSave;
                             } else {
                                 titleToSave = mWebView.getTitle();
                                 urlToSave = url;
